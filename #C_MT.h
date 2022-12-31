@@ -250,11 +250,11 @@
 # endif
 
 # define MAIN main(INT ARGN, CHAR *ARGS[])
-# define ABS($) ($ < 0 ? $ * -1 : $)
-# define SIZEOF($) \
+# define ABS(__IN_A__) (__IN_A__ < 0 ? __IN_A__ * -1 : __IN_A__)
+# define SIZEOF(__IN_S__) \
 	({\
-		TYPEOF($) $$;\
-		(CHAR*) (&$$+1) - (CHAR*) (&$$);\
+		TYPEOF(__IN_S__) __OUT_S__;\
+		(CHAR*) (&__OUT_S__+1) - (CHAR*) (&__OUT_S__);\
 	})
 
 INT	STRLEN(CONST CHAR *STR);
