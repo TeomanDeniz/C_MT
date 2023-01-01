@@ -52,8 +52,13 @@ INT
 # endif
 
 #else
+INT
+	GETCHAR(VOID)
+{
+	CHAR (CHARACTER);
 
-# include	<stdio.h>
-# define GETCHAR getchar
+	READ(0, &CHARACTER, 1);
 
+	RETURN (CHARACTER);
+}
 #endif
