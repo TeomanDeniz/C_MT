@@ -17,74 +17,92 @@
 # define C_MT 42
 
 # include	<time.h> /*
-# CLOCK()
-# CLOCK_T
+# CLOCK();
+# CLOCK_T <VAR>;
 */
 
 # include	<fcntl.h> /*
-# OPEN()
-# WOPEN()
-# CLOSE()
+# OPEN( <FD>, <OPEN_MODE> );
+# WOPEN();
+# CLOSE( <FD> );
 */
 
 # ifdef _WIN32
+
 #  include	<windows.h> /*
 #  CREATEPROCESS()
 #  FOR INCLUDE SPECIAL WINDOWS MODULES
 */
+
 #  include	<io.h>/*
-#  _READ()
+#  _READ( <MODE/FD>, <*CHAR>, <SIZE> );
+#  _WRITE( <MODE/FD>, <*CHAR>, <SIZE> );
 #  _FREAD()
-#  _WRITE()
 #  _FWRITE()
 #  _EOF()
 #  _COMMIT()
 #  _CREAT()
-#  
 */
-#  define READ _read
-#  define FREAD _fread
-#  define OPEN _open
-#  define WOPEN _wopen
-#  define WRITE _write
-#  define COMMIT _commit
-#  define CREAT _creat
 
-#  define _READ READ
-#  define _FREAD FREAD
-#  define _OPEN OPEN
-#  define _WOPEN WOPEN
-#  define _WRITE WRITE
-#  define _FWRITE _fwrite
-#  define _COMMIT COMMIT
-#  define _CREAT CREAT
+#  define           read _read
+#  define          write _write
 
-#  define _EOF _eof
-#  define CREATE CREAT
-#  define CREATEPROCESS CreateProcess
+#  define           READ _read
+#  define          FREAD _fread
+#  define           OPEN _open
+#  define          WOPEN _wopen
+#  define          WRITE _write
+#  define         COMMIT _commit
+#  define          CREAT _creat
+
+#  define          _READ READ
+#  define         _FREAD FREAD
+#  define          _OPEN OPEN
+#  define         _WOPEN WOPEN
+#  define         _WRITE WRITE
+#  define        _FWRITE _fwrite
+#  define        _COMMIT COMMIT
+#  define         _CREAT CREAT
+
+#  define           _EOF _eof
+#  define            EOF _eof
+#  define         CREATE _creat
+#  define  CREATEPROCESS CreateProcess
 #  define CREATE_PROCESS CreateProcess
-#  define FORK CreateProcess
+#  define           FORK CreateProcess
 
-# define STDIN_FILENO  0
-# define STDOUT_FILENO 1
-# define STDERR_FILENO 2
+#  define STDIN_FILENO  0
+#  define STDOUT_FILENO 1
+#  define STDERR_FILENO 2
+
+#  define O_APPEND _O_APPEND // Position file pointer to end
+#  define O_BINARY _O_BINARY // Open file in binary mode
+#  define O_CREAT  _O_CREAT  // Create file if it does not exist
+#  define O_EXCL   _O_EXCL   // Used with O_CREAT, returns an error if file exists
+#  define O_RDONLY _O_RDONLY // Open file for reading only
+#  define O_RDWR   _O_RDWR   // Open file for reading and writing
+#  define O_TEXT   _O_TEXT   // Open file in text mode
+#  define O_TRUNC  _O_TRUNC  // Truncates existing file
+#  define O_WRONLY _O_WRONLY // Opens file for writing only
+
 # endif
 
 # if defined(__unix__) || defined(__linux__) || defined(__MACH__) || defined(__APPLE__) || defined(__ANDROID__)
-#  include	<unistd.h>/*
-#  READ()
-#  WRITE()
-#  CLOSE()
-#  WOPEN()
-*/
-#  define READ read
-#  define OPEN open
-#  define WRITE write
-#  define CLOSE close
 
-#  define CREATEPROCESS fork
+#  include	<unistd.h>/*
+#  READ( <MODE/FD>, <*CHAR>, <SIZE> );
+#  WRITE( <MODE/FD>, <*CHAR>, <SIZE> );
+*/
+
+#  define           READ read
+#  define           OPEN open
+#  define          WRITE write
+#  define          CLOSE close
+
+#  define  CREATEPROCESS fork
 #  define CREATE_PROCESS fork
-#  define FORK fork
+#  define           FORK fork
+
 # endif
 
 # include	<stdio.h> /*
@@ -96,72 +114,88 @@
 */
 
 # include	<stdlib.h> /*
-# MALLOC()
-# FREE()
-# SIZE_T
-# SSIZE_T
+# MALLOC( <*VOID> );
+# SIZEOF( [KEYWORD] );
+# FREE( <*VOID> );
+# SIZE_T <VAR>;
+# SSIZE_T <VAR>;
 */
 
 # include	<stdarg.h> /*
-# VA_LIST()
-# VA_START()
-# VA_END()
-# VA_ARG()
+# VA_LIST();
+# VA_START();
+# VA_END();
+# VA_ARG();
+# VA_COPY();
 */
 
-# define SHORT short
+# ifndef __GNUC__
+#  define __asm__ asm
+#  define __ASM__ asm
+#  define     ASM asm
+# else
+#  define     asm __asm__
+#  define     ASM __asm__
+#  define __ASM__ __asm__
+# endif
+
 # undef INT
-# define INT int
+# define      INT int
+# define    SHORT short
 # define UNSIGNED unsigned
-# define SIGNED signed
-# define STATIC static
-# define EXTERN extern
-# define VOID void
-# define CONST const
-# define INT16 SHORT
+# define   SIGNED signed
+# define   STATIC static
+# define   EXTERN extern
+# define     VOID void
+# define    CONST const
+# define    INT16 short
 # define VOLATILE volatile
-# define CHAR char
-# define LONG long
-# define AUTO auto
+# define     CHAR char
+# define     LONG long
+# define    FLOAT float
+# define   DOUBLE double
+# define     AUTO auto
 # define REGISTER register
-# define INLINE inline
+# define   INLINE inline
 # define RESTRICT restrict
 # ifdef _WIN64
 #  define SSIZE_T __int64
 # else
-#  define SSIZE_T LONG
+#  define SSIZE_T long
 # endif
-# define SIZE_T size_t
+# define   SIZE_T size_t
 
-# define STRUCT strcut
-# define TYPEDEF typedef
-# define UNION union
-# define ENUM enum
+# define   STRUCT strcut
+# define  TYPEDEF typedef
+# define    UNION union
+# define     ENUM enum
 
-# define FOR for
-# define WHILE while
-# define DO do
-# define RETURN return
-# define TYPEOF typeof
-# define IF if
-# define ELSE else
+# define      FOR for
+# define    WHILE while
+# define       DO do
+# define   RETURN return
+# define   TYPEOF typeof
+# define       IF if
+# define     ELSE else
 # define CONTINUE continue
-# define BREAK break
-# define SWITCH switch
-# define CASE case
-# define DEFAULT default
-# define GOTO goto
-# define VA_LIST va_list
+# define    BREAK break
+# define   SWITCH switch
+# define     CASE case
+# define  DEFAULT default
+# define     GOTO goto
+
+# define  VA_LIST va_list
 # define VA_START va_start
-# define VA_END va_end
-# define VA_ARG va_arg
-# define VFSCANF vfscanf
-# define SCANF scanf
-# define EXIT exit
-# define MALLOC malloc
-# define FREE free
-# define CLOCK clock
-# define CLOCK_T clock_t
+# define   VA_END va_end
+# define   VA_ARG va_arg
+# define  VA_COPY va_copy
+# define  VFSCANF vfscanf
+# define    SCANF scanf
+# define     EXIT exit
+# define   MALLOC malloc
+# define     FREE free
+# define    CLOCK clock
+# define  CLOCK_T clock_t
 # define PRINTF printf // silmeyi unutma!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # ifndef ERROR
 #  define ERROR 0 
@@ -176,20 +210,21 @@
 #  define FALSE 1
 # endif
 
-# define ACCESS _access
-# define DUP2 _dup2
-# define EXECVE _execve
+# define     ACCESS _access
+# define       DUP2 _dup2
+# define     EXECVE _execve
 # define FTRUNCASTE _chsize
-# define UNLINK _unlink
-# define FILENO _fileno
-# define GETCWD _getcwd
-# define CHDIR _chdir
-# define ISATTY _isatty
-# define LSEEK _lseek
-# define SRANDOM srand
-# define RANDOM rand
-# define SRAND srand
-# define RAND rand
+# define     UNLINK _unlink
+# define     FILENO _fileno
+# define     GETCWD _getcwd
+# define      CHDIR _chdir
+# define     ISATTY _isatty
+# define      LSEEK _lseek
+
+# define    SRANDOM srand
+# define     RANDOM rand
+# define      SRAND srand
+# define       RAND rand
 
 # ifndef R_OK
 #  define R_OK 4 /* Test for read permission */
@@ -257,25 +292,44 @@
 		(CHAR*) (&__OUT_S__+1) - (CHAR*) (&__OUT_S__);\
 	})
 
-INT	STRLEN(CONST CHAR *STR);
-INT	GETCHAR(VOID);
-INT	ATOI(CONST CHAR *STR);
+INT		STRLEN(CONST CHAR *STR);
+
+INT		GETCHAR(VOID);
+
+INT		ATOI(CONST CHAR *STR);
+
 CHAR	UPPER_CASE(CHAR CHARACTER);
+
 CHAR	LOWER_CASE(CHAR CHARACTER);
+
 CHAR	*ITOA(INT NUMBER);
+
 CHAR	**SPLIT(CHAR CONST *STR, CHAR CHARACTER);
+
 CHAR	*GETS(CHAR *STR);
+
 CHAR	*RELPACE_STRING(CHAR* STR, CHAR* OLD, CHAR* NEW);
+
 CHAR	*GET_PATH(CONST UNSIGNED VOLATILE INT CHOICE);
+
 CHAR	*STRSTR(REGISTER CHAR *STRING, CHAR *SUB_STRING);
+
 CHAR	*STRCPY(CHAR *STR1, CONST CHAR *STR2);
+
 VOID	BZERO(VOID *ELEMENT, SIZE_T SIZE);
+
 VOID	PUT_NUMBER_FD(INT NUMBER, INT FD);
+
 VOID	PUT_NUMBER(INT NUMBER);
+
 VOID	PUT_CHAR_FD(CHAR CHARACTER, INT FD);
+
 VOID	PUT_CHAR(CHAR CHARACTER);
+
 VOID	*CALLOC(SIZE_T COUNT, SIZE_T SIZE);
+
 VOID	*MEMCPY(VOID *DEST, CONST VOID *SRC, SIZE_T SIZE);
+
 VOID	*MEMSET(VOID *ELEMENT, INT OBJECT, SIZE_T SIZE);
 
 #endif
