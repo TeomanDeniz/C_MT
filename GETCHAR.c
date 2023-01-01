@@ -15,32 +15,42 @@
 #include	"#C_MT.h"
 
 #ifndef __TINYC__
-	INT
-		getchar(VOID)
-	{
-		INT (INPUT) = 0;
-
 # ifdef _WIN32
-		__ASM__ __VOLATILE__ (
-			"call _getch\n\t"
-			"mov %%eax, %0\n\t"
-			: "=r" (INPUT)
-			:
-			: "memory"
-		);
+INT
+	GETCHAR(VOID)
+{
+	INT (INPUT) = 0;
+
+	__ASM__ __VOLATILE__ (
+		"call _getch\n\t"
+		"mov %%eax, %0\n\t"
+		: "=r" (INPUT)
+		:
+		: "memory"
+	);
+
+	RETURN (INPUT);
+}
 # else
-		__ASM__ __VOLATILE__ (
-			"mov $0, %%eax\n\t"
-			"mov $0, %%ebx\n\t"
-			"int $0x80\n\t"
-			"mov %%eax, %0\n\t"
-			: "=r" (INPUT)
-			:
-			: "memory"
-		);
+INT
+	GETCHAR(VOID)
+{
+	INT (INPUT) = 0;
+
+	__ASM__ __VOLATILE__ (
+		"mov $0, %%eax\n\t"
+		"mov $0, %%ebx\n\t"
+		"int $0x80\n\t"
+		"mov %%eax, %0\n\t"
+		: "=r" (INPUT)
+		:
+		: "memory"
+	);
+
+	RETURN (INPUT);
+}
 # endif
-		RETURN (INPUT);
-	}
+
 #else
 
 # include	<stdio.h>
