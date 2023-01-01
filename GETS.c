@@ -14,22 +14,26 @@
 
 #include	"#C_MT.h"
 
-CHAR    *GETS(CHAR *STR)
+CHAR
+	*GETS(CHAR *STR)
 {
-    INT (COUNTER) = 0;
-    CHAR *(STR2) = STR;
-    WHILE ((COUNTER = GETCHAR()) != '\n')
-    {
-        IF (COUNTER == -1)
-        {
-            IF (STR2 == STR)
-                RETURN (NULL);
-            ELSE
-                BREAK;
-        }
-        ELSE
-            *STR2++ = COUNTER;
-    }
-    *STR2 = '\0';
-    RETURN (STR);
+	INT (COUNTER) = 0;
+	CHAR  *(STR2) = STR;
+
+	WHILE ((COUNTER = GETCHAR()) != '\n')
+	{
+		IF (COUNTER == -1)
+		{
+			IF (STR2 == STR)
+				RETURN (NULL);
+			ELSE
+				BREAK;
+		}
+		ELSE
+			*STR2++ = COUNTER;
+	}
+
+	*STR2 = '\0';
+
+	RETURN (STR);
 }

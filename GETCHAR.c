@@ -14,17 +14,36 @@
 
 #include	"#C_MT.h"
 
-INT GETCHAR(VOID)
-{
-    STATIC CHAR (BUFFER)[8192];
-    STATIC CHAR *(BUF) = BUFFER;
-    STATIC INT (COUNTER) = 0;
-    IF (COUNTER == 0)
-    {
-        COUNTER = READ(0, BUFFER, 1);
-        BUF = BUFFER;
-    }
-    IF (--COUNTER >= 0)
-        RETURN  (*BUF++);
-    RETURN (-1);
-}
+#ifndef __TINYC__
+	INT
+		getchar(VOID)
+	{
+		INT (INPUT) = 0;
+
+# ifdef _WIN32
+		__ASM__ __VOLATILE__ (
+			"call _getch\n\t"
+			"mov %%eax, %0\n\t"
+			: "=r" (INPUT)
+			:
+			: "memory"
+		);
+# else
+		__ASM__ __VOLATILE__ (
+			"mov $0, %%eax\n\t"
+			"mov $0, %%ebx\n\t"
+			"int $0x80\n\t"
+			"mov %%eax, %0\n\t"
+			: "=r" (INPUT)
+			:
+			: "memory"
+		);
+# endif
+		RETURN (INPUT);
+	}
+#else
+
+# include	<stdio.h>
+# define GETCHAR getchar
+
+#endif

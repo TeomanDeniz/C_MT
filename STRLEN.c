@@ -14,10 +14,13 @@
 
 #include	"#C_MT.h"
 
-INT STRLEN(CONST CHAR *STR)
+INT
+	STRLEN(CONST CHAR *STR)
 {
     INT (COUNTER) = 0;
+
     WHILE (STR[COUNTER])
         COUNTER++;
+
     RETURN (COUNTER);
 }

@@ -130,13 +130,19 @@
 */
 
 # ifndef __GNUC__
-#  define __asm__ asm
-#  define __ASM__ asm
-#  define     ASM asm
+#  ifdef __volatile__
+#   define __VOLATILE__ __volatile__
+#  else
+#   define __VOLATILE__ volatile
+#  endif
+#  define       __asm__ asm
+#  define       __ASM__ asm
+#  define           ASM asm
 # else
-#  define     asm __asm__
-#  define     ASM __asm__
-#  define __ASM__ __asm__
+#  define           asm __asm__
+#  define           ASM __asm__
+#  define       __ASM__ __asm__
+#  define  __VOLATILE__ __volatile__
 # endif
 
 # undef INT
