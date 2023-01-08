@@ -166,6 +166,7 @@
 # define RESTRICT restrict
 # ifdef _WIN64
 #  define SSIZE_T __int64
+#  define __INT64 __int64
 # else
 #  define SSIZE_T long
 # endif
@@ -202,18 +203,17 @@
 # define     FREE free
 # define    CLOCK clock
 # define  CLOCK_T clock_t
-# define PRINTF printf // silmeyi unutma!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # ifndef ERROR
-#  define ERROR 0 
+#  define ERROR 0
 # endif
 # ifndef NULL
-#  define NULL 0
+#  define NULL ((VOID *)0)
 # endif
 # ifndef TRUE
-#  define TRUE 0
+#  define TRUE 1
 # endif
 # ifndef FALSE
-#  define FALSE 1
+#  define FALSE 0
 # endif
 
 # define     ACCESS _access
@@ -244,6 +244,7 @@
 # ifndef F_OK
 #  define F_OK 0 /* Test for existence */
 # endif
+
 # ifndef INT_MAX
 #  define INT_MAX 2147483647
 # endif
@@ -313,6 +314,7 @@ CHAR	*STRCPY(CHAR *STR1, CONST CHAR *STR2);
 CHAR	*STRDUP(CONST CHAR *STRING);
 CHAR	UPPER_CASE(CHAR CHARACTER);
 CHAR	LOWER_CASE(CHAR CHARACTER);
+CHAR	*GET_LINE(INT FD);
 CHAR	*ITOA(INT NUMBER);
 CHAR	*GETS(CHAR *STR);
 
@@ -330,6 +332,5 @@ VOID	PUT_NUMBER(INT NUMBER);
 VOID	PUT_STR(CHAR *STRING);
 
 SIZE_T	STRLCAT(CHAR *DST, CONST CHAR *SRC, SIZE_T DST_SIZE);
-
 
 #endif
