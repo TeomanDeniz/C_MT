@@ -1,47 +1,46 @@
-/*══════════════════════════════════════╦═════════════════════════════╗
-║ H - C_MT                              ║       Maximum Tension       ║
-╠═══════════════════════════════════════╬═════════════════════════════╣
-║                                       │      ▄▄▄            ▄▄▄     ║
-║ Teoman Deniz                          │  ░    ░▒▓▒▄▄    ▄▄▒▓▒░    ░ ║
-║ maximum-tension.com                   │  ░░                      ░░ ║
-║                                       │  ░▒░    ░ ░░ ░ ░  ░  ░░░░▒░ ║
-║ ╔───┬──────────────────╗              │   ░▒░░ ░▒░▒▓░▒░▒░░▓░░░▒▒▒░  ║
-║ │ © │ Maximum Tension  │              │   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
-║ ├───┴─────┬────────────┤ ┌────────────┤   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
-║ │ License │ GNU        │ │ 2022/11/15 │    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ YYYY/MM/DD │       ░░░░▒░░▒░░░▒░░░░      ║
-╚══════════════════════════╩════════════╩════════════════════════════*/
+/*════════════════════════════════════════╦═════════════════════════════╗
+║ H - C_MT                                ║       Maximum Tension       ║
+╠═════════════════════════════════════════╬═════════════════════════════╣
+║                                         │      ▄▄▄            ▄▄▄     ║
+║ Teoman Deniz                            │  ░    ░▒▓▒▄▄    ▄▄▒▓▒░    ░ ║
+║ maximum-tension.com                     │  ░░                      ░░ ║
+║                                         │  ░▒░    ░ ░░ ░ ░  ░  ░░░░▒░ ║
+║ ╔───┬──────────────────╗                │   ░▒░░ ░▒░▒▓░▒░▒░░▓░░░▒▒▒░  ║
+║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
+║ ├───┴─────┬────────────┤ │ C 2020/07/23 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
+║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
+║ ╚─────────┴────────────╝ │ U 2023/01/13 │       ░░░░▒░░▒░░░▒░░░░      ║
+╚══════════════════════════╩══════════════╩════════════════════════════*/
 
-#ifndef C_MT
 
-# define C_MT 42
+#ifndef C_MT_H
+
+# define C_MT_H 42
 
 # include	<time.h> /*
 # CLOCK();
-# CLOCK_T <VAR>;
+# CLOCK_T <VAR_T>;
 */
 
 # include	<fcntl.h> /*
-# OPEN( <FD>, <OPEN_MODE> );
-# WOPEN();
-# CLOSE( <FD> );
+# OPEN(<FD>, <OPEN_MODE>);
+# CLOSE(<FD>);
 */
 
 # ifdef _WIN32
 
 #  include	<windows.h> /*
-#  CREATEPROCESS()
-#  FOR INCLUDE SPECIAL WINDOWS MODULES
+#  CREATEPROCESS();
 */
 
 #  include	<io.h>/*
 #  _READ( <MODE/FD>, <*CHAR>, <SIZE> );
 #  _WRITE( <MODE/FD>, <*CHAR>, <SIZE> );
-#  _FREAD()
-#  _FWRITE()
-#  _EOF()
-#  _COMMIT()
-#  _CREAT()
+#  _FREAD();
+#  _FWRITE();
+#  _EOF();
+#  _COMMIT();
+#  _CREAT();
 */
 
 #  define           read _read
@@ -52,17 +51,18 @@
 #  define           OPEN _open
 #  define          WOPEN _wopen
 #  define          WRITE _write
+#  define         FWRITE _fwrite
 #  define         COMMIT _commit
 #  define          CREAT _creat
 
-#  define          _READ READ
-#  define         _FREAD FREAD
-#  define          _OPEN OPEN
-#  define         _WOPEN WOPEN
-#  define         _WRITE WRITE
+#  define          _READ _read
+#  define         _FREAD _fread
+#  define          _OPEN _open
+#  define         _WOPEN _wopen
+#  define         _WRITE _write
 #  define        _FWRITE _fwrite
-#  define        _COMMIT COMMIT
-#  define         _CREAT CREAT
+#  define        _COMMIT _commit
+#  define         _CREAT _creat
 
 #  define           _EOF _eof
 #  define            EOF _eof
@@ -77,12 +77,12 @@
 
 #  define O_APPEND _O_APPEND // Position file pointer to end
 #  define O_BINARY _O_BINARY // Open file in binary mode
-#  define O_CREAT  _O_CREAT  // Create file if it does not exist
-#  define O_EXCL   _O_EXCL   // Used with O_CREAT, returns an error if file exists
+#  define  O_CREAT _O_CREAT  // Create file if it does not exist
+#  define   O_EXCL _O_EXCL   // Used with O_CREAT, returns an error if file exists
 #  define O_RDONLY _O_RDONLY // Open file for reading only
-#  define O_RDWR   _O_RDWR   // Open file for reading and writing
-#  define O_TEXT   _O_TEXT   // Open file in text mode
-#  define O_TRUNC  _O_TRUNC  // Truncates existing file
+#  define   O_RDWR _O_RDWR   // Open file for reading and writing
+#  define   O_TEXT _O_TEXT   // Open file in text mode
+#  define  O_TRUNC _O_TRUNC  // Truncates existing file
 #  define O_WRONLY _O_WRONLY // Opens file for writing only
 
 # endif
@@ -92,6 +92,9 @@
 #  include	<unistd.h>/*
 #  READ( <MODE/FD>, <*CHAR>, <SIZE> );
 #  WRITE( <MODE/FD>, <*CHAR>, <SIZE> );
+#  OPEN();
+#  CLOSE();
+#  FORK();
 */
 
 #  define           READ read
@@ -106,27 +109,26 @@
 # endif
 
 # include	<stdio.h> /*
-# FREAD()
-# FWRITE()
-# FOPEN()
-# FCLOSE()
-# PRINTF()
+# FREAD();
+# FWRITE();
+# FOPEN();
+# FCLOSE();
+# PRINTF();
 */
 
 # include	<stdlib.h> /*
-# MALLOC( <*VOID> );
-# SIZEOF( [KEYWORD] );
-# FREE( <*VOID> );
+# MALLOC(INT <VAR>);
+# FREE(*VOID);
 # SIZE_T <VAR>;
 # SSIZE_T <VAR>;
 */
 
 # include	<stdarg.h> /*
-# VA_LIST();
-# VA_START();
-# VA_END();
-# VA_ARG();
-# VA_COPY();
+# VA_LIST V_ARG;
+# VA_START(V_ARG, <VAR_ARG>);
+# VA_ARG(V_ARG, KEYWORD);
+# VA_END(V_ARG);
+# VA_COPY(V_ARG2, V_ARG);
 */
 
 # ifndef __GNUC__
@@ -134,6 +136,7 @@
 #   define __VOLATILE__ __volatile__
 #  else
 #   define __VOLATILE__ volatile
+#   define __volatile__ volatile
 #  endif
 #  define       __asm__ asm
 #  define       __ASM__ asm
@@ -170,7 +173,7 @@
 # else
 #  define SSIZE_T long
 # endif
-# define   SIZE_T size_t
+# define   SIZE_T unsigned int
 
 # define   STRUCT strcut
 # define  TYPEDEF typedef
@@ -226,6 +229,18 @@
 # define      CHDIR _chdir
 # define     ISATTY _isatty
 # define      LSEEK _lseek
+
+# define    _ACCESS _access
+# define      _DUP2 _dup2
+# define    _EXECVE _execve
+# define    _CHSIZE _chsize
+# define    _UNLINK _unlink
+# define    _FILENO _fileno
+# define    _GETCWD _getcwd
+# define     _CHDIR _chdir
+# define    _ISATTY _isatty
+# define     _LSEEK _lseek
+
 
 # define    SRANDOM srand
 # define     RANDOM rand
@@ -299,38 +314,45 @@
 		(CHAR*) (&__OUT_S__+1) - (CHAR*) (&__OUT_S__);\
 	})
 
-INT		STRNCMP(CONST CHAR *STRING_1, CONST CHAR *STRING_2, SIZE_T SIZE);
-INT		STRLEN(CONST CHAR *STR);
-INT		ATOI(CONST CHAR *STR);
-INT		GETCHAR(VOID);
-
-CHAR	*STRNSTR(CONST CHAR *HAYSTACK, CONST CHAR *NEEDLE, SIZE_T LEN);
-CHAR	*RELPACE_STRING(CHAR* STR, CHAR* OLD, CHAR* NEW);
-CHAR	*STRSTR(REGISTER CHAR *STRING, CHAR *SUB_STRING);
-CHAR	*GET_PATH(CONST UNSIGNED VOLATILE INT CHOICE);
-CHAR	*STRCHR(CONST CHAR *STRING, INT CHARACTER);
-CHAR	**SPLIT(CHAR CONST *STR, CHAR CHARACTER);
-CHAR	*STRCPY(CHAR *STR1, CONST CHAR *STR2);
-CHAR	*STRDUP(CONST CHAR *STRING);
-CHAR	UPPER_CASE(CHAR CHARACTER);
-CHAR	LOWER_CASE(CHAR CHARACTER);
-CHAR	*GET_LINE(INT FD);
-CHAR	*ITOA(INT NUMBER);
-CHAR	*GETS(CHAR *STR);
-
-VOID	STRITERI(CHAR *STRING, VOID (*FUNCTION)(UNSIGNED INT, CHAR *));
-VOID	*MEMCPY(VOID *DEST, CONST VOID *SRC, SIZE_T SIZE);
-VOID	*MEMMOVE(VOID *DST, CONST VOID *SRC, SIZE_T LEN);
-VOID	*MEMSET(VOID *ELEMENT, INT OBJECT, SIZE_T SIZE);
-VOID	PUT_CHAR_FD(CHAR CHARACTER, INT FD);
-VOID	*CALLOC(SIZE_T COUNT, SIZE_T SIZE);
-VOID	BZERO(VOID *ELEMENT, SIZE_T SIZE);
-VOID	PUT_NUMBER_FD(INT NUMBER, INT FD);
-VOID	PUT_STR_FD(CHAR *STRING, INT FD);
-VOID	PUT_CHAR(CHAR CHARACTER);
-VOID	PUT_NUMBER(INT NUMBER);
-VOID	PUT_STR(CHAR *STRING);
-
-SIZE_T	STRLCAT(CHAR *DST, CONST CHAR *SRC, SIZE_T DST_SIZE);
+ LONG LONG POW             (REGISTER LONG LONG NUMBER, REGISTER SIGNED INT POWER);
+ SIZE_T    STRLCAT         (CHAR *DST, CONST CHAR *RESTRICT SRC, SIZE_T DST_SIZE);
+ SIZE_T    STRLCPY         (CHAR *DST, CONST CHAR *SRC, SIZE_T SIZE);
+ CHAR      *STRNSTR        (CONST CHAR *HAYSTACK, CONST CHAR *RESTRICT NEEDLE, CONST SIZE_T LEN);
+ CHAR      *STRMAPI        (CHAR CONST *STRING, CHAR (*FUNCT)(UNSIGNED INT, CHAR));
+ CHAR      *SUBSTR         (CHAR CONST *STRING, UNSIGNED INT START, SIZE_T LEN);
+ CHAR      *STRTRIM        (CHAR CONST *STRING_1, CHAR CONST *STRING_2);
+ CHAR      *STRCHR         (CONST CHAR *STRING, REGISTER INT CHARACTER);
+ CHAR      *STRJOIN        (CHAR CONST *STRING_1, CONST CHAR *STRING_2);
+ CHAR      *STRSTR         (CHAR *STRING, CHAR *RESTRICT SUB_STRING);
+ CHAR      *GET_PATH       (CONST UNSIGNED VOLATILE INT CHOICE);
+ CHAR      *STRRCHR        (CONST CHAR *STRING, INT CHARACTER);
+ CHAR      *RELPACE_STRING (CHAR* STR, CHAR* OLD, CHAR* NEW);
+ CHAR      **SPLIT         (CHAR CONST *STR, CHAR CHARACTER);
+ CHAR      *STRCPY         (CHAR *STR1, CONST CHAR *STR2);
+ CHAR      *ITOA           (REGISTER INT NUMBER);
+ CHAR      *STRDUP         (CONST CHAR *STRING);
+ CHAR      UPPER_CASE      (CHAR CHARACTER);
+ CHAR      LOWER_CASE      (CHAR CHARACTER);
+ CHAR      *GETS           (CHAR *STRING);
+ CHAR      *GET_LINE       (INT FD);
+ VOID      *MEMMOVE        (VOID *DST, CONST VOID *RESTRICT SRC, CONST SIZE_T LEN);
+ VOID      STRITERI        (CHAR *STRING, VOID (*FUNCTION)(UNSIGNED INT, CHAR *));
+ VOID      *MEMSET         (VOID *OBJECT, REGISTER INT INPUT, SIZE_T SIZE);
+ VOID      *MEMCHR         (CONST VOID *OBJECT, INT CHARACTER, SIZE_T LEN);
+ VOID      *MEMCPY         (VOID *DEST, CONST VOID *SRC, SIZE_T SIZE);
+ VOID      BZERO           (VOID *ELEMENT, SIZE_T SIZE);
+ VOID      *CALLOC         (SIZE_T COUNT, SIZE_T SIZE);
+ VOID      PUT_CHAR_FD     (CHAR CHARACTER, INT FD);
+ VOID      PUT_STR_FD      (CHAR *STRING, INT FD);
+ VOID      PUT_NUMBER_FD   (INT NUMBER, INT FD);
+ VOID      PUT_CHAR        (CHAR CHARACTER);
+ VOID      PUT_STR         (CHAR *STRING);
+ VOID      PUT_NUMBER      (INT NUMBER);
+ INT       STRNCMP         (CONST CHAR *STRING_1, CONST CHAR *STRING_2, SIZE_T SIZE);
+ INT       MEMCMP          (CONST VOID *OBJECT_1, CONST VOID *OBJECT_2, SIZE_T LEN);
+ INT       STRCMP          (CONST CHAR *STRING_1, CONST CHAR *STRING_2);
+ INT       STRLEN          (CONST CHAR *RESTRICT STRING);
+ INT       ATOI            (CONST CHAR *STR);
+ INT       GETCHAR         (VOID);
 
 #endif
