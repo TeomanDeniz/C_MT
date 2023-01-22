@@ -558,8 +558,10 @@ STATIC INLINE INT
 		|| (__)[X] == 'f' || (__)[X] == 'n'\
 		|| (__)[X] == '%')
 		RETURN ((SIGNED INT)(__)[X]);
+
 	IF ((__)[X] == 0)
 		RETURN (0);
+
 	RETURN (-1);
 }
 
