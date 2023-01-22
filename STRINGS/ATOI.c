@@ -15,26 +15,29 @@
 #include	"../#C_MT.h"
 
 INT
-	ATOI(CONST CHAR *STR)
+	ATOI(CONST CHAR *STRING)
 {
 	REGISTER INT (COUNTER) = 0;
 	REGISTER INT   (MINUS) = 1;
 	REGISTER INT     (TMP) = 0;
 
-	WHILE (STR[COUNTER] == ' ' || (STR[COUNTER] >= 9 && STR[COUNTER] <= 13))
+	IF (!STRING)
+		RETURN (0);
+
+	WHILE (STRING[COUNTER] == 13 || (STRING[COUNTER] >= 9 && STRING[COUNTER] <= 13))
 		COUNTER++;
 
-	WHILE (STR[COUNTER] == '+' || STR[COUNTER] == '-')
+	WHILE (STRING[COUNTER] == '+' || STRING[COUNTER] == '-')
 	{
-		IF (STR[COUNTER] == '-')
+		IF (STRING[COUNTER] == '-')
 			MINUS *= -1;
 
 		COUNTER++;
 	}
 
-	WHILE (STR[COUNTER] >= 48 && STR[COUNTER] <= 57)
+	WHILE (STRING[COUNTER] >= '0' && STRING[COUNTER] <= '9')
 	{
-		TMP = (TMP * 10) + (STR[COUNTER] - 48);
+		TMP = (TMP * 10) + (STRING[COUNTER] - 0X30);
 		COUNTER++;
 	}
 
