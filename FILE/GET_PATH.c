@@ -13,6 +13,9 @@
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #include	"../#C_MT.h"
+#include	<stdio.h>/*
+#  sprintf();
+*/
 
 CHAR
 	*GET_PATH(CONST UNSIGNED VOLATILE INT CHOICE)

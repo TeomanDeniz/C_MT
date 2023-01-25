@@ -9,7 +9,7 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2020/07/23 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/01/25 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/01/26 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 
@@ -93,9 +93,9 @@
 #  define           _EOF _eof
 #  define            EOF _eof
 
-#  define STDIN_FILENO  0
-#  define STDOUT_FILENO 1
-#  define STDERR_FILENO 2
+#  define STDIN_FILENO  0 // *
+#  define STDOUT_FILENO 1 // | -> "FD"
+#  define STDERR_FILENO 2 // *
 
 #  define O_APPEND _O_APPEND // Position file pointer to end
 #  define O_BINARY _O_BINARY // Open file in binary mode
@@ -200,7 +200,6 @@
 # define  VA_LIST va_list
 # define  CLOCK_T clock_t
 # define  VFSCANF vfscanf
-# define   MALLOC malloc
 # define   VA_ARG va_arg
 # define   VA_END va_end
 # define    CLOCK clock
@@ -402,7 +401,9 @@
  VOID      PUT_CHAR        (CHAR CHARACTER);
  VOID      PUTCHAR         (CHAR CHARACTER);
  VOID      PUT_STR         (CHAR *STRING);
+# ifndef _WIN32
  VOID      PUTSTR          (CHAR *STRING);
+# endif
  VOID      FREE            (VOID *INPUT);
  INT       STRNCMP         (CONST CHAR *RESTRICT STRING_1, CONST CHAR *RESTRICT STRING_2, CONST SIZE_T SIZE);
  INT       MEMCMP          (CONST VOID *OBJECT_1, CONST VOID *OBJECT_2, REGISTER SIZE_T LEN);
@@ -412,60 +413,5 @@
  INT       PRINTF          (CONST CHAR *(__), ...);
  INT       ATOI            (CONST CHAR *STRING);
  INT       GETCHAR         (VOID);
-
-# define replace_string RELPACE_STRING
-# define  put_number_fd PUT_NUMBER_FD
-# define    put_char_fd PUT_CHAR_FD
-# define     lower_case LOWER_CASE
-# define     put_number PUT_NUMBER
-# define     put_str_fd PUT_STR_FD
-# define     putchar_fd PUTCHAR_FD
-# define     upper_case UPPER_CASE
-# define      printf_fd PRINTF_FD
-# define      putnbr_fd PUTNBR_FD
-# define      putstr_fd PUTSTR_FD
-# define       get_path GET_PATH
-# define       get_line GET_LINE
-# define       put_char PUT_CHAR
-# define       striteri STRITERI
-# define        getchar GETCHAR
-# define        memmove MEMMOVE
-# define        pow_int POW_INT
-# define        put_str PUT_STR
-# define        putchar PUTCHAR
-# define        strjoin STRJOIN
-# define        strlcat STRLCAT
-# define        strlcpy STRLCPY
-# define        strmapi STRMAPI
-# define        strncmp STRNCMP
-# define        strnstr STRNSTR
-# define        strrchr STRRCHR
-# define        strtrim STRTRIM
-# define         calloc CALLOC
-# define         gotoxy GOTOXY
-# define         malloc MALLOC
-# define         memchr MEMCHR
-# define         memcmp MEMCMP
-# define         memcpy MEMCPY
-# define         memset MEMSET
-# define         printf PRINTF
-# define         putnbr PUTNBR
-# define         putstr PUTSTR
-# define         strchr STRCHR
-# define         strcmp STRCMP
-# define         strcpy STRCPY
-# define         strdup STRDUP
-# define         strlen STRLEN
-# define         strstr STRSTR
-# define         substr SUBSTR
-# define          split SPLIT
-# define           atoi ATOI
-# define           free FREE
-# define           gets GETS
-# define           itoa ITOA
-# define            abs ABS
-# define            max MAX
-# define            min MIN
-# define            pow POW
 
 #endif

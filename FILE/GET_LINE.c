@@ -9,7 +9,7 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2023/01/07 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/01/13 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/01/26 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #include	"../#C_MT.h"
@@ -27,12 +27,12 @@ STATIC INLINE CHAR
 		RETURN (0x00);
 
 	IF (CHARACTER == '\0')
-		RETURN ((CHAR *)&STRING[STRLEN(STRING)]);
+		RETURN ((CHAR *) &STRING[STRLEN(STRING)]);
 
 	WHILE (COUNTER[STRING] != '\0')
 	{
 		IF (COUNTER[STRING] == (CHAR) CHARACTER)
-			RETURN ((CHAR *)&STRING[COUNTER]);
+			RETURN ((CHAR *) &STRING[COUNTER]);
 
 		COUNTER++;
 	}
@@ -56,7 +56,7 @@ STATIC INLINE CHAR
 	IF (!STRING_NEWLINE || !BUFFER)
 		RETURN (NULL);
 
-	STRING = MALLOC(SIZEOF(CHAR) * ((STRLEN(STRING_NEWLINE) + STRLEN(BUFFER)) + 1));
+	STRING = (CHAR *) MALLOC(SIZEOF(CHAR) * ((STRLEN(STRING_NEWLINE) + STRLEN(BUFFER)) + 1));
 
 	IF (STRING == NULL)
 		RETURN (NULL);
@@ -124,7 +124,7 @@ STATIC INLINE CHAR
 		RETURN (NULL);
 	}
 
-	STRING = (CHAR *)MALLOC(SIZEOF(CHAR) * (STRLEN(STRING_NEWLINE) - C1 + 1));
+	STRING = (CHAR *) MALLOC(SIZEOF(CHAR) * (STRLEN(STRING_NEWLINE) - C1 + 1));
 
 	IF (!STRING)
 		RETURN (NULL);
@@ -146,7 +146,7 @@ INLINE STATIC CHAR
 	CHAR   *(BUFFER);
 	INT (READ_BYTES) = 1;
 
-	BUFFER = MALLOC((BUFFER_SIZE + 0x1) * SIZEOF(CHAR));
+	BUFFER = (CHAR *) MALLOC((BUFFER_SIZE + 0x1) * SIZEOF(CHAR));
 
 	IF (!BUFFER)
 		RETURN (NULL);
