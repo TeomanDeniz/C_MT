@@ -17,37 +17,50 @@
 
 # define C_MT_H 42
 
-# include	<time.h> /*
+# include <time.h> /*
 # CLOCK();
 # CLOCK_T <VAR_T>;
 */
 
-# include	<fcntl.h> /*
+# include <fcntl.h> /*
+# _OPEN(<FD>, <OPEN_MODE>);
 # OPEN(<FD>, <OPEN_MODE>);
-# CLOSE(<FD>);
 */
 
 # ifdef _WIN32
 
-#  include	<windows.h> /*
+#  include <windows.h> /*
 #  CREATEPROCESS();
 */
 
-#  include	<io.h>/*
-#  _READ( <MODE/FD>, <*CHAR>, <SIZE> );
-#  _WRITE( <MODE/FD>, <*CHAR>, <SIZE> );
-#  _FREAD();
-#  _FWRITE();
-#  _EOF();
-#  _COMMIT();
-#  _CREAT();
+#  include <errno.h>/*
+#  _CLOSE( <FD> );
 */
 
+#  include <io.h>/*
+#  _READ   ( <MODE/FD>, <*CHAR>, <SIZE> );
+#  _WRITE  ( <MODE/FD>, <*CHAR>, <SIZE> );
+#  _CLOSE  ( <FD> );
+#  _FREAD  ();
+#  _COMMIT ();
+#  _FWRITE ();
+#  _CREAT  ();
+#  _EOF    ();
+*/
+
+#  include <process.h>/*
+#  _GETPID();
+*/
+
+#  define         getpid _getpid
+#  define          close _close
 #  define          write _write
 #  define           read _read
 
 #  define         COMMIT _commit
 #  define         FWRITE _fwrite
+#  define         GETPID _getpid
+#  define          CLOSE _close
 #  define          CREAT _creat
 #  define          FREAD _fread
 #  define          WOPEN _wopen
@@ -55,8 +68,10 @@
 #  define           OPEN _open
 #  define           READ _read
 
-#  define        _FWRITE _fwrite
 #  define        _COMMIT _commit
+#  define        _FWRITE _fwrite
+#  define        _GETPID _getpid
+#  define         _CLOSE _close
 #  define         _CREAT _creat
 #  define         _FREAD _fread
 #  define         _WOPEN _wopen
@@ -89,17 +104,31 @@
 # if defined(__unix__) || defined(__linux__) || defined(__MACH__) || defined(__APPLE__) || defined(__ANDROID__)
 
 #  include	<unistd.h>/*
-#  READ( <MODE/FD>, <*CHAR>, <SIZE> );
-#  WRITE( <MODE/FD>, <*CHAR>, <SIZE> );
-#  OPEN();
-#  CLOSE();
-#  FORK();
+#  READ   ( <MODE/FD>, <*CHAR>, <SIZE> );
+#  WRITE  ( <MODE/FD>, <*CHAR>, <SIZE> );
+#  CLOSE  ( <FD> );
+#  GETPID (VOID);
+#  FORK   ();
+#  OPEN   ();
 */
 
+#  define         GETPID getpid
 #  define          CLOSE close
 #  define          WRITE write
 #  define           OPEN open
 #  define           READ read
+
+#  define        _GETPID getpid
+#  define         _CLOSE close
+#  define         _WRITE write
+#  define          _OPEN open
+#  define          _READ read
+
+#  define        _getpid getpid
+#  define         _close close
+#  define         _write write
+#  define          _open open
+#  define          _read read
 
 #  define           FORK fork
 
