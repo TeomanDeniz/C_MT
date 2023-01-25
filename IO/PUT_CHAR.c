@@ -9,7 +9,7 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2022/11/15 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/01/13 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/01/25 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #include	"../#C_MT.h"
@@ -23,5 +23,17 @@ VOID
 VOID
 	PUT_CHAR(CHAR CHARACTER)
 {
-	PUT_CHAR_FD(CHARACTER, 1);
+	WRITE(1, &CHARACTER, 1);
+}
+
+VOID
+	PUTCHAR_FD(CHAR CHARACTER, INT FD)
+{
+	WRITE(FD, &CHARACTER, 1);
+}
+
+VOID
+	PUTCHAR(CHAR CHARACTER)
+{
+	WRITE(1, &CHARACTER, 1);
 }

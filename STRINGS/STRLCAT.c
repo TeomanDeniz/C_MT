@@ -9,13 +9,13 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2022/11/15 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/01/13 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/01/25 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #include	"../#C_MT.h"
 
 SIZE_T
-	STRLCAT(CHAR *DST, CONST CHAR *RESTRICT SRC, SIZE_T DST_SIZE)
+	STRLCAT(CHAR *DST, CONST CHAR *RESTRICT SRC, REGISTER SIZE_T DST_SIZE)
 {
 	REGISTER SIZE_T  (COUNTER) = 0;
 	REGISTER SIZE_T  (DST_LEN) = STRLEN(DST);

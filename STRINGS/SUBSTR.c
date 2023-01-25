@@ -9,13 +9,13 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2023/01/18 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/01/18 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/01/25 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #include	"../#C_MT.h"
 
 CHAR
-	*SUBSTR(CHAR CONST *STRING, UNSIGNED INT START, SIZE_T LEN)
+	*SUBSTR(CHAR CONST *STRING, REGISTER UNSIGNED INT START, REGISTER SIZE_T LEN)
 {
 	CHAR            *(RESULT);
 	REGISTER SIZE_T (COUNTER);

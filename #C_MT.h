@@ -9,7 +9,7 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2020/07/23 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/01/13 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/01/25 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 
@@ -43,33 +43,32 @@
 #  _CREAT();
 */
 
-#  define           read _read
 #  define          write _write
+#  define           read _read
 
-#  define           READ _read
+#  define         COMMIT _commit
+#  define         FWRITE _fwrite
+#  define          CREAT _creat
 #  define          FREAD _fread
-#  define           OPEN _open
 #  define          WOPEN _wopen
 #  define          WRITE _write
-#  define         FWRITE _fwrite
-#  define         COMMIT _commit
-#  define          CREAT _creat
+#  define           OPEN _open
+#  define           READ _read
 
-#  define          _READ _read
-#  define         _FREAD _fread
-#  define          _OPEN _open
-#  define         _WOPEN _wopen
-#  define         _WRITE _write
 #  define        _FWRITE _fwrite
 #  define        _COMMIT _commit
 #  define         _CREAT _creat
+#  define         _FREAD _fread
+#  define         _WOPEN _wopen
+#  define         _WRITE _write
+#  define          _OPEN _open
+#  define          _READ _read
 
+#  define CREATE_PROCESS CreateProcess
+#  define  CREATEPROCESS CreateProcess
+#  define         CREATE _creat
 #  define           _EOF _eof
 #  define            EOF _eof
-#  define         CREATE _creat
-#  define  CREATEPROCESS CreateProcess
-#  define CREATE_PROCESS CreateProcess
-#  define           FORK CreateProcess
 
 #  define STDIN_FILENO  0
 #  define STDOUT_FILENO 1
@@ -77,13 +76,13 @@
 
 #  define O_APPEND _O_APPEND // Position file pointer to end
 #  define O_BINARY _O_BINARY // Open file in binary mode
-#  define  O_CREAT _O_CREAT  // Create file if it does not exist
-#  define   O_EXCL _O_EXCL   // Used with O_CREAT, returns an error if file exists
 #  define O_RDONLY _O_RDONLY // Open file for reading only
+#  define O_WRONLY _O_WRONLY // Opens file for writing only
+#  define  O_CREAT _O_CREAT  // Create file if it does not exist
+#  define  O_TRUNC _O_TRUNC  // Truncates existing file
+#  define   O_EXCL _O_EXCL   // Used with O_CREAT, returns an error if file exists
 #  define   O_RDWR _O_RDWR   // Open file for reading and writing
 #  define   O_TEXT _O_TEXT   // Open file in text mode
-#  define  O_TRUNC _O_TRUNC  // Truncates existing file
-#  define O_WRONLY _O_WRONLY // Opens file for writing only
 
 # endif
 
@@ -97,13 +96,11 @@
 #  FORK();
 */
 
-#  define           READ read
-#  define           OPEN open
-#  define          WRITE write
 #  define          CLOSE close
+#  define          WRITE write
+#  define           OPEN open
+#  define           READ read
 
-#  define  CREATEPROCESS fork
-#  define CREATE_PROCESS fork
 #  define           FORK fork
 
 # endif
@@ -113,7 +110,6 @@
 # FWRITE();
 # FOPEN();
 # FCLOSE();
-# PRINTF();
 */
 
 # include	<stdlib.h> /*
@@ -148,25 +144,28 @@
 #  define  __VOLATILE__ __volatile__
 # endif
 
-# undef INT
-# define      INT int
-# define    SHORT short
+# ifdef INT
+#  undef INT
+# endif
+
+# define REGISTER register
+# define RESTRICT restrict
 # define UNSIGNED unsigned
+# define VOLATILE volatile
+# define   DOUBLE double
+# define   EXTERN extern
 # define   SIGNED signed
 # define   STATIC static
-# define   EXTERN extern
-# define     VOID void
+# define   INLINE inline
 # define    CONST const
+# define    FLOAT float
 # define    INT16 short
-# define VOLATILE volatile
+# define    SHORT short
+# define     AUTO auto
 # define     CHAR char
 # define     LONG long
-# define    FLOAT float
-# define   DOUBLE double
-# define     AUTO auto
-# define REGISTER register
-# define   INLINE inline
-# define RESTRICT restrict
+# define     VOID void
+# define      INT int
 # ifdef _WIN64
 #  define SSIZE_T __int64
 #  define __INT64 __int64
@@ -175,37 +174,37 @@
 # endif
 # define   SIZE_T unsigned int
 
-# define   STRUCT strcut
 # define  TYPEDEF typedef
+# define   STRUCT strcut
 # define    UNION union
 # define     ENUM enum
 
-# define      FOR for
-# define    WHILE while
-# define       DO do
-# define   RETURN return
-# define   TYPEOF typeof
-# define       IF if
-# define     ELSE else
 # define CONTINUE continue
-# define    BREAK break
-# define   SWITCH switch
-# define     CASE case
 # define  DEFAULT default
+# define   RETURN return
+# define   SWITCH switch
+# define   TYPEOF typeof
+# define    BREAK break
+# define    WHILE while
+# define     ELSE else
+# define     CASE case
 # define     GOTO goto
+# define      FOR for
+# define       DO do
+# define       IF if
 
-# define  VA_LIST va_list
 # define VA_START va_start
-# define   VA_END va_end
-# define   VA_ARG va_arg
 # define  VA_COPY va_copy
+# define  VA_LIST va_list
+# define  CLOCK_T clock_t
 # define  VFSCANF vfscanf
+# define   MALLOC malloc
+# define   VA_ARG va_arg
+# define   VA_END va_end
+# define    CLOCK clock
 # define    SCANF scanf
 # define     EXIT exit
-# define   MALLOC malloc
 # define     FREE free
-# define    CLOCK clock
-# define  CLOCK_T clock_t
 # ifndef ERROR
 #  define ERROR 0
 # endif
@@ -219,27 +218,27 @@
 #  define FALSE 0
 # endif
 
-# define     ACCESS _access
-# define       DUP2 _dup2
-# define     EXECVE _execve
 # define FTRUNCASTE _chsize
-# define     UNLINK _unlink
+# define     ACCESS _access
+# define     EXECVE _execve
 # define     FILENO _fileno
 # define     GETCWD _getcwd
-# define      CHDIR _chdir
 # define     ISATTY _isatty
+# define     UNLINK _unlink
+# define      CHDIR _chdir
 # define      LSEEK _lseek
+# define       DUP2 _dup2
 
 # define    _ACCESS _access
-# define      _DUP2 _dup2
-# define    _EXECVE _execve
 # define    _CHSIZE _chsize
-# define    _UNLINK _unlink
+# define    _EXECVE _execve
 # define    _FILENO _fileno
 # define    _GETCWD _getcwd
-# define     _CHDIR _chdir
 # define    _ISATTY _isatty
+# define    _UNLINK _unlink
+# define     _CHDIR _chdir
 # define     _LSEEK _lseek
+# define      _DUP2 _dup2
 
 # define    SRANDOM srand
 # define     RANDOM rand
@@ -315,11 +314,11 @@
 
  LONG LONG POW_INT         (REGISTER LONG LONG NUMBER, REGISTER SIGNED INT POWER);
  DOUBLE    POW             (DOUBLE NUMBER, REGISTER SIGNED INT POWER);
- SIZE_T    STRLCAT         (CHAR *DST, CONST CHAR *RESTRICT SRC, SIZE_T DST_SIZE);
- SIZE_T    STRLCPY         (CHAR *DST, CONST CHAR *SRC, SIZE_T SIZE);
+ SIZE_T    STRLCAT         (CHAR *DST, CONST CHAR *RESTRICT SRC, REGISTER SIZE_T DST_SIZE);
+ SIZE_T    STRLCPY         (CHAR *DST, CONST CHAR *SRC, REGISTER SIZE_T SIZE);
+ CHAR      *SUBSTR         (CHAR CONST *STRING, REGISTER UNSIGNED INT START, REGISTER SIZE_T LEN);
  CHAR      *STRNSTR        (CONST CHAR *HAYSTACK, CONST CHAR *RESTRICT NEEDLE, CONST SIZE_T LEN);
  CHAR      *STRMAPI        (CHAR CONST *STRING, CHAR (*FUNCT)(UNSIGNED INT, CHAR));
- CHAR      *SUBSTR         (CHAR CONST *STRING, UNSIGNED INT START, SIZE_T LEN);
  CHAR      *STRTRIM        (CHAR CONST *STRING_1, CHAR CONST *STRING_2);
  CHAR      *STRCHR         (CONST CHAR *STRING, REGISTER INT CHARACTER);
  CHAR      *STRJOIN        (CHAR CONST *STRING_1, CONST CHAR *STRING_2);
@@ -329,32 +328,88 @@
  CHAR      **SPLIT         (CHAR CONST *STRING, CHAR CHARACTER);
  CHAR      *RELPACE_STRING (CHAR* STRING, CHAR* OLD, CHAR* NEW);
  CHAR      *STRRCHR        (CONST CHAR *STRING, INT CHARACTER);
+ CHAR      UPPER_CASE      (REGISTER CHAR CHARACTER);
+ CHAR      LOWER_CASE      (REGISTER CHAR CHARACTER);
  CHAR      *ITOA           (REGISTER INT NUMBER);
  CHAR      *STRDUP         (CONST CHAR *STRING);
- CHAR      UPPER_CASE      (CHAR CHARACTER);
- CHAR      LOWER_CASE      (CHAR CHARACTER);
  CHAR      *GETS           (CHAR *STRING);
  CHAR      *GET_LINE       (INT FD);
+ VOID      *MEMCHR         (CONST VOID *OBJECT, REGISTER INT CHARACTER, REGISTER SIZE_T LEN);
+ VOID      *MEMSET         (VOID *OBJECT, REGISTER INT INPUT, REGISTER SIZE_T SIZE);
  VOID      *MEMMOVE        (VOID *DST, CONST VOID *RESTRICT SRC, CONST SIZE_T LEN);
  VOID      STRITERI        (CHAR *STRING, VOID (*FUNCTION)(UNSIGNED INT, CHAR *));
- VOID      *MEMSET         (VOID *OBJECT, REGISTER INT INPUT, SIZE_T SIZE);
- VOID      *MEMCHR         (CONST VOID *OBJECT, INT CHARACTER, SIZE_T LEN);
- VOID      *MEMCPY         (VOID *DEST, CONST VOID *SRC, SIZE_T SIZE);
- VOID      BZERO           (VOID *ELEMENT, SIZE_T SIZE);
- VOID      *CALLOC         (SIZE_T COUNT, SIZE_T SIZE);
+ VOID      *MEMCPY         (VOID *DEST, CONST VOID *SRC, REGISTER SIZE_T SIZE);
+ VOID      *CALLOC         (REGISTER SIZE_T COUNT, REGISTER SIZE_T SIZE);
+ VOID      PUT_NUMBER_FD   (REGISTER INT NUMBER, INT FD);
+ VOID      PUTNBR_FD       (REGISTER INT NUMBER, INT FD);
  VOID      PUT_CHAR_FD     (CHAR CHARACTER, INT FD);
+ VOID      PUTCHAR_FD      (CHAR CHARACTER, INT FD);
  VOID      PUT_STR_FD      (CHAR *STRING, INT FD);
- VOID      PUT_NUMBER_FD   (INT NUMBER, INT FD);
+ VOID      PUTSTR_FD       (CHAR *STRING, INT FD);
+ VOID      PUT_NUMBER      (REGISTER INT NUMBER);
+ VOID      PUTNBR          (REGISTER INT NUMBER);
  VOID      PUT_CHAR        (CHAR CHARACTER);
+ VOID      PUTCHAR         (CHAR CHARACTER);
  VOID      PUT_STR         (CHAR *STRING);
- VOID      PUT_NUMBER      (INT NUMBER);
- INT       STRNCMP         (CONST CHAR *STRING_1, CONST CHAR *STRING_2, SIZE_T SIZE);
- INT       MEMCMP          (CONST VOID *OBJECT_1, CONST VOID *OBJECT_2, SIZE_T LEN);
+ VOID      PUTSTR          (CHAR *STRING);
+ INT       STRNCMP         (CONST CHAR *RESTRICT STRING_1, CONST CHAR *RESTRICT STRING_2, CONST SIZE_T SIZE);
+ INT       MEMCMP          (CONST VOID *OBJECT_1, CONST VOID *OBJECT_2, REGISTER SIZE_T LEN);
  INT       STRCMP          (CONST CHAR *STRING_1, CONST CHAR *STRING_2);
  INT       PRINTF_FD       (INT FD, CONST CHAR *(__), ...);
  INT       STRLEN          (CONST CHAR *RESTRICT STRING);
  INT       PRINTF          (CONST CHAR *(__), ...);
  INT       ATOI            (CONST CHAR *STRING);
  INT       GETCHAR         (VOID);
+
+# define replace_string RELPACE_STRING
+# define  put_number_fd PUT_NUMBER_FD
+# define    put_char_fd PUT_CHAR_FD
+# define     lower_case LOWER_CASE
+# define     put_number PUT_NUMBER
+# define     put_str_fd PUT_STR_FD
+# define     putchar_fd PUTCHAR_FD
+# define     upper_case UPPER_CASE
+# define      printf_fd PRINTF_FD
+# define      putnbr_fd PUTNBR_FD
+# define      putstr_fd PUTSTR_FD
+# define       get_path GET_PATH
+# define       get_line GET_LINE
+# define       put_char PUT_CHAR
+# define       striteri STRITERI
+# define        getchar GETCHAR
+# define        memmove MEMMOVE
+# define        pow_int POW_INT
+# define        put_str PUT_STR
+# define        putchar PUTCHAR
+# define        strjoin STRJOIN
+# define        strlcat STRLCAT
+# define        strlcpy STRLCPY
+# define        strmapi STRMAPI
+# define        strncmp STRNCMP
+# define        strnstr STRNSTR
+# define        strrchr STRRCHR
+# define        strtrim STRTRIM
+# define         calloc CALLOC
+# define         memchr MEMCHR
+# define         memcmp MEMCMP
+# define         memcpy MEMCPY
+# define         memset MEMSET
+# define         printf PRINTF
+# define         putnbr PUTNBR
+# define         putstr PUTSTR
+# define         strchr STRCHR
+# define         strcmp STRCMP
+# define         strcpy STRCPY
+# define         strdup STRDUP
+# define         strlen STRLEN
+# define         strstr STRSTR
+# define         substr SUBSTR
+# define          bzero BZERO
+# define          split SPLIT
+# define           atoi ATOI
+# define           gets GETS
+# define           itoa ITOA
+# define            abs ABS
+# define            pow POW
 
 #endif

@@ -9,13 +9,13 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2023/01/18 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/01/18 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/01/25 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #include	"../#C_MT.h"
 
 VOID
-	*MEMCHR(CONST VOID *OBJECT, INT CHARACTER, SIZE_T LEN)
+	*MEMCHR(CONST VOID *OBJECT, REGISTER INT CHARACTER, REGISTER SIZE_T LEN)
 {
 	REGISTER SIZE_T (COUNTER) = 0;
 	UNSIGNED CHAR   *(BUFFER) = (UNSIGNED CHAR *)OBJECT;
