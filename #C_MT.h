@@ -27,10 +27,25 @@
 # OPEN(<FD>, <OPEN_MODE>);
 */
 
+# include <stdbool.h>/*
+#  BOOL BOOLEAN;
+*/
+
+# include <stdarg.h> /*
+#  va_list  V_ARG;
+#  va_start (V_ARG, <VAR_ARG>);
+#  va_arg   (V_ARG, KEYWORD);
+#  va_end   (V_ARG);
+#  va_copy  (V_ARG2, V_ARG);
+*/
+
 # ifdef _WIN32
 
 #  include <windows.h> /*
-#  CREATEPROCESS();
+#  COORD coord;
+#  SetConsoleCursorPosition();
+#  CreateProcess();
+#  GetStdHandle();
 */
 
 #  include <errno.h>/*
@@ -58,29 +73,22 @@
 #  define           read _read
 
 #  define         COMMIT _commit
-#  define         FWRITE _fwrite
 #  define         GETPID _getpid
 #  define          CLOSE _close
 #  define          CREAT _creat
-#  define          FREAD _fread
-#  define          WOPEN _wopen
 #  define          WRITE _write
 #  define           OPEN _open
 #  define           READ _read
 
 #  define        _COMMIT _commit
-#  define        _FWRITE _fwrite
 #  define        _GETPID _getpid
 #  define         _CLOSE _close
 #  define         _CREAT _creat
-#  define         _FREAD _fread
-#  define         _WOPEN _wopen
 #  define         _WRITE _write
 #  define          _OPEN _open
 #  define          _READ _read
 
 #  define CREATE_PROCESS CreateProcess
-#  define  CREATEPROCESS CreateProcess
 #  define         CREATE _creat
 #  define           _EOF _eof
 #  define            EOF _eof
@@ -98,6 +106,9 @@
 #  define   O_EXCL _O_EXCL   // Used with O_CREAT, returns an error if file exists
 #  define   O_RDWR _O_RDWR   // Open file for reading and writing
 #  define   O_TEXT _O_TEXT   // Open file in text mode
+
+#  define SET_CONSOLE_CURSOR_POSITION SetConsoleCursorPosition
+#  define              GET_STD_HADNLE GetStdHandle
 
 # endif
 
@@ -134,45 +145,6 @@
 
 # endif
 
-# include	<stdio.h> /*
-# FREAD();
-# FWRITE();
-# FOPEN();
-# FCLOSE();
-*/
-
-# include	<stdlib.h> /*
-# MALLOC(INT <VAR>);
-# FREE(*VOID);
-# SIZE_T <VAR>;
-# SSIZE_T <VAR>;
-*/
-
-# include	<stdarg.h> /*
-# VA_LIST V_ARG;
-# VA_START(V_ARG, <VAR_ARG>);
-# VA_ARG(V_ARG, KEYWORD);
-# VA_END(V_ARG);
-# VA_COPY(V_ARG2, V_ARG);
-*/
-
-# ifndef __GNUC__
-#  ifdef __volatile__
-#   define __VOLATILE__ __volatile__
-#  else
-#   define __VOLATILE__ volatile
-#   define __volatile__ volatile
-#  endif
-#  define       __asm__ asm
-#  define       __ASM__ asm
-#  define           ASM asm
-# else
-#  define           asm __asm__
-#  define           ASM __asm__
-#  define       __ASM__ __asm__
-#  define  __VOLATILE__ __volatile__
-# endif
-
 # ifdef INT
 #  undef INT
 # endif
@@ -206,6 +178,7 @@
 # define  TYPEDEF typedef
 # define   STRUCT strcut
 # define    UNION union
+# define     BOOL bool
 # define     ENUM enum
 
 # define CONTINUE continue
@@ -234,15 +207,40 @@
 # define    SCANF scanf
 # define     EXIT exit
 # define     FREE free
-# ifndef ERROR
-#  define ERROR 0
+
+# ifndef __GNUC__
+#  ifdef __volatile__
+#   define __VOLATILE__ __volatile__
+#  else
+#   define __VOLATILE__ volatile
+#   define __volatile__ volatile
+#  endif
+#  define       __asm__ asm
+#  define       __ASM__ asm
+#  define           ASM asm
+# else
+#  define           asm __asm__
+#  define           ASM __asm__
+#  define       __ASM__ __asm__
+#  define  __VOLATILE__ __volatile__
 # endif
+
 # ifndef NULL
 #  define NULL ((VOID *)0)
 # endif
+
 # ifndef TRUE
 #  define TRUE 1
 # endif
+
+# ifndef true
+#  define true 1
+# endif
+
+# ifndef false
+#  define false 0
+# endif
+
 # ifndef FALSE
 #  define FALSE 0
 # endif
@@ -303,10 +301,10 @@
 #  define SIZE_T_MAX 4294967294
 # endif
 # ifndef SSIZE_T_MAX
-#  define SSIZE_T_MAX 2147483647
+#  define SSIZE_T_MAX 9223372036854775807
 # endif
 # ifndef SSIZE_T_MIN
-#  define SSIZE_T_MIN -2147483648
+#  define SSIZE_T_MIN -9223372036854775808
 # endif
 # ifndef LONG_MAX
 #  define LONG_MAX 9223372036854775807
@@ -333,13 +331,35 @@
 #  define ULONG_MAX 18446744073709551615
 # endif
 
+# define __NOT_INITIALIZED_PROPERLY__ 0xC0000142 // The application failed to initialize properly. Indicates that the application has been launched on a Desktop to which the current user has no access rights. Another possible cause is that either gdi32.dll or user32.dll has failed to initialize.
+# define        __PROGRAM_NOT_FOUND__ 9009 //////// Program is not recognized as an internal or external command, operable program or batch file. Indicates that command, application name or path has been misspelled when configuring the Action.
+# define           __FILE_NOT_FOUND__ 2 /////////// The system cannot find the file specified. Indicates that the file cannot be found in specified location.
+# define           __PATH_NOT_FOUND__ 3 /////////// The system cannot find the path specified. Indicates that the specified path cannot be found.
+# define            __ACCESS_DENIED__ 5 /////////// Access is denied. Indicates that user has no access right to specified resource.
+# define            __OUT_OF_MEMORY__ 0xC0000017 // Not enough virtual memory is available.
+# define                  __SUCCESS__ 0 /////////// Program successfully completed.
+# define                   __CTRL_C__ 0xC000013A // The application terminated as a result of a CTRL+C. Indicates that the application has been terminated either by the user's keyboard input CTRL+C or CTRL+Break or closing command prompt window.
+# define                     __FAIL__ 1 /////////// Program fail, incorrect function or indicates that Action has attempted to execute non-recognized command in Windows command prompt cmd.exe.
+
 # define MAIN main
 # define ABS(__IN_A__) (__IN_A__ < 0 ? __IN_A__ * -1 : __IN_A__)
 # define SIZEOF(__IN_S__) \
-	({\
-		TYPEOF(__IN_S__) __OUT_S__;\
-		(CHAR*) (&__OUT_S__+1) - (CHAR*) (&__OUT_S__);\
-	})
+    ({\
+        TYPEOF(__IN_S__) __OUT_S__;\
+        (CHAR*) (&__OUT_S__+1) - (CHAR*) (&__OUT_S__);\
+    })
+# define MAX(__A_MAX__, __B_MAX__) \
+    ({\
+        TYPEOF (__A_MAX__) __A_MAX2__ = (__A_MAX__);\
+        TYPEOF (__B_MAX__) __B_MAX2__ = (__B_MAX__);\
+        __A_MAX2__ > __B_MAX2__ ? __A_MAX2__ : __B_MAX2__;\
+    })
+# define MIN(__A_MIN__, __B_MIN__) \
+    ({\
+        TYPEOF (__A_MIN__) __A_MIN2__ = (__A_MIN__);\
+        TYPEOF (__B_MIN__) __B_MIN2__ = (__B_MIN__);\
+        __A_MIN2__ < __B_MIN2__ ? __A_MIN2__ : __B_MIN2__;\
+    })
 
  LONG LONG POW_INT         (REGISTER LONG LONG NUMBER, REGISTER SIGNED INT POWER);
  DOUBLE    POW             (DOUBLE NUMBER, REGISTER SIGNED INT POWER);
@@ -369,8 +389,10 @@
  VOID      STRITERI        (CHAR *STRING, VOID (*FUNCTION)(UNSIGNED INT, CHAR *));
  VOID      *MEMCPY         (VOID *DEST, CONST VOID *SRC, REGISTER SIZE_T SIZE);
  VOID      *CALLOC         (REGISTER SIZE_T COUNT, REGISTER SIZE_T SIZE);
+ VOID      GOTOXY          (REGISTER INT X, REGISTER INT Y);
  VOID      PUT_NUMBER_FD   (REGISTER INT NUMBER, INT FD);
  VOID      PUTNBR_FD       (REGISTER INT NUMBER, INT FD);
+ VOID      *MALLOC         (REGISTER UNSIGNED INT SIZE);
  VOID      PUT_CHAR_FD     (CHAR CHARACTER, INT FD);
  VOID      PUTCHAR_FD      (CHAR CHARACTER, INT FD);
  VOID      PUT_STR_FD      (CHAR *STRING, INT FD);
@@ -381,6 +403,7 @@
  VOID      PUTCHAR         (CHAR CHARACTER);
  VOID      PUT_STR         (CHAR *STRING);
  VOID      PUTSTR          (CHAR *STRING);
+ VOID      FREE            (VOID *INPUT);
  INT       STRNCMP         (CONST CHAR *RESTRICT STRING_1, CONST CHAR *RESTRICT STRING_2, CONST SIZE_T SIZE);
  INT       MEMCMP          (CONST VOID *OBJECT_1, CONST VOID *OBJECT_2, REGISTER SIZE_T LEN);
  INT       STRCMP          (CONST CHAR *STRING_1, CONST CHAR *STRING_2);
@@ -419,6 +442,8 @@
 # define        strrchr STRRCHR
 # define        strtrim STRTRIM
 # define         calloc CALLOC
+# define         gotoxy GOTOXY
+# define         malloc MALLOC
 # define         memchr MEMCHR
 # define         memcmp MEMCMP
 # define         memcpy MEMCPY
@@ -433,12 +458,14 @@
 # define         strlen STRLEN
 # define         strstr STRSTR
 # define         substr SUBSTR
-# define          bzero BZERO
 # define          split SPLIT
 # define           atoi ATOI
+# define           free FREE
 # define           gets GETS
 # define           itoa ITOA
 # define            abs ABS
+# define            max MAX
+# define            min MIN
 # define            pow POW
 
 #endif
