@@ -9,7 +9,7 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2023/01/13 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/01/22 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/01/27 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #include	"../#C_MT.h"
@@ -471,9 +471,10 @@ STATIC INLINE VOID
 }
 
 STATIC INLINE VOID
-	PF__S(CHAR *STRING, INT *FLAGS)
+	PF__S(CHAR *__STRING__, INT *FLAGS)
 {
-	REGISTER INT (COUNTER) = 0;
+	REGISTER INT  (COUNTER) = 0;
+	CHAR          *(STRING) = __STRING__;
 
 	IF (!STRING)
 	{
@@ -591,9 +592,9 @@ STATIC INLINE INT
 }
 
 STATIC INLINE INT
-	GET_STAR(INT *FLAGS, VA_LIST V_ARGS)
+	GET_STAR(INT *FLAGS, VA_LIST *VA_ARGS)
 {
-	REGISTER INT (STAR_VALUE) = VA_ARG(V_ARGS, INT);
+	REGISTER INT (STAR_VALUE) = VA_ARG(*VA_ARGS, INT);
 
 	IF (STAR_VALUE < 0)
 		FLAGS['-'] = 1;
@@ -632,12 +633,12 @@ STATIC INLINE VOID
 }
 
 STATIC INLINE VOID
-	DOT_CHECKER(CONST CHAR *(__), INT *X, INT *FLAGS, VA_LIST V_ARGS)
+	DOT_CHECKER(CONST CHAR *(__), INT *X, INT *FLAGS, VA_LIST *VA_ARGS)
 {
 	*X += 1;
 	IF ((__)[*X] == '*')
 	{
-		FLAGS['.'] = GET_STAR(FLAGS, V_ARGS);
+		FLAGS['.'] = GET_STAR(FLAGS, VA_ARGS);
 		*X += 1;
 		RETURN ;
 	}
@@ -652,7 +653,7 @@ STATIC INLINE VOID
 }
 
 STATIC INLINE VOID
-	PF_FLAG_COLLECTOR(CONST CHAR *(__), INT *X, INT *FLAGS, VA_LIST V_ARGS)
+	PF_FLAG_COLLECTOR(CONST CHAR *(__), INT *X, INT *FLAGS, VA_LIST *VA_ARGS)
 {
 	REGISTER INT (FLAG) = 0;
 
@@ -668,12 +669,12 @@ STATIC INLINE VOID
 
 		IF (FLAG == '*')
 		{
-			FLAGS[2] = GET_STAR(FLAGS, V_ARGS);
+			FLAGS[2] = GET_STAR(FLAGS, VA_ARGS);
 			*X += 1;
 		}
 
 		IF (FLAG == '.')
-			DOT_CHECKER((__), X, FLAGS, V_ARGS);
+			DOT_CHECKER((__), X, FLAGS, VA_ARGS);
 
 		IF (FLAG >= '1' && FLAG <= '9')
 			MARGIN_CHECKER((__), X, FLAGS);
@@ -683,42 +684,42 @@ STATIC INLINE VOID
 }
 
 STATIC INLINE VOID
-	PF_DO_COMMAND(VA_LIST V_ARGS, CONST CHAR *(__), INT X, INT *FLAGS)
+	PF_DO_COMMAND(VA_LIST *VA_ARGS, CONST CHAR *(__), INT X, INT *FLAGS)
 {
 	IF ((__)[X] == 's')
-		PF__S(VA_ARG(V_ARGS, CHAR *), FLAGS);
+		PF__S(VA_ARG(*VA_ARGS, CHAR *), FLAGS);
 	ELSE IF ((__)[X] == 'c')
-		PF__C(VA_ARG(V_ARGS, INT), FLAGS);
+		PF__C(VA_ARG(*VA_ARGS, INT), FLAGS);
 	ELSE IF ((__)[X] == 'd' || (__)[X] == 'i')
-		PF__D(VA_ARG(V_ARGS, INT), FLAGS);
+		PF__D(VA_ARG(*VA_ARGS, INT), FLAGS);
 	ELSE IF ((__)[X] == 'p')
-		PF__P(VA_ARG(V_ARGS, UNSIGNED LONG LONG), FLAGS);
+		PF__P(VA_ARG(*VA_ARGS, UNSIGNED LONG LONG), FLAGS);
 	ELSE IF ((__)[X] == 'u')
-		PF__U(VA_ARG(V_ARGS, UNSIGNED INT), FLAGS);
+		PF__U(VA_ARG(*VA_ARGS, UNSIGNED INT), FLAGS);
 	ELSE IF ((__)[X] == 'x' || (__)[X] == 'X')
-		PF__X(VA_ARG(V_ARGS, UNSIGNED INT), (__)[X], FLAGS);
+		PF__X(VA_ARG(*VA_ARGS, UNSIGNED INT), (__)[X], FLAGS);
 	ELSE IF ((__)[X] == 'o')
-		PF__O(VA_ARG(V_ARGS, UNSIGNED INT), FLAGS);
+		PF__O(VA_ARG(*VA_ARGS, UNSIGNED INT), FLAGS);
 	ELSE IF ((__)[X] == 'b')
-		PF__B(VA_ARG(V_ARGS, UNSIGNED INT), FLAGS);
+		PF__B(VA_ARG(*VA_ARGS, UNSIGNED INT), FLAGS);
 	ELSE IF ((__)[X] == '%')
 		PF__PERC(FLAGS);
 	ELSE IF ((__)[X] == 'f')
-		PF__F(VA_ARG(V_ARGS, DOUBLE), FLAGS);
+		PF__F(VA_ARG(*VA_ARGS, DOUBLE), FLAGS);
 	ELSE IF ((__)[X] == 'n')
-		PF__N(VA_ARG(V_ARGS, INT *), FLAGS);
+		PF__N(VA_ARG(*VA_ARGS, INT *), FLAGS);
 }
 
 STATIC INLINE INT
-	PF_PERC(CONST CHAR *(__), INT X, VA_LIST V_ARGS, INT *FLAGS)
+	PF_PERC(CONST CHAR *(__), INT X, VA_LIST *VA_ARGS, INT *FLAGS)
 {
 	REGISTER INT (TEST) = PF_IS_FLAG_VALID((__), (X + 1), 1, FLAGS);
 
-	PF_FLAG_COLLECTOR((__), &X, FLAGS, V_ARGS);
+	PF_FLAG_COLLECTOR((__), &X, FLAGS, VA_ARGS);
 	IF (TEST != 0 && TEST != -1)
 	{
 		X++;
-		PF_DO_COMMAND(V_ARGS, (__), (X - 1), FLAGS);
+		PF_DO_COMMAND(VA_ARGS, (__), (X - 1), FLAGS);
 	}
 
 	IF (TEST == -1)
@@ -731,18 +732,18 @@ STATIC INLINE INT
 INT
 	PRINTF(CONST CHAR *(__), ...)
 {
-	INT      (FLAGS)[256];
-	VA_LIST (V_ARGS);
-	REGISTER INT (X) = PF_SET_FLAGS(FLAGS);
+	INT        (FLAGS)[256];
+	VA_LIST (VA_ARGS);
+	REGISTER INT   (X) = PF_SET_FLAGS(FLAGS);
 
 	FLAGS[1] = 0;
 	FLAGS[0] = 1;
-	VA_START(V_ARGS, (__));
+	VA_START(VA_ARGS, (__));
 	WHILE ((__)[X] != '\0')
 	{
 		IF ((__)[X] == '%')
 		{
-			X = PF_PERC((__), X, V_ARGS, FLAGS);
+			X = PF_PERC((__), X, &VA_ARGS, FLAGS);
 			IF (X == -1 || (__)[X] == '\0' || (__)[X - 1] == '\0')
 				BREAK ;
 
@@ -757,25 +758,25 @@ INT
 		X++;
 	}
 
-	VA_END(V_ARGS);
+	VA_END(VA_ARGS);
 	RETURN (FLAGS[1]);
 }
 
 INT
 	PRINTF_FD(INT FD, CONST CHAR *(__), ...)
 {
-	INT      (FLAGS)[256];
-	VA_LIST (V_ARGS);
-	REGISTER INT (X) = PF_SET_FLAGS(FLAGS);
+	INT        (FLAGS)[256];
+	VA_LIST (VA_ARGS);
+	REGISTER INT   (X) = PF_SET_FLAGS(FLAGS);
 
 	FLAGS[1] = 0;
 	FLAGS[0] = FD;
-	VA_START(V_ARGS, (__));
+	VA_START(VA_ARGS, (__));
 	WHILE ((__)[X] != '\0')
 	{
 		IF ((__)[X] == '%')
 		{
-			X = PF_PERC((__), X, V_ARGS, FLAGS);
+			X = PF_PERC((__), X, &VA_ARGS, FLAGS);
 			IF (X == -1 || (__)[X] == '\0' || (__)[X - 1] == '\0')
 				BREAK ;
 
@@ -790,6 +791,6 @@ INT
 		X++;
 	}
 
-	VA_END(V_ARGS);
+	VA_END(VA_ARGS);
 	RETURN (FLAGS[1]);
 }
