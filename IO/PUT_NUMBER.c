@@ -9,13 +9,13 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2022/11/15 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/01/25 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/01/30 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #include	"../#C_MT.h"
 
 VOID
-	PUT_NUMBER_FD(REGISTER INT NUMBER, INT FD)
+	PUT_NUMBER_FD(REGISTER INT NUMBER, REGISTER INT FD)
 {
 	REGISTER LONG (LONG_NUMBER) = (LONG)NUMBER;
 
@@ -39,16 +39,4 @@ VOID
 	PUT_NUMBER(REGISTER INT NUMBER)
 {
 	PUT_NUMBER_FD(NUMBER, 1);
-}
-
-VOID
-	PUTNBR(REGISTER INT NUMBER)
-{
-	PUT_NUMBER_FD(NUMBER, 1);
-}
-
-VOID
-	PUTNBR_FD(REGISTER INT NUMBER, INT FD)
-{
-	PUT_NUMBER_FD(NUMBER, FD);
 }

@@ -9,7 +9,7 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2020/07/23 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/01/26 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/01/30 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 
@@ -27,16 +27,22 @@
 # OPEN(<FD>, <OPEN_MODE>);
 */
 
-# include <stdbool.h>/*
-#  BOOL BOOLEAN;
+# include <stdbool.h> /*
+# BOOL BOOLEAN;
 */
 
 # include <stdarg.h> /*
-#  va_list  V_ARG;
-#  va_start (V_ARG, <VAR_ARG>);
-#  va_arg   (V_ARG, KEYWORD);
-#  va_end   (V_ARG);
-#  va_copy  (V_ARG2, V_ARG);
+# VA_LIST  VA_ARGS;
+# VA_START (VA_ARGS, <VAR_ARG>);
+# VA_ARG   (VA_ARGS, KEYWORD);
+# VA_END   (VA_ARGS);
+# VA_COPY  (VA_ARGS2, VA_ARGS);
+*/
+
+# include <stdlib.h> /*
+# EXIT(INT ERRORLEVEL);
+# malloc(size_t <size>);
+# free(void *<var>);
 */
 
 # ifdef _WIN32
@@ -119,26 +125,22 @@
 #  WRITE  ( <MODE/FD>, <*CHAR>, <SIZE> );
 #  CLOSE  ( <FD> );
 #  GETPID (VOID);
-#  FORK   ();
-#  OPEN   ();
+#  FORK   (VOID);
 */
 
 #  define         GETPID getpid
 #  define          CLOSE close
 #  define          WRITE write
-#  define           OPEN open
 #  define           READ read
 
 #  define        _GETPID getpid
 #  define         _CLOSE close
 #  define         _WRITE write
-#  define          _OPEN open
 #  define          _READ read
 
 #  define        _getpid getpid
 #  define         _close close
 #  define         _write write
-#  define          _open open
 #  define          _read read
 
 #  define           FORK fork
@@ -172,6 +174,8 @@
 #  define __INT64 __int64
 # else
 #  define SSIZE_T long
+#  define __INT64 long
+#  define __int64 long
 # endif
 # define   SIZE_T unsigned int
 
@@ -199,13 +203,12 @@
 # define  VA_COPY va_copy
 # define  VA_LIST va_list
 # define  CLOCK_T clock_t
-# define  VFSCANF vfscanf
 # define   VA_ARG va_arg
 # define   VA_END va_end
+# define    _OPEN open
 # define    CLOCK clock
-# define    SCANF scanf
 # define     EXIT exit
-# define     FREE free
+# define     OPEN open
 
 # ifndef __GNUC__
 #  ifdef __volatile__
@@ -296,13 +299,13 @@
 #  define INT_MAX 2147483647
 # endif
 # ifndef INT_MIN
-#  define INT_MIN -2147483648
+#  define INT_MIN (-2147483648)
 # endif
 # ifndef CHAR_MAX
 #  define CHAR_MAX 127
 # endif
 # ifndef CHAR_MIN
-#  define CHAR_MIN -128
+#  define CHAR_MIN (-128)
 # endif
 # ifndef SIZE_T_MAX
 #  define SIZE_T_MAX 4294967294
@@ -311,19 +314,19 @@
 #  define SSIZE_T_MAX 9223372036854775807
 # endif
 # ifndef SSIZE_T_MIN
-#  define SSIZE_T_MIN -9223372036854775808
+#  define SSIZE_T_MIN (-9223372036854775808)
 # endif
 # ifndef LONG_MAX
 #  define LONG_MAX 9223372036854775807
 # endif
 # ifndef LONG_MIN
-#  define LONG_MIN -9223372036854775808
+#  define LONG_MIN (-9223372036854775808)
 # endif
-# ifndef SHORT_MAX
-#  define SHORT_MAX 32767
+# ifndef SHRT_MAX
+#  define SHRT_MAX 32767
 # endif
-# ifndef SHORT_MIN
-#  define SHORT_MIN -32768
+# ifndef SHRT_MIN
+#  define SHRT_MIN (-32768)
 # endif
 # ifndef UCHAR_MAX
 #  define UCHAR_MAX 254
@@ -337,16 +340,23 @@
 # ifndef ULONG_MAX
 #  define ULONG_MAX 18446744073709551615
 # endif
+# ifndef CHAR_BIT
+#  define CHAR_BIT 8
+# endif
 
-# define __NOT_INITIALIZED_PROPERLY__ 0xC0000142 // The application failed to initialize properly. Indicates that the application has been launched on a Desktop to which the current user has no access rights. Another possible cause is that either gdi32.dll or user32.dll has failed to initialize.
-# define        __PROGRAM_NOT_FOUND__ 9009 //////// Program is not recognized as an internal or external command, operable program or batch file. Indicates that command, application name or path has been misspelled when configuring the Action.
-# define           __FILE_NOT_FOUND__ 2 /////////// The system cannot find the file specified. Indicates that the file cannot be found in specified location.
-# define           __PATH_NOT_FOUND__ 3 /////////// The system cannot find the path specified. Indicates that the specified path cannot be found.
-# define            __ACCESS_DENIED__ 5 /////////// Access is denied. Indicates that user has no access right to specified resource.
-# define            __OUT_OF_MEMORY__ 0xC0000017 // Not enough virtual memory is available.
-# define                  __SUCCESS__ 0 /////////// Program successfully completed.
-# define                   __CTRL_C__ 0xC000013A // The application terminated as a result of a CTRL+C. Indicates that the application has been terminated either by the user's keyboard input CTRL+C or CTRL+Break or closing command prompt window.
-# define                     __FAIL__ 1 /////////// Program fail, incorrect function or indicates that Action has attempted to execute non-recognized command in Windows command prompt cmd.exe.
+# ifndef MB_LEN_MAX
+#  define MB_LEN_MAX 1
+# endif
+
+# define NOT_INITIALIZED_PROPERLY 0xC0000142 // The application failed to initialize properly. Indicates that the application has been launched on a Desktop to which the current user has no access rights. Another possible cause is that either gdi32.dll or user32.dll has failed to initialize.
+# define        PROGRAM_NOT_FOUND 9009 //////// Program is not recognized as an internal or external command, operable program or batch file. Indicates that command, application name or path has been misspelled when configuring the Action.
+# define           FILE_NOT_FOUND 2 /////////// The system cannot find the file specified. Indicates that the file cannot be found in specified location.
+# define           PATH_NOT_FOUND 3 /////////// The system cannot find the path specified. Indicates that the specified path cannot be found.
+# define            ACCESS_DENIED 5 /////////// Access is denied. Indicates that user has no access right to specified resource.
+# define            OUT_OF_MEMORY 0xC0000017 // Not enough virtual memory is available.
+# define                  SUCCESS 0 /////////// Program successfully completed.
+# define                   CTRL_C 0xC000013A // The application terminated as a result of a CTRL+C. Indicates that the application has been terminated either by the user's keyboard input CTRL+C or CTRL+Break or closing command prompt window.
+# define                     FAIL 1 /////////// Program fail, incorrect function or indicates that Action has attempted to execute non-recognized command in Windows command prompt cmd.exe.
 
 # define MAIN main
 # define ABS(__IN_A__) (__IN_A__ < 0 ? __IN_A__ * -1 : __IN_A__)
@@ -369,50 +379,49 @@
     })
 
  LONG LONG POW_INT                            (REGISTER LONG LONG NUMBER, REGISTER SIGNED INT POWER);
+
+ SHORT INT GET_BYTE                                                       (REGISTER LONG LONG INPUT);
+
  DOUBLE    POW                                            (DOUBLE NUMBER, REGISTER SIGNED INT POWER);
+
  SIZE_T    STRLCAT                   (CHAR *DST, CONST CHAR *RESTRICT SRC, REGISTER SIZE_T DST_SIZE);
  SIZE_T    STRLCPY                                (CHAR *DST, CONST CHAR *SRC, REGISTER SIZE_T SIZE);
- CHAR      *SUBSTR            (CHAR CONST *STRING, REGISTER UNSIGNED INT START, REGISTER SIZE_T LEN);
- CHAR      *STRNSTR            (CONST CHAR *HAYSTACK, CONST CHAR *RESTRICT NEEDLE, CONST SIZE_T LEN);
- CHAR      *STRMAPI                          (CHAR CONST *STRING, CHAR (*FUNCT)(UNSIGNED INT, CHAR));
- CHAR      *STRTRIM                                     (CHAR CONST *STRING_1, CHAR CONST *STRING_2);
- CHAR      *STRCHR                                      (CONST CHAR *STRING, REGISTER INT CHARACTER);
- CHAR      *STRJOIN                                     (CHAR CONST *STRING_1, CONST CHAR *STRING_2);
- CHAR      *STRSTR                                         (CHAR *STRING, CHAR *RESTRICT SUB_STRING);
- CHAR      *STRCPY                                            (CHAR *STRING_1, CONST CHAR *STRING_2);
- CHAR      **SPLIT                                              (CHAR CONST *STRING, CHAR CHARACTER);
- CHAR      *RELPACE_STRING                                      (CHAR* STRING, CHAR* OLD, CHAR* NEW);
- CHAR      *STRRCHR                                              (CONST CHAR *STRING, INT CHARACTER);
- CHAR      *GET_PATH                                                     (CONST UNSIGNED INT CHOICE);
+
+ CHAR     *SUBSTR             (CHAR CONST *STRING, REGISTER UNSIGNED INT START, REGISTER SIZE_T LEN);
+ CHAR     *STRNSTR             (CONST CHAR *HAYSTACK, CONST CHAR *RESTRICT NEEDLE, CONST SIZE_T LEN);
+ CHAR     *STRMAPI                           (CHAR CONST *STRING, CHAR (*FUNCT)(UNSIGNED INT, CHAR));
+ CHAR     *STRTRIM                                      (CHAR CONST *STRING_1, CHAR CONST *STRING_2);
+ CHAR     *STRCHR                                       (CONST CHAR *STRING, REGISTER INT CHARACTER);
+ CHAR     *STRJOIN                                      (CHAR CONST *STRING_1, CONST CHAR *STRING_2);
+ CHAR     *STRSTR                                          (CHAR *STRING, CHAR *RESTRICT SUB_STRING);
+ CHAR     *STRCPY                                             (CHAR *STRING_1, CONST CHAR *STRING_2);
+ CHAR    **SPLIT                                                (CHAR CONST *STRING, CHAR CHARACTER);
+ CHAR     *RELPACE_STRING                                       (CHAR* STRING, CHAR* OLD, CHAR* NEW);
+ CHAR     *STRRCHR                                               (CONST CHAR *STRING, INT CHARACTER);
+ CHAR     *GET_PATH                                                      (CONST UNSIGNED INT CHOICE);
  CHAR      UPPER_CASE                                                      (REGISTER CHAR CHARACTER);
  CHAR      LOWER_CASE                                                      (REGISTER CHAR CHARACTER);
- CHAR      *ITOA                                                               (REGISTER INT NUMBER);
- CHAR      *STRDUP                                                              (CONST CHAR *STRING);
- CHAR      *GETS                                                                      (CHAR *STRING);
- CHAR      *GET_LINE                                                                        (INT FD);
- VOID      *MEMCHR                 (CONST VOID *OBJECT, REGISTER INT CHARACTER, REGISTER SIZE_T LEN);
- VOID      *MEMSET                          (VOID *OBJECT, REGISTER INT INPUT, REGISTER SIZE_T SIZE);
- VOID      *MEMMOVE                          (VOID *DST, CONST VOID *RESTRICT SRC, CONST SIZE_T LEN);
+ CHAR     *ITOA                                                                (REGISTER INT NUMBER);
+ CHAR     *STRDUP                                                               (CONST CHAR *STRING);
+ CHAR     *GETS                                                                       (CHAR *STRING);
+ CHAR     *GET_LINE                                                                         (INT FD);
+
+ VOID     *MEMCHR                  (CONST VOID *OBJECT, REGISTER INT CHARACTER, REGISTER SIZE_T LEN);
+ VOID     *MEMSET                           (VOID *OBJECT, REGISTER INT INPUT, REGISTER SIZE_T SIZE);
+ VOID     *MEMMOVE                           (VOID *DST, CONST VOID *RESTRICT SRC, CONST SIZE_T LEN);
  VOID      STRITERI                           (CHAR *STRING, VOID (*FUNCTION)(UNSIGNED INT, CHAR *));
- VOID      *MEMCPY                               (VOID *DEST, CONST VOID *SRC, REGISTER SIZE_T SIZE);
- VOID      *CALLOC                                     (REGISTER SIZE_T COUNT, REGISTER SIZE_T SIZE);
+ VOID     *MEMCPY                                (VOID *DEST, CONST VOID *SRC, REGISTER SIZE_T SIZE);
+ VOID     *CALLOC                                      (REGISTER SIZE_T COUNT, REGISTER SIZE_T SIZE);
+ VOID      PUT_NUMBER_FD                                      (REGISTER INT NUMBER, REGISTER INT FD);
+ VOID      PUT_CHAR_FD                                             (CHAR CHARACTER, REGISTER INT FD);
  VOID      GOTOXY                                                   (REGISTER INT X, REGISTER INT Y);
- VOID      PUT_NUMBER_FD                                               (REGISTER INT NUMBER, INT FD);
- VOID      PUTNBR_FD                                                   (REGISTER INT NUMBER, INT FD);
- VOID      *MALLOC                                                      (REGISTER UNSIGNED INT SIZE);
- VOID      PUT_CHAR_FD                                                      (CHAR CHARACTER, INT FD);
- VOID      PUTCHAR_FD                                                       (CHAR CHARACTER, INT FD);
- VOID      PUT_STR_FD                                                         (CHAR *STRING, INT FD);
- VOID      PUTSTR_FD                                                          (CHAR *STRING, INT FD);
+ VOID      PUT_STR_FD                                                (CHAR *STRING, REGISTER INT FD);
+ VOID     *MALLOC                                                       (REGISTER UNSIGNED INT SIZE);
  VOID      PUT_NUMBER                                                          (REGISTER INT NUMBER);
- VOID      PUTNBR                                                              (REGISTER INT NUMBER);
  VOID      PUT_CHAR                                                                 (CHAR CHARACTER);
- VOID      PUTCHAR                                                                  (CHAR CHARACTER);
  VOID      PUT_STR                                                                    (CHAR *STRING);
-# ifndef _WIN32
- VOID      PUTSTR                                                                     (CHAR *STRING);
-# endif
  VOID      FREE                                                                        (VOID *INPUT);
+
  INT       STRNCMP (CONST CHAR *RESTRICT STRING_1, CONST CHAR *RESTRICT STRING_2, CONST SIZE_T SIZE);
  INT       MEMCMP                  (CONST VOID *OBJECT_1, CONST VOID *OBJECT_2, REGISTER SIZE_T LEN);
  INT       STRCMP                                       (CONST CHAR *STRING_1, CONST CHAR *STRING_2);

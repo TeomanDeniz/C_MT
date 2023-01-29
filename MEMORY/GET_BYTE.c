@@ -1,5 +1,5 @@
 /*════════════════════════════════════════╦═════════════════════════════╗
-║ C - PUT_STR + FD                        ║       Maximum Tension       ║
+║ C - GET_BYTE                            ║       Maximum Tension       ║
 ╠═════════════════════════════════════════╬═════════════════════════════╣
 ║                                         │      ▄▄▄            ▄▄▄     ║
 ║ Teoman Deniz                            │  ░    ░▒▓▒▄▄    ▄▄▒▓▒░    ░ ║
@@ -7,27 +7,23 @@
 ║                                         │  ░▒░    ░ ░░ ░ ░  ░  ░░░░▒░ ║
 ║ ╔───┬──────────────────╗                │   ░▒░░ ░▒░▒▓░▒░▒░░▓░░░▒▒▒░  ║
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
-║ ├───┴─────┬────────────┤ │ C 2022/11/15 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
+║ ├───┴─────┬────────────┤ │ C 2023/01/30 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
 ║ ╚─────────┴────────────╝ │ U 2023/01/30 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #include	"../#C_MT.h"
 
-VOID
-	PUT_STR_FD(CHAR *STRING, REGISTER INT FD)
+SHORT INT
+	GET_BYTE(REGISTER LONG LONG INPUT)
 {
-	IF (!STRING)
-		RETURN ;
+	REGISTER SHORT INT (COUNTER) = 0;
 
-	WRITE(FD, STRING, STRLEN(STRING));
-}
+	WHILE (INPUT > 0)
+	{
+		INPUT >>= 8;
+		COUNTER++;
+	}
 
-VOID
-	PUT_STR(CHAR *STRING)
-{
-	IF (!STRING)
-		RETURN ;
-
-	WRITE(1, STRING, STRLEN(STRING));
+	RETURN (COUNTER);
 }
