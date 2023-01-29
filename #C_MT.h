@@ -236,6 +236,14 @@
 #  define true 1
 # endif
 
+# ifndef EXIT_FAILURE
+#  define EXIT_FAILURE 1
+# endif
+
+# ifndef EXIT_SUCCESS
+#  define EXIT_SUCCESS 0
+# endif
+
 # ifndef false
 #  define false 0
 # endif
@@ -360,58 +368,58 @@
         __A_MIN2__ < __B_MIN2__ ? __A_MIN2__ : __B_MIN2__;\
     })
 
- LONG LONG POW_INT         (REGISTER LONG LONG NUMBER, REGISTER SIGNED INT POWER);
- DOUBLE    POW             (DOUBLE NUMBER, REGISTER SIGNED INT POWER);
- SIZE_T    STRLCAT         (CHAR *DST, CONST CHAR *RESTRICT SRC, REGISTER SIZE_T DST_SIZE);
- SIZE_T    STRLCPY         (CHAR *DST, CONST CHAR *SRC, REGISTER SIZE_T SIZE);
- CHAR      *SUBSTR         (CHAR CONST *STRING, REGISTER UNSIGNED INT START, REGISTER SIZE_T LEN);
- CHAR      *STRNSTR        (CONST CHAR *HAYSTACK, CONST CHAR *RESTRICT NEEDLE, CONST SIZE_T LEN);
- CHAR      *STRMAPI        (CHAR CONST *STRING, CHAR (*FUNCT)(UNSIGNED INT, CHAR));
- CHAR      *STRTRIM        (CHAR CONST *STRING_1, CHAR CONST *STRING_2);
- CHAR      *STRCHR         (CONST CHAR *STRING, REGISTER INT CHARACTER);
- CHAR      *STRJOIN        (CHAR CONST *STRING_1, CONST CHAR *STRING_2);
- CHAR      *STRSTR         (CHAR *STRING, CHAR *RESTRICT SUB_STRING);
- CHAR      *STRCPY         (CHAR *STRING_1, CONST CHAR *STRING_2);
- CHAR      *GET_PATH       (CONST UNSIGNED VOLATILE INT CHOICE);
- CHAR      **SPLIT         (CHAR CONST *STRING, CHAR CHARACTER);
- CHAR      *RELPACE_STRING (CHAR* STRING, CHAR* OLD, CHAR* NEW);
- CHAR      *STRRCHR        (CONST CHAR *STRING, INT CHARACTER);
- CHAR      UPPER_CASE      (REGISTER CHAR CHARACTER);
- CHAR      LOWER_CASE      (REGISTER CHAR CHARACTER);
- CHAR      *ITOA           (REGISTER INT NUMBER);
- CHAR      *STRDUP         (CONST CHAR *STRING);
- CHAR      *GETS           (CHAR *STRING);
- CHAR      *GET_LINE       (INT FD);
- VOID      *MEMCHR         (CONST VOID *OBJECT, REGISTER INT CHARACTER, REGISTER SIZE_T LEN);
- VOID      *MEMSET         (VOID *OBJECT, REGISTER INT INPUT, REGISTER SIZE_T SIZE);
- VOID      *MEMMOVE        (VOID *DST, CONST VOID *RESTRICT SRC, CONST SIZE_T LEN);
- VOID      STRITERI        (CHAR *STRING, VOID (*FUNCTION)(UNSIGNED INT, CHAR *));
- VOID      *MEMCPY         (VOID *DEST, CONST VOID *SRC, REGISTER SIZE_T SIZE);
- VOID      *CALLOC         (REGISTER SIZE_T COUNT, REGISTER SIZE_T SIZE);
- VOID      GOTOXY          (REGISTER INT X, REGISTER INT Y);
- VOID      PUT_NUMBER_FD   (REGISTER INT NUMBER, INT FD);
- VOID      PUTNBR_FD       (REGISTER INT NUMBER, INT FD);
- VOID      *MALLOC         (REGISTER UNSIGNED INT SIZE);
- VOID      PUT_CHAR_FD     (CHAR CHARACTER, INT FD);
- VOID      PUTCHAR_FD      (CHAR CHARACTER, INT FD);
- VOID      PUT_STR_FD      (CHAR *STRING, INT FD);
- VOID      PUTSTR_FD       (CHAR *STRING, INT FD);
- VOID      PUT_NUMBER      (REGISTER INT NUMBER);
- VOID      PUTNBR          (REGISTER INT NUMBER);
- VOID      PUT_CHAR        (CHAR CHARACTER);
- VOID      PUTCHAR         (CHAR CHARACTER);
- VOID      PUT_STR         (CHAR *STRING);
+ LONG LONG POW_INT                            (REGISTER LONG LONG NUMBER, REGISTER SIGNED INT POWER);
+ DOUBLE    POW                                            (DOUBLE NUMBER, REGISTER SIGNED INT POWER);
+ SIZE_T    STRLCAT                   (CHAR *DST, CONST CHAR *RESTRICT SRC, REGISTER SIZE_T DST_SIZE);
+ SIZE_T    STRLCPY                                (CHAR *DST, CONST CHAR *SRC, REGISTER SIZE_T SIZE);
+ CHAR      *SUBSTR            (CHAR CONST *STRING, REGISTER UNSIGNED INT START, REGISTER SIZE_T LEN);
+ CHAR      *STRNSTR            (CONST CHAR *HAYSTACK, CONST CHAR *RESTRICT NEEDLE, CONST SIZE_T LEN);
+ CHAR      *STRMAPI                          (CHAR CONST *STRING, CHAR (*FUNCT)(UNSIGNED INT, CHAR));
+ CHAR      *STRTRIM                                     (CHAR CONST *STRING_1, CHAR CONST *STRING_2);
+ CHAR      *STRCHR                                      (CONST CHAR *STRING, REGISTER INT CHARACTER);
+ CHAR      *STRJOIN                                     (CHAR CONST *STRING_1, CONST CHAR *STRING_2);
+ CHAR      *STRSTR                                         (CHAR *STRING, CHAR *RESTRICT SUB_STRING);
+ CHAR      *STRCPY                                            (CHAR *STRING_1, CONST CHAR *STRING_2);
+ CHAR      **SPLIT                                              (CHAR CONST *STRING, CHAR CHARACTER);
+ CHAR      *RELPACE_STRING                                      (CHAR* STRING, CHAR* OLD, CHAR* NEW);
+ CHAR      *STRRCHR                                              (CONST CHAR *STRING, INT CHARACTER);
+ CHAR      *GET_PATH                                                     (CONST UNSIGNED INT CHOICE);
+ CHAR      UPPER_CASE                                                      (REGISTER CHAR CHARACTER);
+ CHAR      LOWER_CASE                                                      (REGISTER CHAR CHARACTER);
+ CHAR      *ITOA                                                               (REGISTER INT NUMBER);
+ CHAR      *STRDUP                                                              (CONST CHAR *STRING);
+ CHAR      *GETS                                                                      (CHAR *STRING);
+ CHAR      *GET_LINE                                                                        (INT FD);
+ VOID      *MEMCHR                 (CONST VOID *OBJECT, REGISTER INT CHARACTER, REGISTER SIZE_T LEN);
+ VOID      *MEMSET                          (VOID *OBJECT, REGISTER INT INPUT, REGISTER SIZE_T SIZE);
+ VOID      *MEMMOVE                          (VOID *DST, CONST VOID *RESTRICT SRC, CONST SIZE_T LEN);
+ VOID      STRITERI                           (CHAR *STRING, VOID (*FUNCTION)(UNSIGNED INT, CHAR *));
+ VOID      *MEMCPY                               (VOID *DEST, CONST VOID *SRC, REGISTER SIZE_T SIZE);
+ VOID      *CALLOC                                     (REGISTER SIZE_T COUNT, REGISTER SIZE_T SIZE);
+ VOID      GOTOXY                                                   (REGISTER INT X, REGISTER INT Y);
+ VOID      PUT_NUMBER_FD                                               (REGISTER INT NUMBER, INT FD);
+ VOID      PUTNBR_FD                                                   (REGISTER INT NUMBER, INT FD);
+ VOID      *MALLOC                                                      (REGISTER UNSIGNED INT SIZE);
+ VOID      PUT_CHAR_FD                                                      (CHAR CHARACTER, INT FD);
+ VOID      PUTCHAR_FD                                                       (CHAR CHARACTER, INT FD);
+ VOID      PUT_STR_FD                                                         (CHAR *STRING, INT FD);
+ VOID      PUTSTR_FD                                                          (CHAR *STRING, INT FD);
+ VOID      PUT_NUMBER                                                          (REGISTER INT NUMBER);
+ VOID      PUTNBR                                                              (REGISTER INT NUMBER);
+ VOID      PUT_CHAR                                                                 (CHAR CHARACTER);
+ VOID      PUTCHAR                                                                  (CHAR CHARACTER);
+ VOID      PUT_STR                                                                    (CHAR *STRING);
 # ifndef _WIN32
- VOID      PUTSTR          (CHAR *STRING);
+ VOID      PUTSTR                                                                     (CHAR *STRING);
 # endif
- VOID      FREE            (VOID *INPUT);
- INT       STRNCMP         (CONST CHAR *RESTRICT STRING_1, CONST CHAR *RESTRICT STRING_2, CONST SIZE_T SIZE);
- INT       MEMCMP          (CONST VOID *OBJECT_1, CONST VOID *OBJECT_2, REGISTER SIZE_T LEN);
- INT       STRCMP          (CONST CHAR *STRING_1, CONST CHAR *STRING_2);
- INT       PRINTF_FD       (INT FD, CONST CHAR *(__), ...);
- INT       STRLEN          (CONST CHAR *RESTRICT STRING);
- INT       PRINTF          (CONST CHAR *(__), ...);
- INT       ATOI            (CONST CHAR *STRING);
- INT       GETCHAR         (VOID);
+ VOID      FREE                                                                        (VOID *INPUT);
+ INT       STRNCMP (CONST CHAR *RESTRICT STRING_1, CONST CHAR *RESTRICT STRING_2, CONST SIZE_T SIZE);
+ INT       MEMCMP                  (CONST VOID *OBJECT_1, CONST VOID *OBJECT_2, REGISTER SIZE_T LEN);
+ INT       STRCMP                                       (CONST CHAR *STRING_1, CONST CHAR *STRING_2);
+ INT       PRINTF_FD                                                 (INT FD, CONST CHAR *(__), ...);
+ INT       STRLEN                                                      (CONST CHAR *RESTRICT STRING);
+ INT       PRINTF                                                            (CONST CHAR *(__), ...);
+ INT       ATOI                                                                 (CONST CHAR *STRING);
+ INT       GETCHAR                                                                            (VOID);
 
 #endif

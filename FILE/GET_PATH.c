@@ -18,7 +18,7 @@
 */
 
 CHAR
-	*GET_PATH(CONST UNSIGNED VOLATILE INT CHOICE)
+	*GET_PATH(CONST UNSIGNED INT CHOICE)
 {
 
 	/*═══════════════════════════════════════╗

@@ -9,17 +9,17 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2023/01/13 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/01/27 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/01/29 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #include	"../#C_MT.h"
 
 STATIC INLINE VOID
-	SEND_NUMBER(INT INDEX, INT *LEN, CHAR COMMAND, INT FD)
+	SEND_NUMBER(INT INDEX, INT *LEN, REGISTER CHAR COMMAND, REGISTER INT FD)
 {
 	IF (FD != 0)
 	{
-		IF (COMMAND == 'X')
+		IF (COMMAND == 'X' || COMMAND == 'P')
 			PUT_CHAR_FD(INDEX["0123456789ABCDEF"], FD);
 		ELSE
 			PUT_CHAR_FD(INDEX["0123456789abcdef"], FD);
@@ -28,13 +28,15 @@ STATIC INLINE VOID
 }
 
 STATIC INLINE INT
-	PF_ITOA_BASE(UNSIGNED LONG LONG NUMBER, INT BASE, CHAR COMMAND, INT FD)
+	PF_ITOA_BASE(UNSIGNED LONG LONG NUMBER, REGISTER INT BASE, REGISTER CHAR COMMAND, REGISTER INT FD)
 {
-	INT (NUMBER_LIST)[0x1000];
-	INT       (INDEX) = 0;
-	INT         (LEN) = 0;
+	INT    (NUMBER_LIST)[0x1000];
+	REGISTER INT (INDEX) = 0;
+	INT            (LEN) = 0;
 
-	IF ((COMMAND == 'd' || COMMAND == 'i') && (INT)NUMBER < 0)
+	IF (((COMMAND == 'd' || COMMAND == 'D') \
+		|| (COMMAND == 'i' || COMMAND == 'I')) \
+		&& (INT)NUMBER < 0)
 		NUMBER *= -1;
 
 	IF (NUMBER == 0)
@@ -58,11 +60,14 @@ STATIC INLINE INT
 STATIC INLINE INT
 	PF_ITOA_BASE_INT(UNSIGNED INT NUMBER, INT BASE, CHAR COMMAND, INT FD)
 {
-	INT (NUMBER_LIST)[0x1000];
-	INT       (INDEX) = 0;
-	INT         (LEN) = 0;
+	INT    (NUMBER_LIST)[0x1000];
+	REGISTER INT (INDEX) = 0;
+	INT            (LEN) = 0;
 
-	IF ((COMMAND == 'd' || COMMAND == 'i' || COMMAND == 'u') && (INT)NUMBER < 0)
+	IF (((COMMAND == 'd' || COMMAND == 'D') \
+		|| (COMMAND == 'i' || COMMAND == 'I') \
+		|| (COMMAND == 'u' || COMMAND == 'U')) \
+		&& (INT)NUMBER < 0)
 		NUMBER *= -1;
 
 	IF (NUMBER == 0)
@@ -86,12 +91,14 @@ STATIC INLINE INT
 STATIC INLINE INT
 	PF_IBL(UNSIGNED LONG LONG NUMBER, INT BASE, CHAR COMMAND)
 {
-	INT (NUMBER_LIST)[0x1000];
-	INT       (INDEX) = 0;
-	INT         (LEN) = 0;
+	INT    (NUMBER_LIST)[0x1000];
+	REGISTER INT (INDEX) = 0;
+	INT            (LEN) = 0;
 
 	(VOID)"ITOA BASE LEN (IBL)";
-	IF ((COMMAND == 'd' || COMMAND == 'i') && (INT)NUMBER < 0)
+	IF (((COMMAND == 'd' || COMMAND == 'D') \
+		|| (COMMAND == 'i' || COMMAND == 'I')) \
+		&& (INT)NUMBER < 0)
 		NUMBER *= -1;
 
 	IF (NUMBER == 0)
@@ -112,12 +119,15 @@ STATIC INLINE INT
 STATIC INLINE INT
 	PF_IBIL(UNSIGNED INT NUMBER, INT BASE, CHAR COMMAND)
 {
-	INT (NUMBER_LIST)[0x1000];
-	INT       (INDEX) = 0;
-	INT         (LEN) = 0;
+	INT    (NUMBER_LIST)[0x1000];
+	REGISTER INT (INDEX) = 0;
+	INT            (LEN) = 0;
 
 	(VOID)"ITOA BASE INT LEN (IBIL)";
-	IF ((COMMAND == 'd' || COMMAND == 'i' || COMMAND == 'u') && (INT)NUMBER < 0)
+	IF (((COMMAND == 'd' || COMMAND == 'D') \
+		|| (COMMAND == 'i' || COMMAND == 'I') \
+		|| (COMMAND == 'u' || COMMAND == 'U')) \
+		&& (INT)NUMBER < 0)
 		NUMBER *= -1;
 
 	IF (NUMBER == 0)
@@ -138,13 +148,13 @@ STATIC INLINE INT
 STATIC INLINE INT
 	SIZE_CALCULATOR(CHAR COMMAND, VOID *OBJECT, INT *FLAGS)
 {
-	IF (COMMAND == 'c' || COMMAND == '%')
+	IF ((COMMAND == 'c' || COMMAND == 'C') || COMMAND == '%')
 		RETURN (1);
 
-	IF (COMMAND == 'f')
+	IF (COMMAND == 'f' || COMMAND == 'F')
 		RETURN (PF_IBL((LONG)*(DOUBLE *)OBJECT, 10, COMMAND));
 
-	IF (COMMAND == 's')
+	IF (COMMAND == 's' || COMMAND == 'S')
 	{
 		IF (STRLEN((CHAR *)OBJECT) > FLAGS['.'] && FLAGS['.'] != -1)
 			RETURN (FLAGS['.']);
@@ -152,22 +162,22 @@ STATIC INLINE INT
 			RETURN (STRLEN((CHAR *)OBJECT));
 	}
 
-	IF (COMMAND == 'u')
+	IF (COMMAND == 'u' || COMMAND == 'U')
 		RETURN (PF_IBL((UNSIGNED INT)*(UNSIGNED INT *)OBJECT, 10, COMMAND));
 
-	IF (COMMAND == 'd')
+	IF (COMMAND == 'd' || COMMAND == 'D')
 		RETURN (PF_IBIL((INT)*(INT *)OBJECT, 10, COMMAND));
 
 	IF (COMMAND == 'x' || COMMAND == 'X')
 		RETURN (PF_IBIL((LONG LONG)*(INT *)OBJECT, 16, COMMAND));
 
-	IF (COMMAND == 'o')
+	IF (COMMAND == 'o' || COMMAND == 'O')
 		RETURN (PF_IBIL((INT)*(INT *)OBJECT, 8, COMMAND));
 
-	IF (COMMAND == 'b')
+	IF (COMMAND == 'b' || COMMAND == 'B')
 		RETURN (PF_IBIL((INT)*(INT *)OBJECT, 2, COMMAND));
 
-	IF (COMMAND == 'p')
+	IF (COMMAND == 'p' || COMMAND == 'P')
 		RETURN (PF_IBL((LONG LONG)*(LONG *)OBJECT, 16, COMMAND));
 
 	RETURN (-1);
@@ -178,12 +188,12 @@ STATIC INLINE VOID
 {
 	REGISTER INT (COUNTER) = 0;
 
-	IF (COMMAND == 'o' && FLAGS['#'] == 1)
+	IF ((COMMAND == 'o' || COMMAND == 'O') && FLAGS['#'] == 1)
 		COUNTER = 1;
 
-	IF (COMMAND != 'f' && COMMAND != '%' && COMMAND != 's')
+	IF ((COMMAND != 'f' || COMMAND != 'F') && COMMAND != '%' && (COMMAND != 's' || COMMAND != 'S'))
 	{
-		WHILE (COUNTER < FLAGS['.'] - (FLAGS[4] + (COMMAND == 'p') * 2))
+		WHILE (COUNTER < FLAGS['.'] - (FLAGS[4] + (COMMAND == 'p' || COMMAND == 'P') * 2))
 		{
 			WRITE(FLAGS[0], "0", 1);
 			FLAGS[1] += 1;
@@ -192,9 +202,9 @@ STATIC INLINE VOID
 	}
 
 	COUNTER = 0;
-	IF (COMMAND != 'f' && FLAGS['0'] && FLAGS['.'] == -1)
+	IF ((COMMAND != 'f' || COMMAND != 'F') && FLAGS['0'] && FLAGS['.'] == -1)
 	{
-		WHILE (COUNTER < (FLAGS[2] - (FLAGS[4] + FLAGS[3] + (COMMAND == 'p') * 2)))
+		WHILE (COUNTER < (FLAGS[2] - (FLAGS[4] + FLAGS[3] + (COMMAND == 'p' || COMMAND == 'P') * 2)))
 		{
 			WRITE(FLAGS[0], "0", 1);
 			FLAGS[1] += 1;
@@ -206,7 +216,9 @@ STATIC INLINE VOID
 STATIC INLINE VOID
 	MINUS(INT *FLAGS, CHAR COMMAND)
 {
-	IF (!(COMMAND == 'd' || COMMAND == 'i' || COMMAND == 'f') || !FLAGS[3])
+	IF (!((COMMAND == 'd' || COMMAND == 'D') \
+		|| (COMMAND == 'i' || COMMAND == 'I') \
+		|| (COMMAND == 'f' || COMMAND == 'F')) || !FLAGS[3])
 		RETURN ;
 
 	WRITE(FLAGS[0], "-", 1);
@@ -216,12 +228,13 @@ STATIC INLINE VOID
 STATIC INLINE INT
 	DOT_CALCULATION(INT *FLAGS, CHAR COMMAND, LONG LONG NUMBER)
 {
-	IF (COMMAND == 'f' && FLAGS['.'] == -1)
+	IF ((COMMAND == 'f' || COMMAND == 'F') && FLAGS['.'] == -1)
 		RETURN (FLAGS[4] + 7);
-	ELSE IF (COMMAND == 'f' && FLAGS['.'] != 0)
+	ELSE IF ((COMMAND == 'f' || COMMAND == 'F') && FLAGS['.'] != 0)
 		RETURN (FLAGS[4] + FLAGS['.'] + 1);
 
-	IF ((FLAGS['.']) > FLAGS[4] - (FLAGS['#'] && COMMAND == 'o' && (NUMBER != 0 && COMMAND != 'o')) && COMMAND != '%')
+	IF ((FLAGS['.']) > FLAGS[4] - (FLAGS['#'] && (COMMAND == 'o' || COMMAND == 'O') \
+		&& (NUMBER != 0 && (COMMAND != 'o' || COMMAND != 'O'))) && COMMAND != '%')
 		RETURN (FLAGS['.']);
 	ELSE
 		RETURN (FLAGS[4]);
@@ -232,19 +245,33 @@ STATIC INLINE INT
 {
 	INT (CALCULATOR) = DOT_CALCULATION(FLAGS, COMMAND, NUMBER);
 
-	IF ((COMMAND == 'd' || COMMAND == 'i' || COMMAND == 'f') && FLAGS['+'] && !FLAGS[3])
+	IF (((COMMAND == 'd' || COMMAND == 'D') \
+		|| (COMMAND == 'i' || COMMAND == 'I') \
+		|| (COMMAND == 'f' || COMMAND == 'F')) \
+		&& FLAGS['+'] && !FLAGS[3])
 		CALCULATOR += 1;
 
-	IF ((COMMAND == 'd' || COMMAND == 'i' || COMMAND == 'f') && FLAGS[3])
+	IF (((COMMAND == 'd' || COMMAND == 'D') \
+		|| (COMMAND == 'i' || COMMAND == 'I') \
+		|| (COMMAND == 'f' || COMMAND == 'F')) \
+		&& FLAGS[3])
 		CALCULATOR += 1;
 
-	IF ((COMMAND == 'd' || COMMAND == 'i' || COMMAND == 'f') && FLAGS[' '] && !FLAGS['+'] && !FLAGS[3])
+	IF (((COMMAND == 'd' || COMMAND == 'D') \
+		|| (COMMAND == 'i' || COMMAND == 'I') \
+		|| (COMMAND == 'f' || COMMAND == 'F')) \
+		&& FLAGS[' '] && !FLAGS['+'] && !FLAGS[3])
 		CALCULATOR += 1;
 
-	IF (((COMMAND == 'x' || COMMAND == 'X' || COMMAND == 'b') && FLAGS['#'] && NUMBER != 0) || COMMAND == 'p')
+	IF ((((COMMAND == 'x' || COMMAND == 'X') \
+		|| (COMMAND == 'b' || COMMAND == 'B')) \
+		&& FLAGS['#'] && NUMBER != 0) \
+		|| (COMMAND == 'p' || COMMAND == 'P'))
 		CALCULATOR += 2;
 
-	IF (COMMAND == 'o' && FLAGS['#'] && !(((FLAGS['.'] - FLAGS['0']) > FLAGS[4]) || ((FLAGS['.'] - FLAGS['0']) > FLAGS[4] && FLAGS['0'])))
+	IF ((COMMAND == 'o' || COMMAND == 'O') \
+		&& FLAGS['#'] && !(((FLAGS['.'] - FLAGS['0']) > FLAGS[4]) \
+		|| ((FLAGS['.'] - FLAGS['0']) > FLAGS[4] && FLAGS['0'])))
 		CALCULATOR += 1;
 
 	RETURN (FLAGS[2] - CALCULATOR);
@@ -269,7 +296,10 @@ STATIC INLINE VOID
 STATIC INLINE VOID
 	PLUS(INT *FLAGS, CHAR COMMAND)
 {
-	IF (!(COMMAND == 'd' || COMMAND == 'i' || COMMAND == 'f') || !FLAGS['+'] || FLAGS[3])
+	IF (!((COMMAND == 'd' || COMMAND == 'D') \
+		|| (COMMAND == 'i' || COMMAND == 'I') \
+		|| (COMMAND == 'f' || COMMAND == 'F')) \
+		|| !FLAGS['+'] || FLAGS[3])
 		RETURN ;
 
 	WRITE(FLAGS[0], "+", 1);
@@ -279,7 +309,10 @@ STATIC INLINE VOID
 STATIC INLINE VOID
 	SPACE(INT *FLAGS, CHAR COMMAND)
 {
-	IF (!(COMMAND == 'd' || COMMAND == 'i' || COMMAND == 'f') || !FLAGS[' '] || FLAGS['+'] || FLAGS[3])
+	IF (!((COMMAND == 'd' || COMMAND == 'D') \
+		|| (COMMAND == 'i' || COMMAND == 'I') \
+		|| (COMMAND == 'f' || COMMAND == 'F')) \
+		|| !FLAGS[' '] || FLAGS['+'] || FLAGS[3])
 		RETURN ;
 
 	WRITE(FLAGS[0], " ", 1);
@@ -295,12 +328,22 @@ STATIC INLINE VOID
 		FLAGS[1] += 2;
 	}
 
-	IF (!(COMMAND == 'o' || COMMAND == 'x' || COMMAND == 'X' || COMMAND == 'b') \
+	IF (COMMAND == 'P')
+	{
+		WRITE(FLAGS[0], "0X", 2);
+		FLAGS[1] += 2;
+	}
+
+	IF (!((COMMAND == 'o' || COMMAND == 'O') \
+		|| (COMMAND == 'x' || COMMAND == 'X') \
+		|| (COMMAND == 'b' || COMMAND == 'B')) \
 		|| !FLAGS['#'] || (FLAGS[2] > FLAGS[4] + FLAGS['#'] && FLAGS['0'] \
-			&& FLAGS['.'] == -1 && !FLAGS['-']) || (NUMBER == 0 && COMMAND != 'o'))
+		&& FLAGS['.'] == -1 && !FLAGS['-']) \
+		|| (NUMBER == 0 && (COMMAND != 'o' || COMMAND != 'O')))
 		RETURN ;
 
-	IF (COMMAND == 'x' || COMMAND == 'X' || COMMAND == 'b')
+	IF ((COMMAND == 'x' || COMMAND == 'X') \
+		|| (COMMAND == 'b' || COMMAND == 'B'))
 	{
 		WRITE(FLAGS[0], "0", 1);
 		WRITE(FLAGS[0], &COMMAND, 1);
@@ -335,11 +378,11 @@ STATIC INLINE VOID
 }
 
 STATIC INLINE VOID
-	PF__B(INT NUMBER, INT *FLAGS)
+	PF__B(INT NUMBER, INT *FLAGS, REGISTER CHAR COMMAND)
 {
-	PF_FLAG_EVENT(FLAGS, 'b', (VOID *)&NUMBER, 'a');
-	FLAGS[1] += PF_ITOA_BASE_INT(NUMBER, 2, 'b', FLAGS[0]);
-	PF_FLAG_EVENT(FLAGS, 'b', (VOID *)&NUMBER, 'b');
+	PF_FLAG_EVENT(FLAGS, COMMAND, (VOID *)&NUMBER, 'a');
+	FLAGS[1] += PF_ITOA_BASE_INT(NUMBER, 2, COMMAND, FLAGS[0]);
+	PF_FLAG_EVENT(FLAGS, COMMAND, (VOID *)&NUMBER, 'b');
 }
 
 STATIC INLINE VOID
@@ -452,11 +495,11 @@ STATIC INLINE VOID
 }
 
 STATIC INLINE VOID
-	PF__P(UNSIGNED LONG LONG ADDRESS, INT *FLAGS)
+	PF__P(UNSIGNED LONG LONG ADDRESS, INT *FLAGS, REGISTER CHAR COMMAND)
 {
-	PF_FLAG_EVENT(FLAGS, 'p', (VOID *)&ADDRESS, 'a');
-	FLAGS[1] += PF_ITOA_BASE(ADDRESS, 16, 'x', FLAGS[0]);
-	PF_FLAG_EVENT(FLAGS, 'p', (VOID *)&ADDRESS, 'b');
+	PF_FLAG_EVENT(FLAGS, COMMAND, (VOID *)&ADDRESS, 'a');
+	FLAGS[1] += PF_ITOA_BASE(ADDRESS, 16, COMMAND, FLAGS[0]);
+	PF_FLAG_EVENT(FLAGS, COMMAND, (VOID *)&ADDRESS, 'b');
 }
 
 STATIC INLINE VOID
@@ -471,14 +514,17 @@ STATIC INLINE VOID
 }
 
 STATIC INLINE VOID
-	PF__S(CHAR *__STRING__, INT *FLAGS)
+	PF__S(CHAR *__STRING__, INT *FLAGS, REGISTER CHAR COMMAND)
 {
 	REGISTER INT  (COUNTER) = 0;
 	CHAR          *(STRING) = __STRING__;
 
 	IF (!STRING)
 	{
-		WRITE(FLAGS[0], "(null)", 6);
+		IF (COMMAND == 'S')
+			WRITE(FLAGS[0], "(NULL)", 6);
+		ELSE
+			WRITE(FLAGS[0], "(null)", 6);
 		FLAGS[1] += 6;
 		RETURN ;
 	}
@@ -544,19 +590,25 @@ STATIC INLINE INT
 STATIC INLINE INT
 	PF_PERC_CHECK(CONST CHAR *(__), INT X)
 {
-	IF ((__)[X] == '+' || (__)[X] == '-' || (__)[X] == '.' || (__)[X] == '*'\
-		|| (__)[X] == '#' || (__)[X] == ' '\
-		|| (__)[X] == '0' || (__)[X] == '1'\
-		|| (__)[X] == '2' || (__)[X] == '3'\
-		|| (__)[X] == '4' || (__)[X] == '5'\
-		|| (__)[X] == '6' || (__)[X] == '7'\
-		|| (__)[X] == '8' || (__)[X] == '9'\
-		|| (__)[X] == 'd' || (__)[X] == 'i'\
-		|| (__)[X] == 'x' || (__)[X] == 'X'\
-		|| (__)[X] == 'o' || (__)[X] == 'b'\
-		|| (__)[X] == 'c' || (__)[X] == 's'\
-		|| (__)[X] == 'p' || (__)[X] == 'u'\
-		|| (__)[X] == 'f' || (__)[X] == 'n'\
+	IF ((__)[X] == '+' || (__)[X] == '-' \
+		|| (__)[X] == '.' || (__)[X] == '*' \
+		|| (__)[X] == '#' || (__)[X] == ' ' \
+		|| (__)[X] == '0' || (__)[X] == '1' \
+		|| (__)[X] == '2' || (__)[X] == '3' \
+		|| (__)[X] == '4' || (__)[X] == '5' \
+		|| (__)[X] == '6' || (__)[X] == '7' \
+		|| (__)[X] == '8' || (__)[X] == '9' \
+		|| ((__)[X] == 'd' || (__)[X] == 'D') \
+		|| ((__)[X] == 'i' || (__)[X] == 'I') \
+		|| ((__)[X] == 'x' || (__)[X] == 'X') \
+		|| ((__)[X] == 'o' || (__)[X] == 'O') \
+		|| ((__)[X] == 'b' || (__)[X] == 'B') \
+		|| ((__)[X] == 'c' || (__)[X] == 'C') \
+		|| ((__)[X] == 's' || (__)[X] == 'S') \
+		|| ((__)[X] == 'p' || (__)[X] == 'P') \
+		|| ((__)[X] == 'u' || (__)[X] == 'U') \
+		|| ((__)[X] == 'f' || (__)[X] == 'F') \
+		|| ((__)[X] == 'n' || (__)[X] == 'N') \
 		|| (__)[X] == '%')
 		RETURN ((SIGNED INT)(__)[X]);
 
@@ -686,27 +738,28 @@ STATIC INLINE VOID
 STATIC INLINE VOID
 	PF_DO_COMMAND(VA_LIST *VA_ARGS, CONST CHAR *(__), INT X, INT *FLAGS)
 {
-	IF ((__)[X] == 's')
-		PF__S(VA_ARG(*VA_ARGS, CHAR *), FLAGS);
-	ELSE IF ((__)[X] == 'c')
+	IF ((__)[X] == 's' || (__)[X] == 'S')
+		PF__S(VA_ARG(*VA_ARGS, CHAR *), FLAGS, (__)[X]);
+	ELSE IF ((__)[X] == 'c' || (__)[X] == 'C')
 		PF__C(VA_ARG(*VA_ARGS, INT), FLAGS);
-	ELSE IF ((__)[X] == 'd' || (__)[X] == 'i')
+	ELSE IF (((__)[X] == 'd' || (__)[X] == 'D') \
+		|| ((__)[X] == 'i' || (__)[X] == 'I'))
 		PF__D(VA_ARG(*VA_ARGS, INT), FLAGS);
-	ELSE IF ((__)[X] == 'p')
-		PF__P(VA_ARG(*VA_ARGS, UNSIGNED LONG LONG), FLAGS);
-	ELSE IF ((__)[X] == 'u')
+	ELSE IF ((__)[X] == 'p' || (__)[X] == 'P')
+		PF__P(VA_ARG(*VA_ARGS, UNSIGNED LONG LONG), FLAGS, (__)[X]);
+	ELSE IF ((__)[X] == 'u' || (__)[X] == 'U')
 		PF__U(VA_ARG(*VA_ARGS, UNSIGNED INT), FLAGS);
 	ELSE IF ((__)[X] == 'x' || (__)[X] == 'X')
 		PF__X(VA_ARG(*VA_ARGS, UNSIGNED INT), (__)[X], FLAGS);
-	ELSE IF ((__)[X] == 'o')
+	ELSE IF ((__)[X] == 'o' || (__)[X] == 'O')
 		PF__O(VA_ARG(*VA_ARGS, UNSIGNED INT), FLAGS);
-	ELSE IF ((__)[X] == 'b')
-		PF__B(VA_ARG(*VA_ARGS, UNSIGNED INT), FLAGS);
+	ELSE IF ((__)[X] == 'b' || (__)[X] == 'B')
+		PF__B(VA_ARG(*VA_ARGS, UNSIGNED INT), FLAGS, (__)[X]);
 	ELSE IF ((__)[X] == '%')
 		PF__PERC(FLAGS);
-	ELSE IF ((__)[X] == 'f')
+	ELSE IF ((__)[X] == 'f' || (__)[X] == 'F')
 		PF__F(VA_ARG(*VA_ARGS, DOUBLE), FLAGS);
-	ELSE IF ((__)[X] == 'n')
+	ELSE IF ((__)[X] == 'n' || (__)[X] == 'N')
 		PF__N(VA_ARG(*VA_ARGS, INT *), FLAGS);
 }
 
