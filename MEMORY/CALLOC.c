@@ -9,7 +9,7 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2022/11/15 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/01/25 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/01/30 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #include	"../#C_MT.h"
@@ -23,14 +23,11 @@ STATIC INLINE VOID
 VOID
 	*CALLOC(REGISTER SIZE_T COUNT, REGISTER SIZE_T SIZE)
 {
-	VOID *(RESULT);
-
-	RESULT = MALLOC(COUNT * SIZE);
+	VOID *(RESULT) = MALLOC(COUNT * SIZE);
 
 	IF (RESULT == NULL)
 		RETURN (NULL);
 
 	BZERO(RESULT, COUNT * SIZE);
-
 	RETURN (RESULT);
 }

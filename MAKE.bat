@@ -9,7 +9,7 @@
 @REM ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 @REM ║ ├───┴─────┬────────────┤ │ C 2022/12/09 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 @REM ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-@REM ║ ╚─────────┴────────────╝ │ U 2023/01/29 │       ░░░░▒░░▒░░░▒░░░░      ║
+@REM ║ ╚─────────┴────────────╝ │ U 2023/01/31 │       ░░░░▒░░▒░░░▒░░░░      ║
 @REM ╚══════════════════════════╩══════════════╩═════════════════════════════╝
 
 @ECHO OFF
@@ -100,6 +100,8 @@ GOTO :EOF
 GOTO :EOF
 
 :Makefile
+	WHERE !CC!>NUL 2>NUL
+	IF %ERRORLEVEL% NEQ 0 GOTO :ERROR_COMPILER !CC!
 	SET "MAKEFILE_PATH=%~0"
 	SET "#=UPDATE_LINE"
 	FOR /F "DELIMS=#" %%# IN ('"PROMPT #$H# &ECHO ON &FOR %%# IN (1) DO REM"') DO (
@@ -153,6 +155,12 @@ GOTO :EOF
 	ECHO  CURRENT CD: [!CD!]
 	CALL :PAUSE
 GOTO :FORCE_OUT 1
+
+:ERROR_COMPILER
+	ECHO.
+	ECHO  ERROR: %~1 IS NOT FOUND ON YOUR COMPUTER TO COMPILE THE FILES!
+	CALL :PAUSE
+GOTO :FORCE_OUT 2
 
 :ERROR
 	ECHO.

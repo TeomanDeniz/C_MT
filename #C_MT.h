@@ -359,7 +359,13 @@
 # define                     FAIL 1 /////////// Program fail, incorrect function or indicates that Action has attempted to execute non-recognized command in Windows command prompt cmd.exe.
 
 # define MAIN main
+
 # define ABS(__IN_A__) (__IN_A__ < 0 ? __IN_A__ * -1 : __IN_A__)
+# define FREE(__FREE__) \
+    ({\
+        VOID **__FREE_TEMP__ = (VOID **) &__FREE__;\
+        *__FREE_TEMP__ = "";\
+    })
 # define SIZEOF(__IN_S__) \
     ({\
         TYPEOF(__IN_S__) __OUT_S__;\
@@ -420,7 +426,6 @@
  VOID      PUT_NUMBER                                                          (REGISTER INT NUMBER);
  VOID      PUT_CHAR                                                                 (CHAR CHARACTER);
  VOID      PUT_STR                                                                    (CHAR *STRING);
- VOID      FREE                                                                        (VOID *INPUT);
 
  INT       STRNCMP (CONST CHAR *RESTRICT STRING_1, CONST CHAR *RESTRICT STRING_2, CONST SIZE_T SIZE);
  INT       MEMCMP                  (CONST VOID *OBJECT_1, CONST VOID *OBJECT_2, REGISTER SIZE_T LEN);
