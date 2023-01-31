@@ -17,6 +17,10 @@
 
 # define C_MT_H 42
 
+# ifdef __cplusplus
+#  define __CPLUSPLUS __cplusplus
+# endif
+
 # include <time.h> /*
 # CLOCK();
 # CLOCK_T <VAR_T>;
@@ -83,7 +87,6 @@
 #  define          CLOSE _close
 #  define          CREAT _creat
 #  define          WRITE _write
-#  define           OPEN _open
 #  define           READ _read
 
 #  define        _COMMIT _commit
@@ -91,7 +94,6 @@
 #  define         _CLOSE _close
 #  define         _CREAT _creat
 #  define         _WRITE _write
-#  define          _OPEN _open
 #  define          _READ _read
 
 #  define CREATE_PROCESS CreateProcess
@@ -210,22 +212,36 @@
 # define     EXIT exit
 # define     OPEN open
 
-# ifndef __GNUC__
-#  ifdef __volatile__
-#   define __VOLATILE__ __volatile__
-#  else
-#   define __VOLATILE__ volatile
-#   define __volatile__ volatile
-#  endif
-#  define       __asm__ asm
-#  define       __ASM__ asm
-#  define           ASM asm
-# else
-#  define           asm __asm__
-#  define           ASM __asm__
-#  define       __ASM__ __asm__
-#  define  __VOLATILE__ __volatile__
+# ifndef _open
+#  define _open open
 # endif
+
+# ifndef __GNUC__ ///////////////////////// IF NOT DEFINED __GNUC__ (GCC)
+                                         //
+#  ifdef __volatile__ /////////////////  //
+#   define __VOLATILE__ __volatile__ //  //
+#  else                              //  //
+#   define __VOLATILE__ volatile     //  //
+#   define __volatile__ volatile     //  //
+#  endif //////////////////////////////  //
+                                         //
+#  ifdef __inline__ ///////////////////  //
+#   define __INLINE__ __inline__     //  //
+#  else                              //  //
+#   define __INLINE__ inline         //  //
+#   define __inline__ inline         //  //
+#  endif //////////////////////////////  //
+                                         //
+#  define       __asm__ asm              //
+#  define       __ASM__ asm              //
+#  define           ASM asm              //
+# else //////////////////////////////////// IF  __GNUC__ (GCC) DEFINED
+#  define           asm __asm__          //
+#  define           ASM __asm__          //
+#  define       __ASM__ __asm__          //
+#  define    __INLINE__ __inline__       //
+#  define  __VOLATILE__ __volatile__     //
+# endif ///////////////////////////////////
 
 # ifndef NULL
 #  define NULL ((VOID *)0)
@@ -398,7 +414,7 @@
  CHAR     *STRMAPI                           (CHAR CONST *STRING, CHAR (*FUNCT)(UNSIGNED INT, CHAR));
  CHAR     *STRTRIM                                      (CHAR CONST *STRING_1, CHAR CONST *STRING_2);
  CHAR     *STRCHR                                       (CONST CHAR *STRING, REGISTER INT CHARACTER);
- CHAR     *STRJOIN                                      (CHAR CONST *STRING_1, CONST CHAR *STRING_2);
+ CHAR     *STRCAT                                       (CHAR CONST *STRING_1, CONST CHAR *STRING_2);
  CHAR     *STRSTR                                          (CHAR *STRING, CHAR *RESTRICT SUB_STRING);
  CHAR     *STRCPY                                             (CHAR *STRING_1, CONST CHAR *STRING_2);
  CHAR    **SPLIT                                                (CHAR CONST *STRING, CHAR CHARACTER);
