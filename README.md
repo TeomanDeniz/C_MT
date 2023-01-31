@@ -2,6 +2,33 @@
 
 <P ALIGN="CENTER">A library for C Language that's make you able to use all keywords uppercase and most of functions written from scratch</P>
 
+# KEYWORDS
+| TYPES            | COMMANDS       | LISTS TYPES |
+| ---------------- | -------------- | ----------- |
+| \_\_VOLATILE\_\_ | CONTINUE       | TYPEDEF     |
+| \_\_INLINE\_\_   | \_\_ASM\_\_    | STRUCT      |
+| UNSIGNED         | DEFAULT        | UNION       |
+| REGISTER         | RETURN         | BOOL        |
+| RESTRICT         | SWITCH         | ENUM        |
+| VOLATILE         | TYPEOF         |             |
+| __INT64          | BREAK          |             |
+| DOUBLE           | WHILE          |             |
+| EXTERN           | ELSE           |             |
+| SIGNED           | CASE           |             |
+| SIZE_T           | GOTO           |             |
+| STATIC           | ASM            |             |
+| INLINE           | FOR            |             |
+| CONST            | DO             |             |
+| FLOAT            | IF             |             |
+| INT16            |                |             |
+| SHORT            |                |             |
+| AUTO             |                |             |
+| CHAR             |                |             |
+| LONG             |                |             |
+| VOID             |                |             |
+| INT              |                |             |
+
+# FUNCTIONS
 | FUNCTION OUTPUT | FUNCTION NAMES        | PARAMETER FUNCTION GETS                            | DESCRIPTION                                                          |
 | --------------- | --------------------- | -------------------------------------------------- | -------------------------------------------------------------------- |
 | `{ALL TYPES}`   | **ABS**               | `{ALL TYPES}` NUMBER                               | CONVERTS `NUMBER` TO POSITIVE IF NEGATIVE                            |
@@ -36,3 +63,10 @@
 | `INT`           | **PRINTF**            | `CHAR` __, `...`                                   | SAME WITH PRINTF, CAN USE BOTH UPPERCASE AND LOWERCASE COMMANDS      |
 | `INT`           | **PRINTF_FD**         | `INT` FD, `CHAR` __, `...`                         | SAME WITH PRINTF, PRINT THE PRINTF STRING TO ORDERED FILE            |
 | `CHAR *`        | **REPLACE_STRING**    | `CHAR *` STRING, `CHAR *` OLD, `CHAR *` NEW        | FIND `OLD` IN `STRING` AND REPLACE IT WITH `NEW`                     |
+| `CHAR **`       | **SPLIT**             | `CHAR *` STRING, `CHAR` CHARACTER                  | CUT THE `STRING` TO STRINGS VIA ORDERED `CHARACTER`                  |
+| `CHAR *`        | **STRCAT**            | `CHAR *` STRING_1, `CHAR *` STRING_2               | CONSUBSTANTIATE TWO STRINGS                                          |
+| `CHAR`          | **STRCHR**            | `CHAR *` STRING, `CHAR` CHARACTER                  | SEARCH THE ORDERED `CHARACTER` INSIDE `STRING`                       |
+| `INT`           | **STRCMP**            | `CHAR *` STRING_1, `CHAR *` STRING_2               | COMAPRE TWO STRINGS                                                  |
+| `SIZE_T`        | **STRLCAT**           | `CHAR *` DST, `CHAR *` SRC, `SIZE_T` DST_SIZE      | CONSUBSTANTIATE TWO STRINGS AND SAVE IT TO `DST`                     |
+| `SIZE_T`        | **STRLCPY**           | `CHAR *` DST, `CHAR *` SRC, `SIZE_T` SIZE          | COPY `SRC` TO `DST` IN ORDERED SIZE                                  |
+
