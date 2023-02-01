@@ -12,14 +12,15 @@
 | RESTRICT         | SWITCH         | ENUM        |
 | VOLATILE         | TYPEOF         |             |
 | __INT64          | BREAK          |             |
-| DOUBLE           | WHILE          |             |
-| EXTERN           | ELSE           |             |
-| SIGNED           | CASE           |             |
-| SIZE_T           | GOTO           |             |
-| STATIC           | ASM            |             |
-| INLINE           | FOR            |             |
-| CONST            | DO             |             |
-| FLOAT            | IF             |             |
+| SSIZE_T          | WHILE          |             |
+| DOUBLE           | ELSE           |             |
+| EXTERN           | CASE           |             |
+| SIGNED           | GOTO           |             |
+| SIZE_T           | ASM            |             |
+| STATIC           | FOR            |             |
+| INLINE           | DO             |             |
+| CONST            | IF             |             |
+| FLOAT            |                |             |
 | INT16            |                |             |
 | SHORT            |                |             |
 | AUTO             |                |             |
