@@ -9,7 +9,7 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2020/07/23 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/01/30 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/02/02 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 
@@ -130,6 +130,14 @@
 #  FORK   (VOID);
 */
 
+#  ifdef __unix__
+#   define __UNIX__ __unix__
+#  endif
+
+#  ifdef __linux__
+#   define __LINUX__ __linux__
+#  endif
+
 #  define         GETPID getpid
 #  define          CLOSE close
 #  define          WRITE write
@@ -216,6 +224,14 @@
 #  define _open open
 # endif
 
+# ifdef __builtin_types_compatible_p
+#  define __BUILTIN_TYPES_COMPATIBLE_P __builtin_types_compatible_p
+# endif
+
+# ifdef __builtin_constant_p
+#  define __BUILTIN_CONSTANT_P __builtin_constant_p
+# endif
+
 # ifndef __GNUC__ ///////////////////////// IF NOT DEFINED __GNUC__ (GCC)
                                          //
 #  ifdef __volatile__ /////////////////  //
@@ -232,14 +248,24 @@
 #   define __inline__ inline         //  //
 #  endif //////////////////////////////  //
                                          //
+#  ifdef __typeof__ ///////////////////  //
+#   define __TYPEOF__ __typeof__     //  //
+#  else                              //  //
+#   define __TYPEOF__ typeof         //  //
+#   define __typeof__ typeof         //  //
+#  endif //////////////////////////////  //
+                                         //
 #  define       __asm__ asm              //
 #  define       __ASM__ asm              //
 #  define           ASM asm              //
+                                         //
 # else //////////////////////////////////// IF  __GNUC__ (GCC) DEFINED
+                                         //
 #  define           asm __asm__          //
 #  define           ASM __asm__          //
 #  define       __ASM__ __asm__          //
 #  define    __INLINE__ __inline__       //
+#  define    __TYPEOF__ __typeof__       //
 #  define  __VOLATILE__ __volatile__     //
 # endif ///////////////////////////////////
 
@@ -379,7 +405,7 @@
 # define ABS(__IN_A__) (__IN_A__ < 0 ? __IN_A__ * -1 : __IN_A__)
 # define FREE(__FREE__) \
     ({\
-        VOID **__FREE_TEMP__ = (VOID **) &__FREE__;\
+        VOID **(__FREE_TEMP__) = (VOID **) &__FREE__;\
         *__FREE_TEMP__ = "";\
     })
 # define SIZEOF(__IN_S__) \
@@ -389,16 +415,19 @@
     })
 # define MAX(__A_MAX__, __B_MAX__) \
     ({\
-        TYPEOF (__A_MAX__) __A_MAX2__ = (__A_MAX__);\
-        TYPEOF (__B_MAX__) __B_MAX2__ = (__B_MAX__);\
+        TYPEOF(__A_MAX__) __A_MAX2__ = (__A_MAX__);\
+        TYPEOF(__B_MAX__) __B_MAX2__ = (__B_MAX__);\
         __A_MAX2__ > __B_MAX2__ ? __A_MAX2__ : __B_MAX2__;\
     })
 # define MIN(__A_MIN__, __B_MIN__) \
     ({\
-        TYPEOF (__A_MIN__) __A_MIN2__ = (__A_MIN__);\
-        TYPEOF (__B_MIN__) __B_MIN2__ = (__B_MIN__);\
+        TYPEOF(__A_MIN__) __A_MIN2__ = (__A_MIN__);\
+        TYPEOF(__B_MIN__) __B_MIN2__ = (__B_MIN__);\
         __A_MIN2__ < __B_MIN2__ ? __A_MIN2__ : __B_MIN2__;\
     })
+# define TYPECMP(__IS_SAME_TYPE_A__, __IS_SAME_TYPE_B__)  __BUILTIN_TYPES_COMPATIBLE_P(__TYPEOF__(__IS_SAME_TYPE_A__), __TYPEOF__(__IS_SAME_TYPE_B__))
+# define IS_ARRAY(__IS_ARRAY__) (!TYPECMP((__IS_ARRAY__), &(__IS_ARRAY__)[0]))
+# define IS_POINTER(__IS_POINTER__) (!IS_ARRAY(__IS_POINTER__))
 
  LONG LONG POW_INT                            (REGISTER LONG LONG NUMBER, REGISTER SIGNED INT POWER);
 
@@ -411,6 +440,7 @@
 
  CHAR     *SUBSTR             (CHAR CONST *STRING, REGISTER UNSIGNED INT START, REGISTER SIZE_T LEN);
  CHAR     *STRNSTR             (CONST CHAR *HAYSTACK, CONST CHAR *RESTRICT NEEDLE, CONST SIZE_T LEN);
+ CHAR     *STRJOIN                       (CONST CHAR **RESTRICT STRINGS, CHAR *RESTRICT JOIN_STRING);
  CHAR     *STRMAPI                           (CHAR CONST *STRING, CHAR (*FUNCT)(UNSIGNED INT, CHAR));
  CHAR     *STRTRIM                                      (CHAR CONST *STRING_1, CHAR CONST *STRING_2);
  CHAR     *STRCHR                                       (CONST CHAR *STRING, REGISTER INT CHARACTER);

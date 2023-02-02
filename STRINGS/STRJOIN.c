@@ -1,5 +1,5 @@
 /*════════════════════════════════════════╦═════════════════════════════╗
-║ C - GOTOXY                              ║       Maximum Tension       ║
+║ C - STRJOIN                             ║       Maximum Tension       ║
 ╠═════════════════════════════════════════╬═════════════════════════════╣
 ║                                         │      ▄▄▄            ▄▄▄     ║
 ║ Teoman Deniz                            │  ░    ░▒▓▒▄▄    ▄▄▒▓▒░    ░ ║
@@ -7,26 +7,46 @@
 ║                                         │  ░▒░    ░ ░░ ░ ░  ░  ░░░░▒░ ║
 ║ ╔───┬──────────────────╗                │   ░▒░░ ░▒░▒▓░▒░▒░░▓░░░▒▒▒░  ║
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
-║ ├───┴─────┬────────────┤ │ C 2023/01/25 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
+║ ├───┴─────┬────────────┤ │ C 2023/02/02 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
 ║ ╚─────────┴────────────╝ │ U 2023/02/02 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #include	"../#C_MT.h"
 
-#ifdef _WIN32
-VOID
-	GOTOXY(REGISTER INT X, REGISTER INT Y)
+CHAR
+	*STRJOIN(CONST CHAR **RESTRICT STRINGS, CHAR *RESTRICT JOIN_STRING)
 {
-	COORD COORD;
-	COORD.X = X;
-	COORD.Y = Y;
-	SET_CONSOLE_CURSOR_POSITION(GET_STD_HADNLE(STD_OUTPUT_HANDLE), COORD);
+	CHAR*        (RESULT);
+	REGISTER INT (X) = 0;
+	REGISTER INT (Y) = 0;
+
+	IF (!STRINGS || STRINGS == NULL || STRINGS[0] == NULL)
+		RETURN (NULL);
+
+	WHILE (STRINGS[X])
+	{
+		WHILE(STRINGS[X][Y])
+			Y++;
+
+		X++;
+	}
+
+	IF (!JOIN_STRING || JOIN_STRING == NULL)
+		JOIN_STRING = "";
+
+	RESULT = (CHAR *) MALLOC(Y + (STRLEN(JOIN_STRING) * X) + 1);
+
+	IF (!RESULT)
+		RETURN (NULL);
+
+	X = 0;
+	STRCPY(RESULT, STRINGS[0]);
+
+	WHILE (X++, STRINGS[X])
+	{
+		STRCAT(RESULT, JOIN_STRING);
+		STRCAT(RESULT, STRINGS[X]);
+	}
+	RETURN (RESULT);
 }
-#else
-VOID
-	GOTOXY(REGISTER INT X, REGISTER INT Y)
-{
-	PRINTF("%C[%D;%Df", 0X1B, Y, X);
-}
-#endif
