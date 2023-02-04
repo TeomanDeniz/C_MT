@@ -9,7 +9,7 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2023/01/18 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/01/31 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/02/05 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #include	"../#C_MT.h"
@@ -21,11 +21,11 @@ CHAR
 	REGISTER SIZE_T (LEN) = STRLEN(STRING_1) + STRLEN(STRING_2);
 
 	IF (!STRING_1 || !STRING_2)
-		RETURN (0);
+		RETURN (NULL);
 
 	RESULT = (CHAR *) MALLOC(SIZEOF(CHAR) * (LEN + 1));
 	IF (!RESULT)
-		RETURN (0);
+		RETURN (NULL);
 
 	STRLCPY(RESULT, STRING_1, STRLEN(STRING_1) + 1);
 	STRLCAT(RESULT, STRING_2, STRLEN(STRING_1) + STRLEN(STRING_2) + 1);
