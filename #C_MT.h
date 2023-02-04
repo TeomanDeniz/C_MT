@@ -9,7 +9,7 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2020/07/23 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/02/02 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/02/04 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 
@@ -450,7 +450,6 @@
  CHAR    **SPLIT                                                (CHAR CONST *STRING, CHAR CHARACTER);
  CHAR     *RELPACE_STRING                                       (CHAR* STRING, CHAR* OLD, CHAR* NEW);
  CHAR     *STRRCHR                                               (CONST CHAR *STRING, INT CHARACTER);
- CHAR     *GET_PATH                                                      (CONST UNSIGNED INT CHOICE);
  CHAR      UPPER_CASE                                                      (REGISTER CHAR CHARACTER);
  CHAR      LOWER_CASE                                                      (REGISTER CHAR CHARACTER);
  CHAR     *ITOA                                                                (REGISTER INT NUMBER);
@@ -475,8 +474,9 @@
 
  INT       STRNCMP (CONST CHAR *RESTRICT STRING_1, CONST CHAR *RESTRICT STRING_2, CONST SIZE_T SIZE);
  INT       MEMCMP                  (CONST VOID *OBJECT_1, CONST VOID *OBJECT_2, REGISTER SIZE_T LEN);
+ INT       STRCASECMP                 (CONST CHAR *RESTRICT STRING_1, CONST CHAR *RESTRICT STRING_2);
  INT       STRCMP                                       (CONST CHAR *STRING_1, CONST CHAR *STRING_2);
- INT       PRINTF_FD                                                 (INT FD, CONST CHAR *(__), ...);
+ INT       PRINTF_FD                                        (REGISTER INT FD, CONST CHAR *(__), ...);
  INT       STRLEN                                                      (CONST CHAR *RESTRICT STRING);
  INT       PRINTF                                                            (CONST CHAR *(__), ...);
  INT       ATOI                                                                 (CONST CHAR *STRING);

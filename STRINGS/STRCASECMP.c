@@ -1,5 +1,5 @@
 /*════════════════════════════════════════╦═════════════════════════════╗
-║ C - GET_PATH                            ║       Maximum Tension       ║
+║ C - STRCASECMP                          ║       Maximum Tension       ║
 ╠═════════════════════════════════════════╬═════════════════════════════╣
 ║                                         │      ▄▄▄            ▄▄▄     ║
 ║ Teoman Deniz                            │  ░    ░▒▓▒▄▄    ▄▄▒▓▒░    ░ ║
@@ -7,45 +7,22 @@
 ║                                         │  ░▒░    ░ ░░ ░ ░  ░  ░░░░▒░ ║
 ║ ╔───┬──────────────────╗                │   ░▒░░ ░▒░▒▓░▒░▒░░▓░░░▒▒▒░  ║
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
-║ ├───┴─────┬────────────┤ │ C 2022/12/07 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
+║ ├───┴─────┬────────────┤ │ C 2023/02/04 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/01/13 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/02/04 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #include	"../#C_MT.h"
-#include	<stdio.h>/*
-#  sprintf();
-*/
 
-CHAR
-	*GET_PATH(CONST UNSIGNED INT CHOICE)
+INT
+	STRCASECMP(CONST CHAR *RESTRICT STRING_1, CONST CHAR *RESTRICT STRING_2)
 {
+	REGISTER INT (COUNTER) = 0;
 
-	/*═══════════════════════════════════════╗
-	║ CHOICE 1 = __APP_NAME__ = "GET_PATH.c" ║
-	╠────────────────────────────────────────╣
-	║ CHOICE 2 = __APP_PATH__ = "C:/USERS/." ║
-	╚═══════════════════════════════════════*/
-
-	CHAR  (TMP)[1024];
-	CHAR (TMP2)[10000];
-	CHAR (TMP3)[10000];
-
-	GetModuleFileName(NULL, TMP, 1024-1);
-
-	CHAR *(__APP_NAME__) = strrchr(TMP, '\\')+1;
-
-	sprintf(TMP2, "%s####%s", TMP, __APP_NAME__);
-
-	sprintf(TMP3, "\\%s####%s", __APP_NAME__, __APP_NAME__);
-
-	CHAR *(__APP_PATH__) = RELPACE_STRING(TMP2, TMP3, "");
-
-	IF (CHOICE == 1)
-		RETURN (__APP_NAME__);
-
-	IF (CHOICE == 2)
-		RETURN (__APP_PATH__);
-
-	RETURN (0);
+	WHILE (STRING_1[COUNTER] != '\0' && STRING_2[COUNTER] != '\0' \
+		&& (STRING_1[COUNTER] == STRING_2[COUNTER] \
+		|| UPPER_CASE(STRING_1[COUNTER]) == STRING_2[COUNTER] \
+		|| LOWER_CASE(STRING_1[COUNTER]) == STRING_2[COUNTER]))
+		COUNTER++;
+	RETURN ((UNSIGNED CHAR)STRING_1[COUNTER] - (UNSIGNED CHAR)STRING_2[COUNTER]);
 }
