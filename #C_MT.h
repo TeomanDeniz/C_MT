@@ -466,8 +466,8 @@
  VOID      PUT_CHAR_FD                                             (CHAR CHARACTER, REGISTER INT FD);
  VOID      GOTOXY                                                   (REGISTER INT X, REGISTER INT Y);
  VOID      PUT_STR_FD                                                (CHAR *STRING, REGISTER INT FD);
- VOID     *MALLOC                                                       (REGISTER UNSIGNED INT SIZE);
  VOID      PUT_NUMBER                                                          (REGISTER INT NUMBER);
+ VOID     *MALLOC                                                                (REGISTER INT SIZE);
  VOID      PUT_CHAR                                                                 (CHAR CHARACTER);
  VOID      PUT_STR                                                                    (CHAR *STRING);
 

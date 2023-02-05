@@ -9,7 +9,7 @@
 # ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 # ║ ├───┴─────┬────────────┤ │ C 2022/11/15 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 # ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-# ║ ╚─────────┴────────────╝ │ U 2023/02/04 │       ░░░░▒░░▒░░░▒░░░░      ║
+# ║ ╚─────────┴────────────╝ │ U 2023/02/05 │       ░░░░▒░░▒░░░▒░░░░      ║
 # ╚══════════════════════════╩══════════════╩═════════════════════════════╝
 
 NAME		=	C_MT.a
@@ -64,13 +64,6 @@ fclean: clean
 		rm -f $(NAME) ; \
 		echo "" ; \
 		echo " $(shell tput setab 1)$(shell tput setaf 11)$(NAME)$(shell tput setaf 15) deleted$(shell tput sgr0)" ; \
-		echo "" ; \
-	fi;
-	@if [ -a $(MAIN) ]; \
-	then \
-		rm -f $(MAIN) ; \
-		echo "" ; \
-		echo " $(shell tput setab 1)$(shell tput setaf 11)$(MAIN)$(shell tput setaf 15) deleted$(shell tput sgr0)" ; \
 		echo "" ; \
 	fi;
 
