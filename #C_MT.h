@@ -433,6 +433,7 @@
 # define IS_POINTER(__IS_POINTER__) (!IS_ARRAY(__IS_POINTER__))
 
  SHORT INT BITLEN                                                (REGISTER UNSIGNED LONG LONG INPUT);
+ SHORT INT BITSIGN                                               (REGISTER UNSIGNED LONG LONG INPUT);
  SHORT INT BYTELEN                                               (REGISTER UNSIGNED LONG LONG INPUT);
 
  DOUBLE    POW                                            (DOUBLE NUMBER, REGISTER SIGNED INT POWER);
