@@ -1,5 +1,5 @@
 /*════════════════════════════════════════╦═════════════════════════════╗
-║ C - POW                                 ║       Maximum Tension       ║
+║ C - BYTELEN                             ║       Maximum Tension       ║
 ╠═════════════════════════════════════════╬═════════════════════════════╣
 ║                                         │      ▄▄▄            ▄▄▄     ║
 ║ Teoman Deniz                            │  ░    ░▒▓▒▄▄    ▄▄▒▓▒░    ░ ║
@@ -7,27 +7,26 @@
 ║                                         │  ░▒░    ░ ░░ ░ ░  ░  ░░░░▒░ ║
 ║ ╔───┬──────────────────╗                │   ░▒░░ ░▒░▒▓░▒░▒░░▓░░░▒▒▒░  ║
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
-║ ├───┴─────┬────────────┤ │ C 2023/01/18 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
+║ ├───┴─────┬────────────┤ │ C 2023/01/30 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
 ║ ╚─────────┴────────────╝ │ U 2023/02/08 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #include	"../#C_MT.h"
 
-DOUBLE
-	POW(DOUBLE NUMBER, REGISTER SIGNED INT POWER)
+SHORT INT
+	BYTELEN(REGISTER UNSIGNED LONG LONG INPUT)
 {
-	REGISTER SIGNED INT (COUNTER) = 1;
-	DOUBLE                    (X) = NUMBER;
+	REGISTER SHORT INT (COUNTER) = 0;
 
-	IF (POWER < 0 || (INT)NUMBER == 0)
-		RETURN (0);
+	IF (!INPUT || INPUT == 0)
+		RETURN (COUNTER);
 
-	IF (POWER == 0)
-		RETURN (1);
+	WHILE (INPUT > 0)
+	{
+		INPUT >>= 8;
+		COUNTER++;
+	}
 
-	WHILE (COUNTER++ < POWER)
-		NUMBER = NUMBER * X;
-
-	RETURN (NUMBER);
+	RETURN (COUNTER);
 }

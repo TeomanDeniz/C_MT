@@ -9,7 +9,7 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2020/07/23 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/02/05 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/02/08 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #ifndef C_MT_H
@@ -21,7 +21,9 @@
 # endif
 
 # include <time.h> /*
+# TIME(TIME_T VAR);
 # CLOCK();
+# TIME_T <VAR_T>;
 # CLOCK_T <VAR_T>;
 */
 
@@ -208,16 +210,19 @@
 # define       DO do
 # define       IF if
 
+# define  CLOCK_T clock_t
+# define   TIME_T time_t
+
 # define VA_START va_start
 # define  VA_COPY va_copy
 # define  VA_LIST va_list
-# define  CLOCK_T clock_t
 # define   VA_ARG va_arg
 # define   VA_END va_end
 # define    _OPEN open
 # define    CLOCK clock
 # define     EXIT exit
 # define     OPEN open
+# define     TIME time
 
 # ifndef _open
 #  define _open open
@@ -319,7 +324,6 @@
 # define      _DUP2 _dup2
 
 # define    SRANDOM srand
-# define     RANDOM rand
 # define      SRAND srand
 # define       RAND rand
 
@@ -428,9 +432,8 @@
 # define IS_ARRAY(__IS_ARRAY__) (!TYPECMP((__IS_ARRAY__), &(__IS_ARRAY__)[0]))
 # define IS_POINTER(__IS_POINTER__) (!IS_ARRAY(__IS_POINTER__))
 
- LONG LONG POW_INT                            (REGISTER LONG LONG NUMBER, REGISTER SIGNED INT POWER);
-
- SHORT INT GET_BYTE                                                       (REGISTER LONG LONG INPUT);
+ SHORT INT BITLEN                                                (REGISTER UNSIGNED LONG LONG INPUT);
+ SHORT INT BYTELEN                                               (REGISTER UNSIGNED LONG LONG INPUT);
 
  DOUBLE    POW                                            (DOUBLE NUMBER, REGISTER SIGNED INT POWER);
 
@@ -476,6 +479,7 @@
  INT       STRCASECMP                 (CONST CHAR *RESTRICT STRING_1, CONST CHAR *RESTRICT STRING_2);
  INT       STRCMP                                       (CONST CHAR *STRING_1, CONST CHAR *STRING_2);
  INT       PRINTF_FD                                        (REGISTER INT FD, CONST CHAR *(__), ...);
+ INT       RANDOM                                               (REGISTER INT MIN, REGISTER INT MAX);
  INT       STRLEN                                                      (CONST CHAR *RESTRICT STRING);
  INT       PRINTF                                                            (CONST CHAR *(__), ...);
  INT       ATOI                                                                 (CONST CHAR *STRING);
