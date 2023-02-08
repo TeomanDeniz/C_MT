@@ -22,7 +22,7 @@ SHORT INT
 	IF (!INPUT || INPUT == 0)
 		RETURN (COUNTER);
 
-	WHILE (INPUT > 0)
+	WHILE (INPUT != 0)
 	{
 		INPUT >>= 1;
 		COUNTER++;
