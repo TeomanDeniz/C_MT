@@ -9,13 +9,21 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2023/01/18 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/01/18 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/02/09 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #include	"../#C_MT.h"
 
+#ifdef __STDC__
 STATIC INLINE INT
 	CHARACTER_CHECKER(CONST CHAR *STRING, CHAR CHARACTER)
+#else
+STATIC INLINE INT
+	CHARACTER_CHECKER(STRING, CHARACTER)
+
+	CONST CHAR *(STRING);
+	CHAR     (CHARACTER);
+#endif
 {
 	REGISTER INT (COUNTER) = 0;
 
@@ -30,8 +38,16 @@ STATIC INLINE INT
 	RETURN (0);
 }
 
+#ifdef __STDC__
 CHAR
 	*STRTRIM(CHAR CONST *STRING_1, CHAR CONST *STRING_2)
+#else
+CHAR
+	*STRTRIM(STRING_1, STRING_2)
+
+	CHAR CONST *(STRING_1);
+	CHAR CONST *(STRING_2);
+#endif
 {
 	REGISTER INT (FIRST_INDEX) = 0;
 	REGISTER INT     (COUNTER) = 0;

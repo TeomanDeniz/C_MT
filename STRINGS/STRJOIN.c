@@ -9,13 +9,21 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2023/02/02 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/02/02 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/02/09 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #include	"../#C_MT.h"
 
+#ifdef __STDC__
 CHAR
 	*STRJOIN(CONST CHAR **RESTRICT STRINGS, CHAR *RESTRICT JOIN_STRING)
+#else
+CHAR
+	*STRJOIN(STRINGS, JOIN_STRING)
+
+	CONST CHAR **(STRINGS);
+	CHAR    *(JOIN_STRING);
+#endif
 {
 	CHAR*        (RESULT);
 	REGISTER INT (X) = 0;

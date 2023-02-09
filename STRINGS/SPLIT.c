@@ -9,13 +9,21 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2022/11/15 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/01/13 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/02/09 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #include	"../#C_MT.h"
 
+#ifdef __STDC__
 STATIC INLINE INT
 	COUNT_WORDS(CHAR CONST *STRING, CHAR CHARACTER)
+#else
+STATIC INLINE INT
+	COUNT_WORDS(STRING, CHARACTER)
+
+	CHAR CONST *(STRING);
+	CHAR     (CHARACTER);
+#endif
 {
 	REGISTER INT (COUNTER) = 0;
 	REGISTER INT  (RESULT) = 0;
@@ -36,8 +44,18 @@ STATIC INLINE INT
 	RETURN (RESULT);
 }
 
+#ifdef __STDC__
 STATIC INLINE CHAR
 	*MAKE_WORDS(CHAR *WORD, CHAR CONST *STRING, INT COUNT_2, INT LINE)
+#else
+STATIC INLINE CHAR
+	*MAKE_WORDS(WORD, STRING, COUNT_2, LINE)
+
+	CHAR         *(WORD);
+	CHAR CONST *(STRING);
+	INT        (COUNT_2);
+	INT           (LINE);
+#endif
 {
 	REGISTER INT (COUNTER) = 0;
 
@@ -48,8 +66,18 @@ STATIC INLINE CHAR
 	RETURN (WORD);
 }
 
+#ifdef __STDC__
 STATIC INLINE CHAR
 	**SPLIT_WORDS(CHAR **RESULT, CHAR CONST *STRING, CHAR CHARACTER, INT COUNTER)
+#else
+STATIC INLINE CHAR
+	**SPLIT_WORDS(RESULT, STRING, CHARACTER, COUNTER)
+
+	CHAR      **(RESULT);
+	CHAR CONST *(STRING);
+	CHAR     (CHARACTER);
+	INT        (COUNTER);
+#endif
 {
 	REGISTER INT (COUNT_1) = 0;
 	REGISTER INT (COUNT_2) = 0;
@@ -80,8 +108,16 @@ STATIC INLINE CHAR
 	RETURN (RESULT);
 }
 
+#ifdef __STDC__
 CHAR
 	**SPLIT(CHAR CONST *STRING, CHAR CHARACTER)
+#else
+CHAR
+	**SPLIT(STRING, CHARACTER)
+
+	CHAR CONST *(STRING);
+	CHAR     (CHARACTER);
+#endif
 {
 	REGISTER INT (COUNTER) = COUNT_WORDS(STRING, CHARACTER);
 	CHAR        **(RESULT) = (CHAR **) MALLOC(SIZEOF(CHAR *) * (COUNTER + 1));

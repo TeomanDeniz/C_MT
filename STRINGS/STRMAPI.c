@@ -9,13 +9,21 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2023/01/18 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/01/18 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/02/09 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #include	"../#C_MT.h"
 
+#ifdef __STDC__
 CHAR
-	*STRMAPI(CHAR CONST *STRING, CHAR (*FUNCT)(UNSIGNED INT, CHAR))
+	*STRMAPI(CHAR CONST *STRING, CHAR (*FUNCTION)(UNSIGNED INT, CHAR))
+#else
+CHAR
+	*STRMAPI(STRING, FUNCTION)
+
+	CHAR CONST *(STRING);
+	CHAR   (*FUNCTION)();
+#endif
 {
 	REGISTER UNSIGNED INT (COUNTER) = 0;
 	CHAR                  *(RESULT);
@@ -29,7 +37,7 @@ CHAR
 
 	WHILE (STRING[COUNTER])
 	{
-		RESULT[COUNTER] = FUNCT(COUNTER, STRING[COUNTER]);
+		RESULT[COUNTER] = FUNCTION(COUNTER, STRING[COUNTER]);
 		COUNTER++;
 	}
 

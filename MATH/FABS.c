@@ -1,5 +1,5 @@
 /*════════════════════════════════════════╦═════════════════════════════╗
-║ C - STRRCHR                             ║       Maximum Tension       ║
+║ C - FABS                                ║       Maximum Tension       ║
 ╠═════════════════════════════════════════╬═════════════════════════════╣
 ║                                         │      ▄▄▄            ▄▄▄     ║
 ║ Teoman Deniz                            │  ░    ░▒▓▒▄▄    ▄▄▒▓▒░    ░ ║
@@ -7,7 +7,7 @@
 ║                                         │  ░▒░    ░ ░░ ░ ░  ░  ░░░░▒░ ║
 ║ ╔───┬──────────────────╗                │   ░▒░░ ░▒░▒▓░▒░▒░░▓░░░▒▒▒░  ║
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
-║ ├───┴─────┬────────────┤ │ C 2023/01/18 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
+║ ├───┴─────┬────────────┤ │ C 2023/02/09 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
 ║ ╚─────────┴────────────╝ │ U 2023/02/09 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
@@ -15,25 +15,16 @@
 #include	"../#C_MT.h"
 
 #ifdef __STDC__
-CHAR
-	*STRRCHR(CONST CHAR *STRING, REGISTER INT CHARACTER)
+DOUBLE
+	FABS(DOUBLE NUMBER)
 #else
-CHAR
-	*STRRCHR(STRING, CHARACTER)
+DOUBLE
+	FABS(NUMBER)
 
-	CONST CHAR     *(STRING);
-	REGISTER INT (CHARACTER);
+	DOUBLE (NUMBER);
 #endif
 {
-	REGISTER INT (COUNTER) = STRLEN(STRING);
-
-	WHILE (COUNTER >= 0)
-	{
-		IF (STRING[COUNTER] == (CHAR)CHARACTER)
-			RETURN ((CHAR *)(STRING + COUNTER));
-
-		COUNTER--;
-	}
-
-	RETURN (0);
+	IF (NUMBER < 0)
+		RETURN (NUMBER * -1);
+	RETURN (NUMBER);
 }

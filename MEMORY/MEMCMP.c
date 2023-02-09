@@ -9,13 +9,22 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2023/01/18 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/01/25 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/02/09 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #include	"../#C_MT.h"
 
+#ifdef __STDC__
 INT
 	MEMCMP(CONST VOID *OBJECT_1, CONST VOID *OBJECT_2, REGISTER SIZE_T LEN)
+#else
+INT
+	MEMCMP(OBJECT_1, OBJECT_2, LEN)
+
+	CONST VOID *(OBJECT_1);
+	CONST VOID *(OBJECT_2);
+	REGISTER SIZE_T  (LEN);
+#endif
 {
 	REGISTER SIZE_T (COUNTER) = 0;
 	UNSIGNED CHAR *(BUFFER_1) = (UNSIGNED CHAR *)OBJECT_1;

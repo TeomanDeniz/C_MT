@@ -16,8 +16,16 @@
 
 #ifdef _WIN32
 
+#ifdef __STDC__
 VOID
 	GOTOXY(REGISTER INT X, REGISTER INT Y)
+#else
+VOID
+	GOTOXY(X, Y)
+
+	REGISTER INT (X);
+	REGISTER INT (Y);
+#endif
 {
 	COORD COORD;
 	COORD.X = X;
@@ -27,8 +35,16 @@ VOID
 
 #else
 
+#ifdef __STDC__
 VOID
 	GOTOXY(REGISTER INT X, REGISTER INT Y)
+#else
+VOID
+	GOTOXY(X, Y)
+
+	REGISTER INT (X);
+	REGISTER INT (Y);
+#endif
 {
 	PRINTF("%C[%D;%Df", 0X1B, Y, X);
 }

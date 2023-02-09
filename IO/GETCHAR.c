@@ -9,15 +9,22 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2022/12/07 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/01/13 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/02/09 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #include	"../#C_MT.h"
 
 #ifndef __TINYC__
+
 # ifdef _WIN32
+
+#  ifdef __STDC__
 INT
 	GETCHAR(VOID)
+#  else
+INT
+	GETCHAR()
+#  endif
 {
 	INT (INPUT) = 0;
 	__ASM__ __VOLATILE__ (
@@ -29,22 +36,37 @@ INT
 	);
 	RETURN (INPUT);
 }
+
 # else
+
+#  ifdef __STDC__
 INT
 	GETCHAR(VOID)
+#  else
+INT
+	GETCHAR()
+#  endif
 {
 	CHAR (CHARACTER);
 	READ(0, &CHARACTER, 1);
 	RETURN (CHARACTER);
 }
+
 # endif
 
 #else
+
+# ifdef __STDC__
 INT
 	GETCHAR(VOID)
+# else
+INT
+	GETCHAR()
+# endif
 {
 	CHAR (CHARACTER);
 	READ(0, &CHARACTER, 1);
 	RETURN (CHARACTER);
 }
+
 #endif

@@ -9,18 +9,25 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2021/04/16 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/02/05 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/02/09 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #include	"../#C_MT.h"
 
+#ifdef __STDC__
 INT
 	STRLEN(CONST CHAR *RESTRICT STRING)
+#else
+INT
+	STRLEN(STRING)
+
+	CONST CHAR *(STRING);
+#endif
 {
-    REGISTER INT (COUNTER) = 0;
+	REGISTER INT (COUNTER) = 0;
 
-    WHILE (STRING[COUNTER])
-        COUNTER++;
+	WHILE (STRING[COUNTER])
+		COUNTER++;
 
-    RETURN (COUNTER);
+	RETURN (COUNTER);
 }

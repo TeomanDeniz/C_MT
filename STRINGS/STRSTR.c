@@ -9,13 +9,21 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2022/11/15 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/01/13 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/02/09 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #include	"../#C_MT.h"
 
+#ifdef __STDC__
 CHAR
 	*STRSTR(CHAR *STRING, CHAR *RESTRICT SUB_STRING)
+#else
+CHAR
+	*STRSTR(STRING, SUB_STRING)
+
+	CHAR     *(STRING);
+	CHAR *(SUB_STRING);
+#endif
 {
 	CHAR *(TMP_STR) = STRING;
 	CHAR *(SUB_STR) = SUB_STRING;

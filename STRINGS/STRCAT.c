@@ -9,13 +9,21 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2023/01/18 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/02/05 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/02/09 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #include	"../#C_MT.h"
 
+#ifdef __STDC__
 CHAR
 	*STRCAT(CHAR CONST *STRING_1, CONST CHAR *STRING_2)
+#else
+CHAR
+	*STRCAT(STRING_1, STRING_2)
+
+	CHAR CONST *(STRING_1);
+	CONST CHAR *(STRING_2);
+#endif
 {
 	CHAR        *(RESULT);
 	REGISTER SIZE_T (LEN) = STRLEN(STRING_1) + STRLEN(STRING_2);

@@ -9,19 +9,26 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2022/11/15 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/01/13 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/02/09 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #include	"../#C_MT.h"
 
+#ifdef __STDC__
 CHAR
 	*STRNSTR(CONST CHAR *HAYSTACK, CONST CHAR *RESTRICT NEEDLE, CONST SIZE_T LEN)
+#else
+CHAR
+	*STRNSTR(HAYSTACK, RESTRICT NEEDLE, LEN)
+
+	CONST CHAR *(HAYSTACK);
+	CONST CHAR   *(NEEDLE);
+	CONST SIZE_T     (LEN);
+#endif
 {
 	REGISTER SIZE_T    (C1) = 0;
 	REGISTER SIZE_T    (C2) = 0;
-	REGISTER SIZE_T (N_LEN) = 0;
-
-	N_LEN = STRLEN(NEEDLE);
+	REGISTER SIZE_T (N_LEN) = STRLEN(NEEDLE);
 
 	IF (HAYSTACK == NULL)
 		RETURN (NULL);

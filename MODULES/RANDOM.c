@@ -9,7 +9,7 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2023/02/08 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/02/08 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/02/09 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #include	"../#C_MT.h"
@@ -22,8 +22,16 @@ TYPEDEF UNION U_CAST
 	UNSIGNED LONG	INTEGER;
 }				T_CAST;
 
+# ifdef __STDC__
 INT
 	RANDOM(REGISTER INT MIN, REGISTER INT MAX)
+# else
+INT
+	RANDOM(MIN, MAX)
+
+	REGISTER INT (MIN);
+	REGISTER INT (MAX);
+# endif
 {
 	STATIC UNSIGNED LONG (ADDRESS);
 	STATIC INT              (SEED);
@@ -50,8 +58,16 @@ INT
 
 #else
 
+# ifdef __STDC__
 INT
 	RANDOM(REGISTER INT MIN, REGISTER INT MAX)
+# else
+INT
+	RANDOM(MIN, MAX)
+
+	REGISTER INT (MIN);
+	REGISTER INT (MAX);
+# endif
 {
 	REGISTER LONG (SEED);
 
