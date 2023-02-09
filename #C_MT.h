@@ -9,7 +9,7 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2020/07/23 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/02/08 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/02/09 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #ifndef C_MT_H
@@ -236,42 +236,73 @@
 #  define __BUILTIN_CONSTANT_P __builtin_constant_p
 # endif
 
-# ifndef __GNUC__ ///////////////////////// IF NOT DEFINED __GNUC__ (GCC)
-                                         //
-#  ifdef __volatile__ /////////////////  //
-#   define __VOLATILE__ __volatile__ //  //
-#  else                              //  //
-#   define __VOLATILE__ volatile     //  //
-#   define __volatile__ volatile     //  //
-#  endif //////////////////////////////  //
-                                         //
-#  ifdef __inline__ ///////////////////  //
-#   define __INLINE__ __inline__     //  //
-#  else                              //  //
-#   define __INLINE__ inline         //  //
-#   define __inline__ inline         //  //
-#  endif //////////////////////////////  //
-                                         //
-#  ifdef __typeof__ ///////////////////  //
-#   define __TYPEOF__ __typeof__     //  //
-#  else                              //  //
-#   define __TYPEOF__ typeof         //  //
-#   define __typeof__ typeof         //  //
-#  endif //////////////////////////////  //
-                                         //
-#  define       __asm__ asm              //
-#  define       __ASM__ asm              //
-#  define           ASM asm              //
-                                         //
-# else //////////////////////////////////// IF  __GNUC__ (GCC) DEFINED
-                                         //
-#  define           asm __asm__          //
-#  define           ASM __asm__          //
-#  define       __ASM__ __asm__          //
-#  define    __INLINE__ __inline__       //
-#  define    __TYPEOF__ __typeof__       //
-#  define  __VOLATILE__ __volatile__     //
-# endif ///////////////////////////////////
+# ifndef __GNUC__ /////////////////////////// IF NOT DEFINED __GNUC__ (GCC)
+                                           //
+#  ifdef __volatile__ ///////////////////  //
+#   define  __VOLATILE__ __volatile__  //  //
+#  else                                //  //
+#   define  __VOLATILE__ volatile      //  //
+#   define  __volatile__ volatile      //  //
+#  endif ////////////////////////////////  //
+                                           //
+#  ifdef __inline__ /////////////////////  //
+#   define    __INLINE__ __inline__    //  //
+#  else                                //  //
+#   define    __INLINE__ inline        //  //
+#   define    __inline__ inline        //  //
+#  endif ////////////////////////////////  //
+                                           //
+#  ifdef __typeof__ /////////////////////  //
+#   define    __TYPEOF__ __typeof__    //  //
+#  else                                //  //
+#   define    __TYPEOF__ typeof        //  //
+#   define    __typeof__ typeof        //  //
+#  endif ////////////////////////////////  //
+                                           //
+#  ifdef __alignof__ ////////////////////  //
+#   define   __ALIGNOF__ __alignof__   //  //
+#   define     DLLEXPORT dllexport     //  //
+#   define      NORETURN noreturn      //  //
+#   define       ALIGNED aligned       //  //
+#   define       REGPARM regparm       //  //
+#   define       SECTION section       //  //
+#   define       STDCALL stdcall       //  //
+#   define        PACKED packed        //  //
+#   define        UNUSED unused        //  //
+#   define         CDECL cdecl         //  //
+#  endif ////////////////////////////////  //
+                                           //
+#  ifdef __attribute__ //////////////////  //
+#   define __ATTRIBUTE__ __attribute__ //  //
+#  endif ////////////////////////////////  //
+                                           //
+#  ifdef asm                               //
+#   define       __asm__ asm               //
+#   define       __ASM__ asm               //
+#   define           ASM asm               //
+#  endif                                   //
+                                           //
+# else ////////////////////////////////////// IF  __GNUC__ (GCC) DEFINED
+                                           //
+#  define            asm __asm__           //
+#  define            ASM __asm__           //
+#  define        __ASM__ __asm__           //
+#  define     __INLINE__ __inline__        //
+#  define     __TYPEOF__ __typeof__        //
+#  define    __ALIGNOF__ __alignof__       //
+#  define   __VOLATILE__ __volatile__      //
+#  define  __ATTRIBUTE__ __attribute__     //
+#  define      DLLEXPORT dllexport         //
+#  define       NORETURN noreturn          //
+#  define        ALIGNED aligned           //
+#  define        REGPARM regparm           //
+#  define        SECTION section           //
+#  define        STDCALL stdcall           //
+#  define         PACKED packed            //
+#  define         UNUSED unused            //
+#  define          CDECL cdecl             //
+                                           //
+# endif /////////////////////////////////////
 
 # ifndef NULL
 #  define NULL ((VOID *)0)
