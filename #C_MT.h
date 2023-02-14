@@ -9,7 +9,7 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2020/07/23 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/02/09 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/02/14 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #ifndef C_MT_H
@@ -304,6 +304,32 @@ extern "C" { // C++
                                            //
 # endif /////////////////////////////////////
 
+/////////////////////
+# define and_eq &= //
+# define bitand &  //
+# define not_eq != //
+# define xor_eq ^= //
+# define  bitor |  //
+# define  compl ~  //
+# define  or_eq |= //
+# define    and && //
+# define    not !  //
+# define    xor ^  //
+# define     or || //
+///////////////////// ISO646 C95
+# define AND_EQ &= //
+# define BITAND &  //
+# define NOT_EQ != //
+# define XOR_EQ ^= //
+# define  BITOR |  //
+# define  COMPL ~  //
+# define  OR_EQ |= //
+# define    AND && //
+# define    NOT !  //
+# define    XOR ^  //
+# define     OR || //
+/////////////////////
+
 # ifndef NULL
 #  define NULL ((VOID *)0)
 # endif
@@ -416,6 +442,15 @@ extern "C" { // C++
 # ifndef ULONG_MAX
 #  define ULONG_MAX 18446744073709551615
 # endif
+# ifndef LLONG_MAX
+#  define LLONG_MAX 9223372036854775807
+# endif
+# ifndef LLONG_MIN
+#  define LLONG_MIN (-9223372036854775808)
+# endif
+# ifndef ULLONG_MAX
+#  define ULLONG_MAX 18446744073709551615
+# endif
 # ifndef CHAR_BIT
 #  define CHAR_BIT 8
 # endif
@@ -423,6 +458,9 @@ extern "C" { // C++
 # ifndef MB_LEN_MAX
 #  define MB_LEN_MAX 1
 # endif
+
+# define PI 3.14159265358979323846
+# define pi 3.14159265358979323846
 
 # define NOT_INITIALIZED_PROPERLY 0xC0000142 // The application failed to initialize properly. Indicates that the application has been launched on a Desktop to which the current user has no access rights. Another possible cause is that either gdi32.dll or user32.dll has failed to initialize.
 # define        PROGRAM_NOT_FOUND 9009 //////// Program is not recognized as an internal or external command, operable program or batch file. Indicates that command, application name or path has been misspelled when configuring the Action.
@@ -470,7 +508,10 @@ extern "C" { // C++
   SHORT INT BYTELEN                                               (REGISTER UNSIGNED LONG LONG INPUT);
 
   DOUBLE    POW                                            (DOUBLE NUMBER, REGISTER SIGNED INT POWER);
+  DOUBLE    FMOD                                                                 (DOUBLE X, DOUBLE Y);
   DOUBLE    FABS                                                                      (DOUBLE NUMBER);
+  DOUBLE    COS                                                                            (DOUBLE X);
+  DOUBLE    SIN                                                                            (DOUBLE X);
 
   SIZE_T    STRLCAT                   (CHAR *DST, CONST CHAR *RESTRICT SRC, REGISTER SIZE_T DST_SIZE);
   SIZE_T    STRLCPY                                (CHAR *DST, CONST CHAR *SRC, REGISTER SIZE_T SIZE);
@@ -527,7 +568,10 @@ extern "C" { // C++
   SHORT INT BITLEN         ();
 
   DOUBLE    FABS           ();
+  DOUBLE    FMOD           ();
+  DOUBLE    COS            ();
   DOUBLE    POW            ();
+  DOUBLE    SIN            ();
 
   SIZE_T    STRLCAT        ();
   SIZE_T    STRLCPY        ();
