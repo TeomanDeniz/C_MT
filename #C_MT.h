@@ -505,12 +505,15 @@ extern "C" { // C++
   SHORT INT BITSIGN                                               (REGISTER UNSIGNED LONG LONG INPUT);
   SHORT INT BYTELEN                                               (REGISTER UNSIGNED LONG LONG INPUT);
 
-  DOUBLE    POW                                   (REGISTER DOUBLE NUMBER, REGISTER SIGNED INT POWER);
+  DOUBLE    POW                                        (REGISTER DOUBLE X, REGISTER SIGNED INT POWER);
   DOUBLE    FMOD                                               (REGISTER DOUBLE X, REGISTER DOUBLE Y);
   DOUBLE    ATOF                                                        (CONST CHAR *RESTRICT STRING);
-  DOUBLE    FABS                                                             (REGISTER DOUBLE NUMBER);
   DOUBLE    COS                                                                   (REGISTER DOUBLE X);
+  DOUBLE    FABS                                                                  (REGISTER DOUBLE X);
+  DOUBLE    LOG                                                                   (REGISTER DOUBLE X);
+  DOUBLE    LOG10                                                                 (REGISTER DOUBLE X);
   DOUBLE    SIN                                                                   (REGISTER DOUBLE X);
+  DOUBLE    SQRT                                                                  (REGISTER DOUBLE X);
 
   SIZE_T    STRLCAT                   (CHAR *DST, CONST CHAR *RESTRICT SRC, REGISTER SIZE_T DST_SIZE);
   SIZE_T    STRLCPY                                (CHAR *DST, CONST CHAR *SRC, REGISTER SIZE_T SIZE);
@@ -569,7 +572,10 @@ extern "C" { // C++
   DOUBLE    ATOF           ();
   DOUBLE    FABS           ();
   DOUBLE    FMOD           ();
+  DOUBLE    SQRT           ();
   DOUBLE    COS            ();
+  DOUBLE    LOG            ();
+  DOUBLE    LOG10          ();
   DOUBLE    POW            ();
   DOUBLE    SIN            ();
 
