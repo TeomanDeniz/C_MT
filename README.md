@@ -3,35 +3,36 @@
 <P ALIGN="CENTER">A library for C Language that's make you able to use all keywords uppercase and most of functions written from scratch</P>
 
 # KEYWORDS
-| TYPES            | COMMANDS       | LIST  TYPES |
-| ---------------- | -------------- | ----------- |
-| \_\_VOLATILE\_\_ | \_\_TYPEOF\_\_ | TYPEDEF     |
-| \_\_INLINE\_\_   | CONTINUE       | STRUCT      |
-| UNSIGNED         | \_\_ASM\_\_    | UNION       |
-| REGISTER         | DEFAULT        | BOOL        |
-| RESTRICT         | RETURN         | ENUM        |
-| VOLATILE         | SWITCH         |             |
-| __INT64          | TYPEOF         |             |
-| DOUBLE           | BREAK          |             |
-| EXTERN           | WHILE          |             |
-| SIGNED           | ELSE           |             |
-| SIZE_T           | CASE           |             |
-| STATIC           | GOTO           |             |
-| INLINE           | ASM            |             |
-| CONST            | FOR            |             |
-| FLOAT            | DO             |             |
-| INT16            | IF             |             |
-| SHORT            |                |             |
-| AUTO             |                |             |
-| CHAR             |                |             |
-| LONG             |                |             |
-| VOID             |                |             |
-| INT              |                |             |
+| TYPES            | COMMANDS       | LIST TYPES  | SETTINGS          |
+| ---------------- | -------------- | ----------- | ----------------- |
+| \_\_VOLATILE\_\_ | \_\_TYPEOF\_\_ | TYPEDEF     | \_\_ATTRIBUTE\_\_ |
+| \_\_INLINE\_\_   | CONTINUE       | STRUCT      | \_\_EXTENSION\_\_ |
+| UNSIGNED         | \_\_ASM\_\_    | UNION       |                   |
+| REGISTER         | DEFAULT        | BOOL        |                   |
+| RESTRICT         | RETURN         | ENUM        |                   |
+| VOLATILE         | SWITCH         |             |                   |
+| __INT64          | TYPEOF         |             |                   |
+| DOUBLE           | BREAK          |             |                   |
+| EXTERN           | WHILE          |             |                   |
+| SIGNED           | ELSE           |             |                   |
+| SIZE_T           | CASE           |             |                   |
+| STATIC           | GOTO           |             |                   |
+| INLINE           | ASM            |             |                   |
+| CONST            | FOR            |             |                   |
+| FLOAT            | DO             |             |                   |
+| INT16            | IF             |             |                   |
+| SHORT            |                |             |                   |
+| AUTO             |                |             |                   |
+| CHAR             |                |             |                   |
+| LONG             |                |             |                   |
+| VOID             |                |             |                   |
+| INT              |                |             |                   |
 
 # FUNCTIONS
 | FUNCTION OUTPUT | FUNCTION NAMES                                                                               | PARAMETER FUNCTION GETS                             | DESCRIPTION                                                          |
 | --------------- | -------------------------------------------------------------------------------------------- | --------------------------------------------------- | -------------------------------------------------------------------- |
 | `{ALL TYPES}`   | **[ABS](https://github.com/TeomanDeniz/C_MT/blob/main/%23C_MT.h#L439)**                      | `{ALL TYPES}` NUMBER                                | CONVERTS `NUMBER` TO POSITIVE IF NEGATIVE                            |
+| `DOUBLE`        | **[ATOF](https://github.com/TeomanDeniz/C_MT/blob/main/STRINGS/ATOF.c)**                     | `CHAR *` STRING                                     | CONVERTS `STRING` TO FLOAT POINT NUMBER                              |
 | `INT`           | **[ATOI](https://github.com/TeomanDeniz/C_MT/blob/main/STRINGS/ATOI.c)**                     | `CHAR *` STRING                                     | CONVERTS `STRING` TO NUMBER                                          |
 | `SHORT INT`     | **[BITLEN](https://github.com/TeomanDeniz/C_MT/blob/main/MEMORY/BITLEN.c)**                  | `LONG LONG` INPUT                                   | COUNTS HOW MANY BITS VARIABLE USING                                  |
 | `INT`           | **[BITSIGN](https://github.com/TeomanDeniz/C_MT/blob/main/MEMORY/BITSIGN.c)**                | `LONG LONG` INPUT                                   | CHECK IF THE SIGN BIT IS `1` OR `0` (AKA: THE LAST BIT IN THE BYTE)  |

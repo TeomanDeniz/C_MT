@@ -1,5 +1,5 @@
 /*════════════════════════════════════════╦═════════════════════════════╗
-║ C - COS                                 ║       Maximum Tension       ║
+║ C - ATOF                                ║       Maximum Tension       ║
 ╠═════════════════════════════════════════╬═════════════════════════════╣
 ║                                         │      ▄▄▄            ▄▄▄     ║
 ║ Teoman Deniz                            │  ░    ░▒▓▒▄▄    ▄▄▒▓▒░    ░ ║
@@ -7,7 +7,7 @@
 ║                                         │  ░▒░    ░ ░░ ░ ░  ░  ░░░░▒░ ║
 ║ ╔───┬──────────────────╗                │   ░▒░░ ░▒░▒▓░▒░▒░░▓░░░▒▒▒░  ║
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
-║ ├───┴─────┬────────────┤ │ C 2023/02/14 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
+║ ├───┴─────┬────────────┤ │ C 2023/02/19 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
 ║ ╚─────────┴────────────╝ │ U 2023/02/19 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
@@ -15,26 +15,56 @@
 #include	"../#C_MT.h"
 
 #ifdef __STDC__
-DOUBLE
-	COS(REGISTER DOUBLE X)
+STATIC INLINE INT
+	NUMBER_LEN(REGISTER INT NUMBER)
 #else
-DOUBLE
-	COS(X)
+STATIC INLINE INT
+	NUMBER_LEN(NUMBER)
 
-	REGISTER DOUBLE (X);
+	REGISTER INT NUMBER;
 #endif
 {
-	REGISTER DOUBLE (RESULT) = 1.0;
-	REGISTER DOUBLE   (TERM) = 1.0;
-	REGISTER INT   (COUNTER) = 0;
+	REGISTER INT (COUNTER) = -1;
 
-	X = FMOD(X, 2 * PI);
+	WHILE (++COUNTER, NUMBER)
+		NUMBER /= 10;
+	RETURN (COUNTER);
+}
 
-	WHILE (COUNTER++, FABS(TERM) > 1E-15)
+#ifdef __STDC__
+DOUBLE
+	ATOF(CONST CHAR *RESTRICT STRING)
+#else
+DOUBLE
+	ATOF(STRING)
+
+	CONST CHAR *STRING;
+#endif
+{
+	REGISTER INT (FRICTION) = 1;
+	REGISTER INT  (INTEGER) = 0;
+	REGISTER DOUBLE  (SIGN) = 1;
+	REGISTER INT        (X) = 0;
+
+	WHILE (STRING[X] == ' ' || (STRING[X] <= 13 && STRING[X] >= 9))
+		X++;
+
+	IF (STRING[X] == '-')
 	{
-		TERM = -TERM * X * X / (2 * COUNTER - 1) / (2 * COUNTER);
-		RESULT += TERM;
+		SIGN *= -1;
+		X++;
 	}
 
-	RETURN (RESULT);
+	WHILE (++X, STRING[X - 1] != '.' && STRING[X - 1] && STRING[X - 1] >= '0' && STRING[X - 1] <= '9')
+		INTEGER = (10 * INTEGER) + (STRING[X - 1] & 0B1111);
+
+	WHILE (++X, STRING[X - 1] && STRING[X - 1] >= '0' && STRING[X - 1] <= '9')
+		FRICTION = (10 * FRICTION) + (STRING[X - 1] & 0B1111);
+
+	X = NUMBER_LEN(FRICTION) - 1;
+
+	IF (--FRICTION, FRICTION == 0)
+		RETURN ((DOUBLE)INTEGER * SIGN);
+
+	RETURN ((((DOUBLE)INTEGER) + ((DOUBLE)FRICTION / POW(10, X))) * SIGN);
 }

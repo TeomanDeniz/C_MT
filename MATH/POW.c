@@ -9,24 +9,24 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2023/01/18 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/02/09 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/02/19 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #include	"../#C_MT.h"
 
 #ifdef __STDC__
 DOUBLE
-	POW(DOUBLE NUMBER, REGISTER SIGNED INT POWER)
+	POW(REGISTER DOUBLE NUMBER, REGISTER SIGNED INT POWER)
 #else
 DOUBLE
 	POW(NUMBER, POWER)
 
-	DOUBLE             (NUMBER);
-	REGISTER SIGNED INT (POWER);
+	REGISTER LONG DOUBLE (NUMBER);
+	REGISTER SIGNED INT   (POWER);
 #endif
 {
 	REGISTER SIGNED INT (COUNTER) = 1;
-	DOUBLE                    (X) = NUMBER;
+	REGISTER LONG DOUBLE      (X) = NUMBER;
 
 	IF (POWER < 0 || (INT)NUMBER == 0)
 		RETURN (0);

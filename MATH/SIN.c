@@ -9,24 +9,24 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2023/02/14 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/02/14 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/02/19 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #include	"../#C_MT.h"
 
 #ifdef __STDC__
 DOUBLE
-	SIN(DOUBLE X)
+	SIN(REGISTER DOUBLE X)
 #else
 DOUBLE
 	SIN(X)
 
-	DOUBLE (X);
+	REGISTER DOUBLE (X);
 #endif
 {
-	DOUBLE        (RESULT);
-	DOUBLE          (TERM);
-	REGISTER INT (COUNTER) = 3;
+	REGISTER DOUBLE (RESULT);
+	REGISTER DOUBLE   (TERM);
+	REGISTER INT   (COUNTER) = 3;
 
 	X = FMOD(X, 2 * PI);
 	TERM = X;

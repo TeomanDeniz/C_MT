@@ -9,7 +9,7 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2020/07/23 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/02/14 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/02/19 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #ifndef C_MT_H
@@ -19,6 +19,14 @@
 # ifdef __cplusplus
 #  define __CPLUSPLUS __cplusplus
 extern "C" { // C++
+# endif
+
+# ifdef __x86_64__
+#  define __X86_64__  __x86_64__
+# endif
+
+# ifdef __ppc64__
+#  define __PPC64__   __ppc64__
 # endif
 
 # include <time.h> /*
@@ -163,6 +171,12 @@ extern "C" { // C++
 #  undef INT
 # endif
 
+# define  TYPEDEF typedef
+# define   STRUCT strcut
+# define    UNION union
+# define     BOOL bool
+# define     ENUM enum
+
 # define REGISTER register
 # define RESTRICT restrict
 # define UNSIGNED unsigned
@@ -190,12 +204,6 @@ extern "C" { // C++
 #  define __int64 long
 # endif
 # define   SIZE_T unsigned int
-
-# define  TYPEDEF typedef
-# define   STRUCT strcut
-# define    UNION union
-# define     BOOL bool
-# define     ENUM enum
 
 # define CONTINUE continue
 # define  DEFAULT default
@@ -239,49 +247,29 @@ extern "C" { // C++
 
 # ifndef __GNUC__ /////////////////////////// IF NOT DEFINED __GNUC__ (GCC)
                                            //
-#  ifdef __volatile__ ///////////////////  //
+#  define    __ALIGNOF__ __alignof__       //
+#  define     __INLINE__ inline            //
+#  define     __inline__ inline            //
+                                           //
+#  ifdef __TINYC__ //////////////////////  //
+                                       //  //
 #   define  __VOLATILE__ __volatile__  //  //
-#  else                                //  //
+#   define    __TYPEOF__ __typeof__    //  //
+#   define       __ASM__ __asm__       //  //
+#   define           asm __asm__       //  //
+#   define           ASM __asm__       //  //
+                                       //  //
+#  else /////////////////////////////////  //
+                                       //  //
 #   define  __VOLATILE__ volatile      //  //
 #   define  __volatile__ volatile      //  //
-#  endif ////////////////////////////////  //
-                                           //
-#  ifdef __inline__ /////////////////////  //
-#   define    __INLINE__ __inline__    //  //
-#  else                                //  //
-#   define    __INLINE__ inline        //  //
-#   define    __inline__ inline        //  //
-#  endif ////////////////////////////////  //
-                                           //
-#  ifdef __typeof__ /////////////////////  //
-#   define    __TYPEOF__ __typeof__    //  //
-#  else                                //  //
 #   define    __TYPEOF__ typeof        //  //
 #   define    __typeof__ typeof        //  //
+#   define       __asm__ asm           //  //
+#   define       __ASM__ asm           //  //
+#   define           ASM asm           //  //
+                                       //  //
 #  endif ////////////////////////////////  //
-                                           //
-#  ifdef __alignof__ ////////////////////  //
-#   define   __ALIGNOF__ __alignof__   //  //
-#   define     DLLEXPORT dllexport     //  //
-#   define      NORETURN noreturn      //  //
-#   define       ALIGNED aligned       //  //
-#   define       REGPARM regparm       //  //
-#   define       SECTION section       //  //
-#   define       STDCALL stdcall       //  //
-#   define        PACKED packed        //  //
-#   define        UNUSED unused        //  //
-#   define         CDECL cdecl         //  //
-#  endif ////////////////////////////////  //
-                                           //
-#  ifdef __attribute__ //////////////////  //
-#   define __ATTRIBUTE__ __attribute__ //  //
-#  endif ////////////////////////////////  //
-                                           //
-#  ifdef asm                               //
-#   define       __asm__ asm               //
-#   define       __ASM__ asm               //
-#   define           ASM asm               //
-#  endif                                   //
                                            //
 # else ////////////////////////////////////// IF  __GNUC__ (GCC) DEFINED
                                            //
@@ -292,17 +280,30 @@ extern "C" { // C++
 #  define     __TYPEOF__ __typeof__        //
 #  define    __ALIGNOF__ __alignof__       //
 #  define   __VOLATILE__ __volatile__      //
-#  define  __ATTRIBUTE__ __attribute__     //
-#  define      DLLEXPORT dllexport         //
-#  define       NORETURN noreturn          //
-#  define        ALIGNED aligned           //
-#  define        REGPARM regparm           //
-#  define        SECTION section           //
-#  define        STDCALL stdcall           //
-#  define         PACKED packed            //
-#  define         UNUSED unused            //
                                            //
 # endif /////////////////////////////////////
+
+# define        __FUNC__ __func__
+# ifndef __FUNCTION__
+#  define   __FUNCTION__ __FUNC__
+# endif
+
+# ifdef CDECL
+#  undef CDECL
+# endif
+
+# define   __ATTRIBUTE__ __attribute__
+# define   __EXTENSION__ __extension__
+
+# define       DLLEXPORT dllexport
+# define        NORETURN noreturn
+# define         ALIGNED aligned
+# define         REGPARM regparm
+# define         SECTION section
+# define         STDCALL stdcall
+# define          PACKED packed
+# define          UNUSED unused
+# define           CDECL cdecl
 
 /////////////////////
 # define and_eq &= //
@@ -337,7 +338,6 @@ extern "C" { // C++
 # ifndef TRUE
 #  define TRUE 1
 # endif
-
 # ifndef true
 #  define true 1
 # endif
@@ -345,7 +345,6 @@ extern "C" { // C++
 # ifndef EXIT_FAILURE
 #  define EXIT_FAILURE 1
 # endif
-
 # ifndef EXIT_SUCCESS
 #  define EXIT_SUCCESS 0
 # endif
@@ -353,7 +352,6 @@ extern "C" { // C++
 # ifndef false
 #  define false 0
 # endif
-
 # ifndef FALSE
 #  define FALSE 0
 # endif
@@ -507,11 +505,12 @@ extern "C" { // C++
   SHORT INT BITSIGN                                               (REGISTER UNSIGNED LONG LONG INPUT);
   SHORT INT BYTELEN                                               (REGISTER UNSIGNED LONG LONG INPUT);
 
-  DOUBLE    POW                                            (DOUBLE NUMBER, REGISTER SIGNED INT POWER);
-  DOUBLE    FMOD                                                                 (DOUBLE X, DOUBLE Y);
-  DOUBLE    FABS                                                                      (DOUBLE NUMBER);
-  DOUBLE    COS                                                                            (DOUBLE X);
-  DOUBLE    SIN                                                                            (DOUBLE X);
+  DOUBLE    POW                                   (REGISTER DOUBLE NUMBER, REGISTER SIGNED INT POWER);
+  DOUBLE    FMOD                                               (REGISTER DOUBLE X, REGISTER DOUBLE Y);
+  DOUBLE    ATOF                                                        (CONST CHAR *RESTRICT STRING);
+  DOUBLE    FABS                                                             (REGISTER DOUBLE NUMBER);
+  DOUBLE    COS                                                                   (REGISTER DOUBLE X);
+  DOUBLE    SIN                                                                   (REGISTER DOUBLE X);
 
   SIZE_T    STRLCAT                   (CHAR *DST, CONST CHAR *RESTRICT SRC, REGISTER SIZE_T DST_SIZE);
   SIZE_T    STRLCPY                                (CHAR *DST, CONST CHAR *SRC, REGISTER SIZE_T SIZE);
@@ -567,6 +566,7 @@ extern "C" { // C++
   SHORT INT BYTELEN        ();
   SHORT INT BITLEN         ();
 
+  DOUBLE    ATOF           ();
   DOUBLE    FABS           ();
   DOUBLE    FMOD           ();
   DOUBLE    COS            ();

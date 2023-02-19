@@ -9,23 +9,21 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2023/02/14 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/02/14 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/02/19 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #include	"../#C_MT.h"
 
 #ifdef __STDC__
 DOUBLE
-	FMOD(DOUBLE X, DOUBLE Y)
+	FMOD(REGISTER DOUBLE X, REGISTER DOUBLE Y)
 #else
 DOUBLE
 	FMOD(X, Y)
 
-	DOUBLE (X);
-	DOUBLE (Y);
+	REGISTER DOUBLE (X);
+	REGISTER DOUBLE (Y);
 #endif
 {
-	WHILE (X >= Y)
-		X -= Y;
-	RETURN (X);
+	RETURN (X - (LONG)(X / Y) * Y);
 }
