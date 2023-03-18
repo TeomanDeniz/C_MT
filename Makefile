@@ -7,16 +7,26 @@
 # ║                                         │  ░▒░    ░ ░░ ░ ░  ░  ░░░░▒░ ║
 # ║ ╔───┬──────────────────╗                │   ░▒░░ ░▒░▒▓░▒░▒░░▓░░░▒▒▒░  ║
 # ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
-# ║ ├───┴─────┬────────────┤ │ C 2022/11/15 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
+# ║ ├───┴─────┬────────────┤ │ C 2022/10/12 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 # ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-# ║ ╚─────────┴────────────╝ │ U 2023/02/19 │       ░░░░▒░░▒░░░▒░░░░      ║
+# ║ ╚─────────┴────────────╝ │ U 2023/03/18 │       ░░░░▒░░▒░░░▒░░░░      ║
 # ╚══════════════════════════╩══════════════╩═════════════════════════════╝
 
-NAME		=	C_MT.a
-MAIN		=	MAIN.c
 CC			=	gcc
-FLAGS		=	-Wall -Wextra -Werror
+# [COMPILER]
+
+NAME		=	C_MT.a
+# [COMPILED LIBRARY FILE'S NAME (STATIC LINK LIBRARY)]
+
 SRC			=	$(shell find . -type f ! -name "$(MAIN)" -name "*.c")
+# [FILES TO COMPILE]
+
+MAIN		=	MAIN.c
+# [MAIN PRODUCT TO COMPILE]
+
+FLAGS		=	-Wall -Wextra -Werror
+# [COMPILER FLAGS]
+
 OBJ			=	$(SRC:.c=.o)
 N_FILES		:=	0
 FILES_N		:=	0
@@ -41,11 +51,15 @@ all: $(NAME)
 
 $(NAME): files_n_calculator $(OBJ)
 	@ar -rcs $(NAME) $(OBJ)
+	@echo ""
+	@echo ""
 	@echo " $(shell tput setab 2)$(shell tput setaf 15)$(NAME) Done !$(shell tput sgr0)"
 	@echo ""
 	@if [ -a $(MAIN) ]; \
 	then \
-		$(CC) $(FLAGS) $(MAIN) $(NAME) -o $(MAIN:.c=) ; \
+		$(CC) $(FLAGS) $(MAIN) $(NAME) -o $(MAIN:.c=); \
+		echo " $(shell tput setab 2)$(shell tput setaf 15)$(MAIN) Done !$(shell tput sgr0)" ; \
+		echo "" ; \
 	fi;
 
 c: clean
@@ -74,12 +88,23 @@ fclean: clean
 		echo "" ; \
 	fi;
 
+n: norminette
+norm: norminette
+norminette:
+	@echo ""
+	@echo "$(shell tput setab 10)$(shell tput setaf 0) Checking Norminette Rules $(shell tput sgr0)"
+	@norminette *.c
+	@echo ""
+	@echo "$(shell tput setab 11)$(shell tput setaf 0) Checking Header Norminette Rules $(shell tput sgr0)"
+	@norminette -R CheckDefine *.h
+
 files_n_calculator:
 	@echo "$(shell tput sgr0)"
 	@echo ""
 	$(eval FILES_N := 0)
 	$(eval N_FILES := $(shell echo $(SRC) | wc -w | sed "s/ //g" | bc))
 
+r: fclean all
 re: fclean all
 
-.PHONY: all a clean clear c fclean fclear fc re
+.PHONY: all a clean clear c fclean fclear fc re r norminette norm n

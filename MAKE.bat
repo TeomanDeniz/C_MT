@@ -9,7 +9,7 @@
 @REM ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 @REM ║ ├───┴─────┬────────────┤ │ C 2022/12/09 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 @REM ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-@REM ║ ╚─────────┴────────────╝ │ U 2023/03/12 │       ░░░░▒░░▒░░░▒░░░░      ║
+@REM ║ ╚─────────┴────────────╝ │ U 2023/03/18 │       ░░░░▒░░▒░░░▒░░░░      ║
 @REM ╚══════════════════════════╩══════════════╩═════════════════════════════╝
 
 @ECHO OFF
@@ -70,7 +70,8 @@ GOTO :EOF
 	) ELSE (
 		ECHO.
 		ECHO.
-		ECHO  WARNING: "AR" IS NOT FOUND ON YOUR COMPUTER TO LIBRARY OBJECT FILES!
+		ECHO  WARNING: "AR" IS NOT FOUND ON YOUR COMPUTER!
+		ECHO  INFO: UNFORTUNATELY, WE CAN'T ARCHIVE YOUR OBJECT FILES.
 	)
 	SET PROGRESS=0
 GOTO :EOF
@@ -81,8 +82,8 @@ GOTO :EOF
 	ECHO.
 	WHERE "AR">NUL 2>NUL
 	IF !ERRORLEVEL! NEQ 0 (
-		ECHO  INFO: THIS WILL CAUSE SOME PROBLEMS ON YOUR PROGRAM.
-		ECHO        WE'RE GOING TO COMPILE "!MAIN!" MANUALLY WITHOUT "!NAME!"
+		ECHO  INFO: WE'RE GOING TO COMPILE "!MAIN!" MANUALLY WITHOUT "!NAME!"
+		ECHO  WARNING: THIS WILL CAUSE SOME PROBLEMS ON YOUR PROGRAM.
 		!CC! !CFLAGS! !MAIN! "*.o" -o !MAIN_NAME!.exe||GOTO :ERROR
 	) ELSE (
 		!CC! !CFLAGS! !MAIN! !NAME! -o !MAIN_NAME!.exe||GOTO :ERROR
@@ -165,7 +166,7 @@ GOTO :EOF
 
 :ERROR_MAIN
 	ECHO.
-	ECHO  ERROR: !MAIN! IS NOT EXIST!
+	ECHO  WARNING: !MAIN! IS NOT EXIST!
 	ECHO  CURRENT CD: [!CD!]
 	CALL :PAUSE
 GOTO :FORCE_OUT 1

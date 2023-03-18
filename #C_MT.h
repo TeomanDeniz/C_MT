@@ -9,7 +9,7 @@
 ║ │ © │ Maximum Tension  │ ┌──────────────┤   ░░▒░░▒▒▓██▓█▓█▒░▒▓▓▒▒░░   ║
 ║ ├───┴─────┬────────────┤ │ C 2020/07/23 │   ░▒▓▒▒▓▓██████████▓▓▒▒░    ║
 ║ │ License │ GNU        │ │──────────────│    ░░░░▒▒▒▓▒▒▓▒▒▒▓▒▒▒░░     ║
-║ ╚─────────┴────────────╝ │ U 2023/02/19 │       ░░░░▒░░▒░░░▒░░░░      ║
+║ ╚─────────┴────────────╝ │ U 2023/03/18 │       ░░░░▒░░▒░░░▒░░░░      ║
 ╚══════════════════════════╩══════════════╩════════════════════════════*/
 
 #ifndef C_MT_H
@@ -270,7 +270,7 @@ extern "C" { // C++
 #   define           ASM asm           //  //
                                        //  //
 #  endif ////////////////////////////////  //
-                                           //
+										   //
 # else ////////////////////////////////////// IF  __GNUC__ (GCC) DEFINED
                                            //
 #  define            asm __asm__           //
@@ -340,13 +340,6 @@ extern "C" { // C++
 # endif
 # ifndef true
 #  define true 1
-# endif
-
-# ifndef EXIT_FAILURE
-#  define EXIT_FAILURE 1
-# endif
-# ifndef EXIT_SUCCESS
-#  define EXIT_SUCCESS 0
 # endif
 
 # ifndef false
@@ -457,9 +450,6 @@ extern "C" { // C++
 #  define MB_LEN_MAX 1
 # endif
 
-# define PI 3.14159265358979323846
-# define pi 3.14159265358979323846
-
 # define NOT_INITIALIZED_PROPERLY 0xC0000142 // The application failed to initialize properly. Indicates that the application has been launched on a Desktop to which the current user has no access rights. Another possible cause is that either gdi32.dll or user32.dll has failed to initialize.
 # define        PROGRAM_NOT_FOUND 9009 //////// Program is not recognized as an internal or external command, operable program or batch file. Indicates that command, application name or path has been misspelled when configuring the Action.
 # define           FILE_NOT_FOUND 2 /////////// The system cannot find the file specified. Indicates that the file cannot be found in specified location.
@@ -469,165 +459,41 @@ extern "C" { // C++
 # define                  SUCCESS 0 /////////// Program successfully completed.
 # define                   CTRL_C 0xC000013A // The application terminated as a result of a CTRL+C. Indicates that the application has been terminated either by the user's keyboard input CTRL+C or CTRL+Break or closing command prompt window.
 # define                     FAIL 1 /////////// Program fail, incorrect function or indicates that Action has attempted to execute non-recognized command in Windows command prompt cmd.exe.
+# ifndef EXIT_FAILURE
+#  define EXIT_FAILURE 1
+# endif
+# ifndef EXIT_SUCCESS
+#  define EXIT_SUCCESS 0
+# endif
 
 # define MAIN main
 
-# define ABS(__IN_A__) (__IN_A__ < 0 ? __IN_A__ * -1 : __IN_A__)
-# define FREE(__FREE__) \
-    ({\
-        VOID **(__FREE_TEMP__) = (VOID **) &__FREE__;\
-        *__FREE_TEMP__ = "";\
-    })
-# define SIZEOF(__IN_S__) \
-    ({\
-        TYPEOF(__IN_S__) __OUT_S__;\
-        (CHAR*) (&__OUT_S__+1) - (CHAR*) (&__OUT_S__);\
-    })
+# define ABS(__IN_ABS__) (__IN_ABS__ < 0 ? __IN_ABS__ * -1 : __IN_ABS__)
+
 # define MAX(__A_MAX__, __B_MAX__) \
-    ({\
-        TYPEOF(__A_MAX__) __A_MAX2__ = (__A_MAX__);\
-        TYPEOF(__B_MAX__) __B_MAX2__ = (__B_MAX__);\
-        __A_MAX2__ > __B_MAX2__ ? __A_MAX2__ : __B_MAX2__;\
-    })
+	({\
+		TYPEOF(__A_MAX__) __A_MAX2__ = (__A_MAX__);\
+		TYPEOF(__B_MAX__) __B_MAX2__ = (__B_MAX__);\
+		__A_MAX2__ > __B_MAX2__ ? __A_MAX2__ : __B_MAX2__;\
+	})
+
 # define MIN(__A_MIN__, __B_MIN__) \
-    ({\
-        TYPEOF(__A_MIN__) __A_MIN2__ = (__A_MIN__);\
-        TYPEOF(__B_MIN__) __B_MIN2__ = (__B_MIN__);\
-        __A_MIN2__ < __B_MIN2__ ? __A_MIN2__ : __B_MIN2__;\
-    })
+	({\
+		TYPEOF(__A_MIN__) __A_MIN2__ = (__A_MIN__);\
+		TYPEOF(__B_MIN__) __B_MIN2__ = (__B_MIN__);\
+		__A_MIN2__ < __B_MIN2__ ? __A_MIN2__ : __B_MIN2__;\
+	})
+
 # define TYPECMP(__IS_SAME_TYPE_A__, __IS_SAME_TYPE_B__)  __BUILTIN_TYPES_COMPATIBLE_P(__TYPEOF__(__IS_SAME_TYPE_A__), __TYPEOF__(__IS_SAME_TYPE_B__))
 # define IS_ARRAY(__IS_ARRAY__) (!TYPECMP((__IS_ARRAY__), &(__IS_ARRAY__)[0]))
 # define IS_POINTER(__IS_POINTER__) (!IS_ARRAY(__IS_POINTER__))
 
-# ifdef __STDC__ // GNU ISO STANDARD C LANGUAGE
-
-  SHORT INT BITLEN                                                (REGISTER UNSIGNED LONG LONG INPUT);
-  SHORT INT BITSIGN                                               (REGISTER UNSIGNED LONG LONG INPUT);
-  SHORT INT BYTELEN                                               (REGISTER UNSIGNED LONG LONG INPUT);
-
-  DOUBLE    POW                                        (REGISTER DOUBLE X, REGISTER SIGNED INT POWER);
-  DOUBLE    FMOD                                               (REGISTER DOUBLE X, REGISTER DOUBLE Y);
-  DOUBLE    ATOF                                                        (CONST CHAR *RESTRICT STRING);
-  DOUBLE    COS                                                                   (REGISTER DOUBLE X);
-  DOUBLE    FABS                                                                  (REGISTER DOUBLE X);
-  DOUBLE    LOG                                                                   (REGISTER DOUBLE X);
-  DOUBLE    LOG10                                                                 (REGISTER DOUBLE X);
-  DOUBLE    SIN                                                                   (REGISTER DOUBLE X);
-  DOUBLE    SQRT                                                                  (REGISTER DOUBLE X);
-
-  SIZE_T    STRLCAT                   (CHAR *DST, CONST CHAR *RESTRICT SRC, REGISTER SIZE_T DST_SIZE);
-  SIZE_T    STRLCPY                                (CHAR *DST, CONST CHAR *SRC, REGISTER SIZE_T SIZE);
-
-  CHAR     *SUBSTR             (CHAR CONST *STRING, REGISTER UNSIGNED INT START, REGISTER SIZE_T LEN);
-  CHAR     *STRNSTR             (CONST CHAR *HAYSTACK, CONST CHAR *RESTRICT NEEDLE, CONST SIZE_T LEN);
-  CHAR     *STRJOIN                       (CONST CHAR **RESTRICT STRINGS, CHAR *RESTRICT JOIN_STRING);
-  CHAR     *STRMAPI                        (CHAR CONST *STRING, CHAR (*FUNCTION)(UNSIGNED INT, CHAR));
-  CHAR     *STRTRIM                                      (CHAR CONST *STRING_1, CHAR CONST *STRING_2);
-  CHAR     *STRCHR                                       (CONST CHAR *STRING, REGISTER INT CHARACTER);
-  CHAR     *STRCAT                                       (CHAR CONST *STRING_1, CONST CHAR *STRING_2);
-  CHAR     *STRRCHR                                      (CONST CHAR *STRING, REGISTER INT CHARACTER);
-  CHAR     *STRSTR                                          (CHAR *STRING, CHAR *RESTRICT SUB_STRING);
-  CHAR     *STRCPY                                             (CHAR *STRING_1, CONST CHAR *STRING_2);
-  CHAR    **SPLIT                                                (CHAR CONST *STRING, CHAR CHARACTER);
-  CHAR     *RELPACE_STRING                                       (CHAR* STRING, CHAR* OLD, CHAR* NEW);
-  CHAR      UPPER_CASE                                                      (REGISTER CHAR CHARACTER);
-  CHAR      LOWER_CASE                                                      (REGISTER CHAR CHARACTER);
-  CHAR     *ITOA                                                                (REGISTER INT NUMBER);
-  CHAR     *STRDUP                                                               (CONST CHAR *STRING);
-  CHAR     *GET_LINE                                                                (REGISTER INT FD);
-  CHAR     *GETS                                                                       (CHAR *STRING);
-
-  VOID     *MEMCHR                  (CONST VOID *OBJECT, REGISTER INT CHARACTER, REGISTER SIZE_T LEN);
-  VOID     *MEMSET                           (VOID *OBJECT, REGISTER INT INPUT, REGISTER SIZE_T SIZE);
-  VOID     *MEMMOVE                           (VOID *DST, CONST VOID *RESTRICT SRC, CONST SIZE_T LEN);
-  VOID      STRITERI                           (CHAR *STRING, VOID (*FUNCTION)(UNSIGNED INT, CHAR *));
-  VOID     *MEMCPY                                (VOID *DEST, CONST VOID *SRC, REGISTER SIZE_T SIZE);
-  VOID     *CALLOC                                      (REGISTER SIZE_T COUNT, REGISTER SIZE_T SIZE);
-  VOID      PUT_NUMBER_FD                                      (REGISTER INT NUMBER, REGISTER INT FD);
-  VOID      PUT_CHAR_FD                                             (CHAR CHARACTER, REGISTER INT FD);
-  VOID      GOTOXY                                                   (REGISTER INT X, REGISTER INT Y);
-  VOID      PUT_STR_FD                                                (CHAR *STRING, REGISTER INT FD);
-  VOID      PUT_NUMBER                                                          (REGISTER INT NUMBER);
-  VOID     *MALLOC                                                                (REGISTER INT SIZE);
-  VOID      PUT_CHAR                                                                 (CHAR CHARACTER);
-  VOID      PUT_STR                                                                    (CHAR *STRING);
-
-  INT       STRNCMP (CONST CHAR *RESTRICT STRING_1, CONST CHAR *RESTRICT STRING_2, CONST SIZE_T SIZE);
-  INT       MEMCMP                  (CONST VOID *OBJECT_1, CONST VOID *OBJECT_2, REGISTER SIZE_T LEN);
-  INT       STRCASECMP                 (CONST CHAR *RESTRICT STRING_1, CONST CHAR *RESTRICT STRING_2);
-  INT       STRCMP                                       (CONST CHAR *STRING_1, CONST CHAR *STRING_2);
-  INT       PRINTF_FD                                        (REGISTER INT FD, CONST CHAR *(__), ...);
-  INT       RANDOM                                               (REGISTER INT MIN, REGISTER INT MAX);
-  INT       STRLEN                                                      (CONST CHAR *RESTRICT STRING);
-  INT       PRINTF                                                            (CONST CHAR *(__), ...);
-  INT       ATOI                                                                 (CONST CHAR *STRING);
-  INT       GETCHAR                                                                            (VOID);
-
-# else // K&R C LANGUAGE
-
-  SHORT INT BITSIGN        ();
-  SHORT INT BYTELEN        ();
-  SHORT INT BITLEN         ();
-
-  DOUBLE    ATOF           ();
-  DOUBLE    FABS           ();
-  DOUBLE    FMOD           ();
-  DOUBLE    SQRT           ();
-  DOUBLE    COS            ();
-  DOUBLE    LOG            ();
-  DOUBLE    LOG10          ();
-  DOUBLE    POW            ();
-  DOUBLE    SIN            ();
-
-  SIZE_T    STRLCAT        ();
-  SIZE_T    STRLCPY        ();
-
-  CHAR     *RELPACE_STRING ();
-  CHAR      UPPER_CASE     ();
-  CHAR      LOWER_CASE     ();
-  CHAR     *GET_LINE       ();
-  CHAR     *STRNSTR        ();
-  CHAR     *STRJOIN        ();
-  CHAR     *STRMAPI        ();
-  CHAR     *STRRCHR        ();
-  CHAR     *STRTRIM        ();
-  CHAR     *SUBSTR         ();
-  CHAR     *STRCAT         ();
-  CHAR     *STRCHR         ();
-  CHAR     *STRCPY         ();
-  CHAR     *STRDUP         ();
-  CHAR     *STRSTR         ();
-  CHAR    **SPLIT          ();
-  CHAR     *ITOA           ();
-  CHAR     *GETS           ();
-
-  VOID      PUT_NUMBER_FD  ();
-  VOID      PUT_CHAR_FD    ();
-  VOID      PUT_NUMBER     ();
-  VOID      PUT_STR_FD     ();
-  VOID      PUT_CHAR       ();
-  VOID      STRITERI       ();
-  VOID     *MEMMOVE        ();
-  VOID      PUT_STR        ();
-  VOID     *CALLOC         ();
-  VOID      GOTOXY         ();
-  VOID     *MALLOC         ();
-  VOID     *MEMCHR         ();
-  VOID     *MEMCPY         ();
-  VOID     *MEMSET         ();
-
-  INT       STRCASECMP     ();
-  INT       PRINTF_FD      ();
-  INT       GETCHAR        ();
-  INT       STRNCMP        ();
-  INT       MEMCMP         ();
-  INT       PRINTF         ();
-  INT       RANDOM         ();
-  INT       STRCMP         ();
-  INT       STRLEN         ();
-  INT       ATOI           ();
-
-# endif
+#include	"FILE/#FILE.h"
+#include	"IO/#IO.h"
+#include	"MATH/#MATH.h"
+#include	"MEMORY/#MEMORY.h"
+#include	"MODULES/#MODULES.h"
+#include	"STRINGS/#STRINGS.h"
 
 # ifdef __CPLUSPLUS
 } // C++
